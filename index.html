@@ -26,9 +26,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--off);color:var(--t1);min-
 .auth-side{background:#fff;display:flex;align-items:center;justify-content:center;padding:40px}
 .auth-box{width:100%;max-width:380px}
 .auth-box h2{font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--navy);margin-bottom:8px}
-.sub{color:var(--t2);font-size:.88rem;margin-bottom:24px}
+.sub{color:var(--t2);font-size:.88rem;margin-bottom:20px}
 
-.field{margin-bottom:16px;position:relative}
+.field{margin-bottom:14px;position:relative}
 .field label{display:block;font-size:.75rem;font-weight:600;color:var(--t2);margin-bottom:4px;text-transform:uppercase}
 .field input,.field select{width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--rl);outline:none;font-size:.92rem}
 
@@ -37,8 +37,21 @@ body{font-family:'DM Sans',sans-serif;background:var(--off);color:var(--t1);min-
 .pw-wrapper input{padding-right:40px}
 .pw-toggle{position:absolute;right:10px;background:none;border:none;cursor:pointer;font-size:1.1rem;user-select:none}
 
-.btn-main{width:100%;padding:12px;background:var(--navy);color:#fff;border:none;border-radius:var(--rl);font-weight:600;cursor:pointer;margin-top:10px}
+.btn-main{width:100%;padding:12px;background:var(--navy);color:#fff;border:none;border-radius:var(--rl);font-weight:600;cursor:pointer;margin-top:6px}
 .btn-main:hover{background:var(--blue)}
+
+/* BOTÓN GOOGLE */
+.btn-google{
+  width:100%;padding:11px;background:#fff;color:#333;border:1.5px solid var(--border);
+  border-radius:var(--rl);font-weight:600;cursor:pointer;display:flex;align-items:center;
+  justify-content:center;gap:10px;font-size:.9rem;margin-bottom:16px;
+  box-shadow:0 1px 3px rgba(0,0,0,.08);transition:background .2s;
+}
+.btn-google:hover{background:#f8f9fa;border-color:#baccdf}
+.divider{display:flex;align-items:center;text-align:center;color:var(--t2);font-size:.78rem;margin:16px 0}
+.divider::before, .divider::after{content:'';flex:1;border-bottom:1px solid var(--border)}
+.divider::before{margin-right:8px} .divider::after{margin-left:8px}
+
 .auth-switch{text-align:center;margin-top:18px;font-size:.85rem;color:var(--t2)}
 .auth-switch span{color:var(--sky);font-weight:600;cursor:pointer}
 .err-msg{font-size:.8rem;color:var(--red);margin-top:8px;text-align:center}
@@ -54,15 +67,15 @@ body{font-family:'DM Sans',sans-serif;background:var(--off);color:var(--t1);min-
 .perm-notice.info{background:var(--info-bg);color:var(--info)}
 .perm-notice.warn{background:var(--amber-bg);color:var(--amber)}
 .sc{background:#fff;border:1px solid var(--border);border-radius:var(--rxl);padding:20px;margin-bottom:15px}
-#toast{position:fixed;bottom:20px;right:20px;background:var(--navy);color:#fff;padding:10px 16px;border-radius:8px;display:none}
+#toast{position:fixed;bottom:20px;right:20px;background:var(--navy);color:#fff;padding:10px 16px;border-radius:8px;display:none;z-index:99}
 </style>
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
   import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-  // ⚠️ REEMPLAZA ESTOS DATOS CON TUS CLAVES DE FIREBASE (PASO 4)
+  // ⚠️ REEMPLAZA ESTOS DATOS CON TUS CLAVES DE FIREBASE
   const firebaseConfig = {
     apiKey: "REEMPLAZA_CON_TU_API_KEY",
     authDomain: "REEMPLAZA_CON_TU_AUTH_DOMAIN",
@@ -75,16 +88,28 @@ body{font-family:'DM Sans',sans-serif;background:var(--off);color:var(--t1);min-
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const db = getFirestore(app);
+  const googleProvider = new GoogleAuthProvider();
 
   window.fbAuth = auth;
   window.fbDb = db;
-  window.fbOps = { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, doc, setDoc, getDoc };
+  window.googleProvider = googleProvider;
+  window.fbOps = { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, signOut, doc, setDoc, getDoc };
 
   // Escuchar estado de sesión
   onAuthStateChanged(auth, async (user) => {
     if (user) {
       const userDoc = await getDoc(doc(db, "users", user.uid));
-      const userData = userDoc.exists() ? userDoc.data() : { nm: user.email.split('@')[0], rol: 'Estudiante' };
+      let userData = userDoc.exists() ? userDoc.data() : null;
+      
+      if(!userData) {
+        userData = { 
+          nm: user.displayName || user.email.split('@')[0], 
+          rol: user.email.endsWith('@luzyverdadsucre.org') ? 'Estudiante' : 'Visitante',
+          email: user.email 
+        };
+        await setDoc(doc(db, "users", user.uid), userData);
+      }
+      
       window.currentUser = { uid: user.uid, email: user.email, ...userData };
       launchApp();
     } else {
@@ -106,11 +131,18 @@ body{font-family:'DM Sans',sans-serif;background:var(--off);color:var(--t1);min-
   <div class="auth-side">
     <div class="auth-box">
       <h2>Iniciar Sesión</h2>
-      <p class="sub">Ingresa con tu correo institucional o Gmail</p>
+      <p class="sub">Utiliza tu cuenta institucional o tu correo personal</p>
+      
+      <button class="btn-google" onclick="doGoogleAuth()">
+        <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+        Entrar con Google (Colegio / Gmail)
+      </button>
+
+      <div class="divider">o usa correo externo</div>
       
       <div class="field">
         <label>Correo electrónico</label>
-        <input type="email" id="li-em" placeholder="usuario@luzyverdadsucre.org o gmail.com">
+        <input type="email" id="li-em" placeholder="usuario@gmail.com">
       </div>
       
       <div class="field">
@@ -121,7 +153,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--off);color:var(--t1);min-
         </div>
       </div>
       
-      <button class="btn-main" onclick="doLogin()">🔑 Ingresar</button>
+      <button class="btn-main" onclick="doLogin()">🔑 Ingresar con Correo</button>
       <p class="err-msg" id="li-err"></p>
       <p class="auth-switch">¿No tienes cuenta? <span onclick="showPg('register')">Regístrate aquí</span></p>
     </div>
@@ -132,28 +164,34 @@ body{font-family:'DM Sans',sans-serif;background:var(--off);color:var(--t1);min-
   <div class="auth-hero">
     <div class="hero-ring">✨</div>
     <h1>Crear Cuenta</h1>
-    <p>Sincronizada en todos tus dispositivos</p>
+    <p>Las cuentas @luzyverdadsucre.org deben usar Google</p>
   </div>
   <div class="auth-side">
     <div class="auth-box">
-      <div style="color:var(--sky);cursor:pointer;font-size:.85rem;margin-bottom:15px" onclick="showPg('login')">← Volver</div>
+      <div style="color:var(--sky);cursor:pointer;font-size:.85rem;margin-bottom:12px" onclick="showPg('login')">← Volver</div>
       <h2>Registro</h2>
-      <p class="sub">Se admiten correos <b>@luzyverdadsucre.org</b> y <b>@gmail.com</b></p>
+      <p class="sub">Si tienes correo institucional, usa el botón de Google</p>
+      
+      <button class="btn-google" onclick="doGoogleAuth()">
+        <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+        Registrarse con Google
+      </button>
+
+      <div class="divider">o registro manual (Solo correos externos)</div>
       
       <div class="field">
         <label>Nombre Completo</label>
         <input type="text" id="rg-nm" placeholder="Juan Pérez">
       </div>
       <div class="field">
-        <label>Correo Electrónico</label>
-        <input type="email" id="rg-em" placeholder="estudiante@luzyverdadsucre.org">
+        <label>Correo Electrónico Externo</label>
+        <input type="email" id="rg-em" placeholder="usuario@gmail.com">
       </div>
       <div class="field">
         <label>Rol</label>
         <select id="rg-rol">
-          <option value="Estudiante">Estudiante</option>
           <option value="Padre">Padre de Familia</option>
-          <option value="Docente">Docente</option>
+          <option value="Visitante">Visitante / Externo</option>
         </select>
       </div>
       <div class="field">
@@ -164,7 +202,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--off);color:var(--t1);min-
         </div>
       </div>
       
-      <button class="btn-main" onclick="doRegister()">📝 Crear Cuenta</button>
+      <button class="btn-main" onclick="doRegister()">📝 Crear Cuenta Manual</button>
       <p class="err-msg" id="rg-err"></p>
     </div>
   </div>
@@ -183,11 +221,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--off);color:var(--t1);min-
     <div id="banner-perm"></div>
     <div class="sc">
       <h3>📢 Tablero Principal</h3>
-      <p style="margin-top:8px;color:var(--t2)">Tus datos ahora están guardados de verdad en la nube de Google.</p>
+      <p style="margin-top:8px;color:var(--t2)">Plataforma de la Unidad Educativa Luz y Verdad.</p>
     </div>
     <div class="sc">
       <h3>🏆 Vitrina de Logros</h3>
-      <p style="margin-top:8px;color:var(--t2)">Visibilidad habilitada para todos los usuarios registrados.</p>
+      <p style="margin-top:8px;color:var(--t2)">Visibilidad habilitada para toda la comunidad.</p>
     </div>
   </div>
 </div>
@@ -198,7 +236,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--off);color:var(--t1);min-
 function v(id){ return document.getElementById(id).value.trim(); }
 function toast(m){ const t=document.getElementById('toast'); t.textContent=m; t.style.display='block'; setTimeout(()=>t.style.display='none',3000); }
 
-// Ver/Ocultar contraseña (Ojo 👁️)
 function togglePw(id, btn){
   const el = document.getElementById(id);
   if(el.type === 'password'){ el.type = 'text'; btn.textContent = '🙈'; }
@@ -210,25 +247,35 @@ function showPg(p){
   document.getElementById('pg-register').classList.toggle('hidden', p!=='register');
 }
 
-// Validar correo
-function checkEmail(em){
-  const l = em.toLowerCase();
-  return l.endsWith('@luzyverdadsucre.org') || l.endsWith('@gmail.com');
+// Iniciar Sesión con Google
+async function doGoogleAuth(){
+  try {
+    await window.fbOps.signInWithPopup(window.fbAuth, window.googleProvider);
+    toast('¡Sesión iniciada con Google!');
+  } catch(e) {
+    alert('Error con Google: ' + e.message);
+  }
 }
 
+// Registro Manual (Bloqueado para cuentas del colegio)
 async function doRegister(){
   const nm = v('rg-nm'), em = v('rg-em').toLowerCase(), pw = v('rg-pw'), rol = v('rg-rol');
   const err = document.getElementById('rg-err');
 
   if(!nm || !em || !pw){ err.textContent = 'Completa todos los campos.'; return; }
-  if(!checkEmail(em)){ err.textContent = 'Solo correos @luzyverdadsucre.org o @gmail.com'; return; }
-  if(pw.length < 6){ err.textContent = 'Contraseña mínima de 6 caracteres.'; return; }
+  
+  // Regla: Cuentas del colegio DEBEN usar Google
+  if(em.endsWith('@luzyverdadsucre.org')){
+    err.textContent = 'Las cuentas @luzyverdadsucre.org deben iniciar sesión obligatoriamente con el botón de Google.';
+    return;
+  }
+  
+  if(pw.length < 6){ err.textContent = 'La contraseña debe tener al menos 6 caracteres.'; return; }
 
   try {
     const res = await window.fbOps.createUserWithEmailAndPassword(window.fbAuth, em, pw);
-    // Guardar perfil en Firestore
     await window.fbOps.setDoc(window.fbOps.doc(window.fbDb, "users", res.user.uid), { nm, rol, email: em });
-    toast('¡Cuenta registrada exitosamente!');
+    toast('¡Cuenta registrada con éxito!');
   } catch(e) {
     err.textContent = 'Error: ' + (e.message.includes('email-already') ? 'El correo ya existe' : e.message);
   }
@@ -262,10 +309,10 @@ function launchApp(){
   const b = document.getElementById('banner-perm');
   if(isSchool){
     b.className = 'perm-notice info';
-    b.innerHTML = `✅ Cuenta Institucional (<b>${u.email}</b>): Acceso total a mensajes y publicaciones.`;
+    b.innerHTML = `✅ Cuenta Institucional Oficial (<b>${u.email}</b>): Acceso completo a la plataforma.`;
   } else {
     b.className = 'perm-notice warn';
-    b.innerHTML = `🔒 Cuenta Gmail (<b>${u.email}</b>): Modo visitante. Puedes ver logros y publicaciones, pero la mensajería interna requiere correo institucional.`;
+    b.innerHTML = `🔒 Cuenta Externa (<b>${u.email}</b>): Puedes ver logros y publicaciones, pero la mensajería interna requiere correo institucional @luzyverdadsucre.org.`;
   }
 }
 </script>
