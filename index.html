@@ -75,15 +75,14 @@ body{font-family:'DM Sans',sans-serif;background:var(--off);color:var(--t1);min-
   import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
   import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-  // ⚠️ REEMPLAZA ESTOS DATOS CON TUS CLAVES DE FIREBASE
-  const firebaseConfig = {
-    apiKey: "REEMPLAZA_CON_TU_API_KEY",
-    authDomain: "REEMPLAZA_CON_TU_AUTH_DOMAIN",
-    projectId: "REEMPLAZA_CON_TU_PROJECT_ID",
-    storageBucket: "REEMPLAZA_CON_TU_STORAGE_BUCKET",
-    messagingSenderId: "REEMPLAZA_CON_TU_MESSAGING_SENDER_ID",
-    appId: "REEMPLAZA_CON_TU_APP_ID"
-  };
+const firebaseConfig = {
+  apiKey: "AIzaSyCW-SPDPAUGbZvfbttuMVl0GEAqHR7v65o",
+  authDomain: "comunicacion-digital-35de7.firebaseapp.com",
+  projectId: "comunicacion-digital-35de7",
+  storageBucket: "comunicacion-digital-35de7.firebasestorage.app",
+  messagingSenderId: "676450339406",
+  appId: "1:676450339406:web:d7cea9ce802d53b29c511f"
+};
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
