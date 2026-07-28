@@ -5,18 +5,27 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Luz y Verdad – Plataforma Escolar</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
 :root{
-  --navy:#0b1f3a; --navy2:#122952; --blue:#1a4a8a; --sky:#2e7dd1;
-  --ice:#ddeeff; --off:#f4f7fb; --gold:#c8973a;
-  --t1:#0b1f3a; --t2:#4a5a72; --t3:#8a9ab5; --border:#d0dcee; 
-  --green:#1d7a4a; --green-bg:#e6f5ed; --amber-bg:#fef0dc; --amber:#a35c0a; --red:#a32020;
-  --info:#185fa5; --info-bg:#e6f1fb; --rl:12px; --rxl:18px;
+  --navy:#0b1f3a; --navy2:#122952; --blue:#1a4a8a; --sky:#2e7dd1; --sky-lt:#5b9ee8;
+  --ice:#ddeeff; --ice2:#eef5ff; --white:#fff; --off:#f4f7fb;
+  --gold:#c8973a; --gold-lt:#e8b84b;
+  --t1:#0b1f3a; --t2:#4a5a72; --t3:#8a9ab5;
+  --border:#d0dcee; --border-lt:#e8eff8;
+  --green:#1d7a4a; --green-bg:#e6f5ed;
+  --amber:#a35c0a; --amber-bg:#fef0dc;
+  --red:#a32020; --red-bg:#fce8e8;
+  --info:#185fa5; --info-bg:#e6f1fb;
+  --rS:8px; --rM:12px; --rL:18px; --rXL:24px;
+  --shS:0 2px 8px rgba(11,31,58,.06);
+  --shM:0 6px 20px rgba(11,31,58,.10);
+  --shL:0 12px 36px rgba(11,31,58,.14);
 }
 
 body.dark-mode {
-  --off:#0f172a; --t1:#f8fafc; --t2:#94a3b8; --border:#334155;
+  --off:#0b1329; --white:#111c38; --t1:#f1f5f9; --t2:#94a3b8; --t3:#64748b;
+  --border:#1e2d52; --border-lt:#172445; --ice:#1a2b4c; --ice2:#14223d;
   background: var(--off); color: var(--t1);
 }
 
@@ -27,87 +36,129 @@ body{font-family:'DM Sans',sans-serif;background:var(--off);color:var(--t1);min-
 /* AUTH PAGES */
 .auth-page{min-height:100vh;display:grid;grid-template-columns:1fr 1fr}
 @media(max-width:800px){.auth-page{grid-template-columns:1fr}.auth-hero{display:none}}
-.auth-hero{background:var(--navy);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px;text-align:center;color:#fff}
-.hero-ring{width:80px;height:80px;border-radius:50%;border:3px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:32px;margin-bottom:20px}
-.auth-side{background:#fff;display:flex;align-items:center;justify-content:center;padding:40px}
-body.dark-mode .auth-side{background:#1e293b}
-.auth-box{width:100%;max-width:380px}
-.auth-box h2{font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--navy);margin-bottom:8px}
+.auth-hero{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 60%,var(--blue) 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px;text-align:center;color:#fff;position:relative;overflow:hidden}
+.auth-hero::before{content:'';position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(200,151,58,.15) 0%,transparent 70%);top:-50px;right:-50px}
+.hero-ring{width:90px;height:90px;border-radius:50%;border:3px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:36px;margin-bottom:20px;background:rgba(255,255,255,.05);box-shadow:0 0 30px rgba(200,151,58,.3)}
+.hero-title{font-family:'Playfair Display',serif;font-size:2.2rem;margin-bottom:8px}
+.hero-sub{color:var(--gold-lt);font-size:.95rem;letter-spacing:1px;text-transform:uppercase;font-weight:600}
+
+.auth-side{background:var(--white);display:flex;align-items:center;justify-content:center;padding:40px}
+.auth-box{width:100%;max-width:390px}
+.auth-box h2{font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--navy);margin-bottom:6px}
 body.dark-mode .auth-box h2{color:#fff}
-.sub{color:var(--t2);font-size:.88rem;margin-bottom:20px}
+.sub{color:var(--t2);font-size:.88rem;margin-bottom:22px}
 
 .field{margin-bottom:14px;position:relative}
-.field label{display:block;font-size:.75rem;font-weight:600;color:var(--t2);margin-bottom:4px;text-transform:uppercase}
-.field input,.field select,.field textarea{width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--rl);outline:none;font-size:.92rem;background:transparent;color:inherit}
+.field label{display:block;font-size:.75rem;font-weight:600;color:var(--t2);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px}
+.field input,.field select,.field textarea{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:var(--rM);outline:none;font-size:.92rem;background:transparent;color:inherit;transition:border-color .2s}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--sky)}
 
-/* CONTRASEÑA CON OJO */
 .pw-wrapper{position:relative;display:flex;align-items:center}
-.pw-wrapper input{padding-right:40px}
-.pw-toggle{position:absolute;right:10px;background:none;border:none;cursor:pointer;font-size:1.1rem;user-select:none}
+.pw-wrapper input{padding-right:42px}
+.pw-toggle{position:absolute;right:12px;background:none;border:none;cursor:pointer;font-size:1.1rem;user-select:none;opacity:.7}
 
-.btn-main{width:100%;padding:12px;background:var(--navy);color:#fff;border:none;border-radius:var(--rl);font-weight:600;cursor:pointer;margin-top:6px}
+.btn-main{width:100%;padding:12px;background:var(--navy);color:#fff;border:none;border-radius:var(--rM);font-weight:600;cursor:pointer;margin-top:6px;transition:background .2s,transform .1s}
 .btn-main:hover{background:var(--blue)}
+.btn-main:active{transform:scale(.99)}
 
-/* BOTÓN GOOGLE */
 .btn-google{
   width:100%;padding:11px;background:#fff;color:#333;border:1.5px solid var(--border);
-  border-radius:var(--rl);font-weight:600;cursor:pointer;display:flex;align-items:center;
+  border-radius:var(--rM);font-weight:600;cursor:pointer;display:flex;align-items:center;
   justify-content:center;gap:10px;font-size:.9rem;margin-bottom:16px;
-  box-shadow:0 1px 3px rgba(0,0,0,.08);
+  box-shadow:0 2px 5px rgba(0,0,0,.05);transition:background .2s,border-color .2s;
 }
-.divider{display:flex;align-items:center;text-align:center;color:var(--t2);font-size:.78rem;margin:16px 0}
+.btn-google:hover{background:#f8f9fa;border-color:var(--sky)}
+.divider{display:flex;align-items:center;text-align:center;color:var(--t3);font-size:.78rem;margin:18px 0}
 .divider::before, .divider::after{content:'';flex:1;border-bottom:1px solid var(--border)}
-.divider::before{margin-right:8px} .divider::after{margin-left:8px}
+.divider::before{margin-right:10px} .divider::after{margin-left:10px}
 
-.auth-switch{text-align:center;margin-top:18px;font-size:.85rem;color:var(--t2)}
+.auth-switch{text-align:center;margin-top:20px;font-size:.85rem;color:var(--t2)}
 .auth-switch span{color:var(--sky);font-weight:600;cursor:pointer}
-.err-msg{font-size:.8rem;color:var(--red);margin-top:8px;text-align:center}
+.err-msg{font-size:.82rem;color:var(--red);margin-top:10px;text-align:center}
 
-/* APP SHELL */
+/* APP SHELL DECORADO */
 #app{display:none;flex-direction:column;min-height:100vh}
 #app.on{display:flex}
-#topbar{background:var(--navy);color:#fff;padding:0 20px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-.tb-logo{display:flex;align-items:center;gap:10px;font-family:'Playfair Display',serif;font-size:1.1rem;cursor:pointer}
 
-/* PERFIL Y MENÚ DESPLEGABLE */
+#topbar{
+  background:linear-gradient(90deg,var(--navy) 0%,var(--navy2) 100%);
+  color:#fff;padding:0 24px;height:65px;display:flex;align-items:center;
+  justify-content:space-between;position:sticky;top:0;z-index:100;
+  box-shadow:0 4px 15px rgba(0,0,0,.15);border-bottom:2px solid var(--gold);
+}
+.tb-logo{display:flex;align-items:center;gap:12px;font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700}
+.tb-logo-icon{width:36px;height:36px;border-radius:50%;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.1);font-size:18px}
+.tb-motto{font-size:.7rem;color:var(--gold-lt);letter-spacing:1px;text-transform:uppercase;font-family:'DM Sans',sans-serif;font-weight:500}
+
+/* MENU DESPLEGABLE DE USUARIO */
 .user-menu-wrapper{position:relative}
-.user-badge{display:flex;align-items:center;gap:10px;cursor:pointer;padding:6px 12px;border-radius:20px;background:rgba(255,255,255,.1);transition:background .2s}
-.user-badge:hover{background:rgba(255,255,255,.2)}
-.u-avatar{width:32px;height:32px;border-radius:50%;background:var(--gold);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem}
-.u-name-top{font-size:.88rem;font-weight:500;max-width:140px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.user-badge{display:flex;align-items:center;gap:10px;cursor:pointer;padding:5px 14px 5px 6px;border-radius:30px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);transition:background .2s}
+.user-badge:hover{background:rgba(255,255,255,.18)}
+.u-avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--gold) 0%,var(--gold-lt) 100%);color:var(--navy);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.92rem;box-shadow:0 2px 6px rgba(0,0,0,.2)}
+.u-name-top{font-size:.88rem;font-weight:500;max-width:130px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#fff}
 
 .dropdown-menu{
-  position:absolute;top:50px;right:0;width:220px;background:#fff;border-radius:var(--rl);
-  box-shadow:0 10px 25px rgba(0,0,0,.15);border:1px solid var(--border);padding:8px 0;
-  display:none;z-index:200;color:var(--t1);
+  position:absolute;top:54px;right:0;width:230px;background:var(--white);border-radius:var(--rM);
+  box-shadow:var(--shL);border:1px solid var(--border);padding:8px 0;
+  display:none;z-index:200;color:var(--t1);animation:fadeIn .15s ease-out;
 }
-body.dark-mode .dropdown-menu{background:#1e293b;color:#fff}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
 .dropdown-menu.show{display:block}
-.dd-header{padding:10px 16px;border-bottom:1px solid var(--border)}
-.dd-header small{color:var(--t2);display:block;font-size:.75rem}
-.dd-item{padding:10px 16px;display:flex;align-items:center;gap:10px;font-size:.88rem;cursor:pointer;transition:background .2s}
-.dd-item:hover{background:var(--off)}
+.dd-header{padding:12px 16px;border-bottom:1px solid var(--border);background:var(--ice2)}
+.dd-header strong{display:block;font-size:.9rem;color:var(--navy)}
+body.dark-mode .dd-header strong{color:#fff}
+.dd-header small{color:var(--t2);font-size:.76rem}
+.dd-item{padding:10px 16px;display:flex;align-items:center;gap:10px;font-size:.88rem;cursor:pointer;transition:background .2s;color:var(--t1)}
+.dd-item:hover{background:var(--ice)}
 .dd-item.danger{color:var(--red)}
 
-.main-wrap{max-width:1000px;margin:20px auto;width:90%;flex:1}
-.perm-notice{padding:12px 16px;border-radius:var(--rl);font-size:.88rem;margin-bottom:16px}
-.perm-notice.info{background:var(--info-bg);color:var(--info)}
-.perm-notice.warn{background:var(--amber-bg);color:var(--amber)}
-.sc{background:#fff;border:1px solid var(--border);border-radius:var(--rxl);padding:20px;margin-bottom:15px}
-body.dark-mode .sc{background:#1e293b}
+/* NAV TABS */
+.nav-tabs{background:var(--white);border-bottom:1px solid var(--border);padding:0 24px;display:flex;gap:8px;overflow-x:auto}
+.tab-btn{padding:14px 18px;border:none;background:none;font-weight:600;font-size:.88rem;color:var(--t2);cursor:pointer;border-bottom:3px solid transparent;display:flex;align-items:center;gap:8px;white-space:nowrap;transition:color .2s,border-color .2s}
+.tab-btn:hover{color:var(--navy)}
+.tab-btn.active{color:var(--sky);border-bottom-color:var(--sky)}
+.tab-badge{background:var(--ice);color:var(--sky);padding:2px 7px;border-radius:10px;font-size:.72rem}
 
-/* MODALES */
-.modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;z-index:300}
+/* MAIN CONTENT */
+.main-wrap{max-width:1000px;margin:24px auto;width:92%;flex:1}
+.perm-notice{padding:14px 18px;border-radius:var(--rM);font-size:.88rem;margin-bottom:20px;display:flex;align-items:center;gap:12px;box-shadow:var(--shS)}
+.perm-notice.info{background:var(--info-bg);color:var(--info);border:1px solid #b2d4f5}
+.perm-notice.warn{background:var(--amber-bg);color:var(--amber);border:1px solid #f7d8a8}
+
+.sc{background:var(--white);border:1px solid var(--border);border-radius:var(--rL);padding:24px;margin-bottom:20px;box-shadow:var(--shS)}
+.sc-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;border-bottom:1px solid var(--border-lt);padding-bottom:12px}
+.sc-title{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--navy);display:flex;align-items:center;gap:10px}
+body.dark-mode .sc-title{color:#fff}
+
+/* CARDS GRID DECORADAS */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:700px){.grid-2{grid-template-columns:1fr}}
+
+.info-card{background:var(--ice2);border:1px solid var(--border-lt);border-radius:var(--rM);padding:16px;position:relative;overflow:hidden}
+.info-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:var(--sky)}
+.info-card h4{font-size:.98rem;color:var(--navy);margin-bottom:6px}
+body.dark-mode .info-card h4{color:#fff}
+.info-card p{font-size:.86rem;color:var(--t2);line-height:1.4}
+
+.badge-role{padding:4px 10px;border-radius:20px;font-size:.75rem;font-weight:600;display:inline-block}
+.role-Estudiante{background:var(--ice);color:var(--info)}
+.role-Docente{background:var(--amber-bg);color:var(--amber)}
+.role-Padre{background:var(--green-bg);color:var(--green)}
+.role-Visitante{background:#f1f5f9;color:#64748b}
+
+/* MODALES DECORADOS */
+.modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(11,31,58,.5);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:300}
 .modal-overlay.active{display:flex}
-.modal-card{background:#fff;border-radius:var(--rxl);padding:24px;width:90%;max-width:450px;box-shadow:0 15px 30px rgba(0,0,0,.2);position:relative}
-body.dark-mode .modal-card{background:#1e293b;color:#fff}
-.modal-card h3{font-family:'Playfair Display',serif;margin-bottom:15px}
-.btn-close-modal{position:absolute;top:15px;right:15px;background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--t2)}
+.modal-card{background:var(--white);border-radius:var(--rXL);padding:28px;width:90%;max-width:440px;box-shadow:var(--shL);position:relative;border:1px solid var(--border)}
+.modal-card h3{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--navy);margin-bottom:18px}
+body.dark-mode .modal-card h3{color:#fff}
+.btn-close-modal{position:absolute;top:18px;right:18px;background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--t3)}
 
-.profile-info-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:.9rem}
+.profile-avatar-big{width:70px;height:70px;border-radius:50%;background:linear-gradient(135deg,var(--navy) 0%,var(--blue) 100%);color:var(--gold-lt);display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-weight:700;margin:0 auto 12px;border:3px solid var(--gold)}
+.profile-info-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border-lt);font-size:.9rem}
 .profile-info-row span:first-child{color:var(--t2);font-weight:500}
 
-#toast{position:fixed;bottom:20px;right:20px;background:var(--navy);color:#fff;padding:10px 16px;border-radius:8px;display:none;z-index:400}
+#toast{position:fixed;bottom:24px;right:24px;background:var(--navy);color:#fff;padding:12px 20px;border-radius:var(--rM);display:none;z-index:400;box-shadow:var(--shM);border-left:4px solid var(--gold);font-weight:500;font-size:.9rem}
 </style>
 
 <script type="module">
@@ -134,7 +185,7 @@ const firebaseConfig = {
   window.googleProvider = googleProvider;
   window.fbOps = { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, signOut, doc, setDoc, getDoc };
 
-  // Escuchar inicio de sesión
+  // Escuchar estado de usuario
   onAuthStateChanged(auth, async (user) => {
     if (user) {
       const userDoc = await getDoc(doc(db, "users", user.uid));
@@ -143,7 +194,7 @@ const firebaseConfig = {
       if(!userData) {
         userData = { 
           nm: user.displayName || user.email.split('@')[0], 
-          rol: user.email.endsWith('@luzyverdadsucre.org') ? 'Estudiante' : 'Visitante / Padre',
+          rol: user.email.endsWith('@luzyverdadsucre.org') ? 'Estudiante' : 'Padre / Visitante',
           email: user.email 
         };
         await setDoc(doc(db, "users", user.uid), userData);
@@ -163,18 +214,18 @@ const firebaseConfig = {
 
 <div id="pg-login" class="auth-page">
   <div class="auth-hero">
-    <div class="hero-ring">🏫</div>
-    <h1>Luz y Verdad</h1>
-    <p>Plataforma Institucional Sucre</p>
+    <div class="hero-ring">✝️</div>
+    <h1 class="hero-title">Luz y Verdad</h1>
+    <p class="hero-sub">Ciencia, Fe y Virtud</p>
   </div>
   <div class="auth-side">
     <div class="auth-box">
       <h2>Iniciar Sesión</h2>
-      <p class="sub">Utiliza tu cuenta institucional o tu correo personal</p>
+      <p class="sub">Accede a la plataforma institucional Sucre</p>
       
       <button class="btn-google" onclick="doGoogleAuth()">
         <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
-        Entrar con Google (Colegio / Gmail)
+        Entrar con Google
       </button>
 
       <div class="divider">o usa correo externo</div>
@@ -202,21 +253,21 @@ const firebaseConfig = {
 <div id="pg-register" class="auth-page hidden">
   <div class="auth-hero">
     <div class="hero-ring">✨</div>
-    <h1>Crear Cuenta</h1>
-    <p>Las cuentas @luzyverdadsucre.org deben ingresar por Google</p>
+    <h1 class="hero-title">Crear Cuenta</h1>
+    <p class="hero-sub">Unidad Educativa Luz y Verdad</p>
   </div>
   <div class="auth-side">
     <div class="auth-box">
-      <div style="color:var(--sky);cursor:pointer;font-size:.85rem;margin-bottom:12px" onclick="showPg('login')">← Volver</div>
+      <div style="color:var(--sky);cursor:pointer;font-size:.85rem;margin-bottom:12px;font-weight:600" onclick="showPg('login')">← Volver al Login</div>
       <h2>Registro</h2>
-      <p class="sub">Para registrar tu cuenta del colegio, usa Google</p>
+      <p class="sub">Cuentas @luzyverdadsucre.org deben usar Google</p>
       
       <button class="btn-google" onclick="doGoogleAuth()">
         <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
         Registrarse con Google
       </button>
 
-      <div class="divider">o registro manual (Visitantes / Padres)</div>
+      <div class="divider">o registro manual (Externos / Padres)</div>
       
       <div class="field">
         <label>Nombre Completo</label>
@@ -249,13 +300,19 @@ const firebaseConfig = {
 
 <div id="app">
   <div id="topbar">
-    <div class="tb-logo">✝️ Luz y Verdad</div>
+    <div class="tb-logo">
+      <div class="tb-logo-icon">✝️</div>
+      <div>
+        <div>Luz y Verdad</div>
+        <div class="tb-motto">Ciencia, Fe y Virtud</div>
+      </div>
+    </div>
     
     <div class="user-menu-wrapper">
       <div class="user-badge" onclick="toggleUserDropdown()">
         <div class="u-avatar" id="u-top-avatar">U</div>
         <span class="u-name-top" id="u-top-name">Usuario</span>
-        <span style="font-size:.7rem">▼</span>
+        <span style="font-size:.65rem;color:var(--gold-lt)">▼</span>
       </div>
       
       <div class="dropdown-menu" id="dd-menu">
@@ -263,32 +320,66 @@ const firebaseConfig = {
           <strong id="dd-full-name">Nombre</strong>
           <small id="dd-role">Rol</small>
         </div>
-        <div class="dd-item" onclick="openProfileModal()">👤 Mi Perfil</div>
+        <div class="dd-item" onclick="openProfileModal()">👤 Mi Perfil Institucional</div>
         <div class="dd-item" onclick="openConfigModal()">⚙️ Configuraciones</div>
         <div class="dd-item danger" onclick="doLogout()">🚪 Cerrar Sesión / Cambiar Cuenta</div>
       </div>
     </div>
   </div>
 
+  <div class="nav-tabs">
+    <button class="tab-btn active" onclick="switchTab('tab-news', this)">📢 Inicio / Noticias <span class="tab-badge">Novedades</span></button>
+    <button class="tab-btn" onclick="switchTab('tab-achievements', this)">🏆 Vitrina de Logros</button>
+    <button class="tab-btn" onclick="switchTab('tab-mailbox', this)">💬 Buzón de Mensajes</button>
+  </div>
+
   <div class="main-wrap">
     <div id="banner-perm"></div>
     
-    <div class="sc">
-      <h3>📢 Publicaciones e Informaciones</h3>
-      <p style="margin-top:8px;color:var(--t2)">Visibilidad habilitada para todos los visitantes, padres y estudiantes.</p>
-    </div>
-
-    <div class="sc">
-      <h3>💬 Buzón de Mensajes y Sugerencias</h3>
-      <p style="margin-top:6px;color:var(--t2);font-size:.9rem">Espacio para sugerencias directas con el cuerpo docente.</p>
-      
-      <div id="mailbox-container" style="margin-top:15px">
+    <div id="tab-news" class="tab-content">
+      <div class="sc">
+        <div class="sc-header">
+          <h3 class="sc-title">📢 Comunicados Oficiales</h3>
+          <span style="font-size:.8rem;color:var(--t2)">Actualizado hoy</span>
         </div>
+        <div class="grid-2">
+          <div class="info-card">
+            <h4>🗓️ Inicio de Actividades Académicas</h4>
+            <p>Se comunica a toda la comunidad educativa que el horario de ingreso oficial se mantiene con normalidad a partir de las 07:45 AM.</p>
+          </div>
+          <div class="info-card">
+            <h4>🎨 Feria Científica y Cultural Sucre</h4>
+            <p>Felicitamos a nuestros estudiantes representantes por obtener el primer lugar en la categoría de innovación tecnológica.</p>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="sc">
-      <h3>🏆 Vitrina de Logros</h3>
-      <p style="margin-top:8px;color:var(--t2)">Alumnos e hitos destacados de la institución.</p>
+    <div id="tab-achievements" class="tab-content hidden">
+      <div class="sc">
+        <div class="sc-header">
+          <h3 class="sc-title">🏆 Galería de Excelencia</h3>
+        </div>
+        <div class="grid-2">
+          <div class="info-card" style="border-left-color:var(--gold)">
+            <h4 style="color:var(--gold)">🥇 Primer Lugar Nacional en Robótica</h4>
+            <p>Equipo conformado por estudiantes de Secundaria representaron a la U.E. Luz y Verdad con orgullo.</p>
+          </div>
+          <div class="info-card" style="border-left-color:var(--green)">
+            <h4 style="color:var(--green)">🏅 Campeones Departamentales de Ajedrez</h4>
+            <p>Destacada participación en el torneo intercolegial Chuquisaca.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="tab-mailbox" class="tab-content hidden">
+      <div class="sc">
+        <div class="sc-header">
+          <h3 class="sc-title">📮 Buzón Institucional y Sugerencias</h3>
+        </div>
+        <div id="mailbox-container"></div>
+      </div>
     </div>
   </div>
 </div>
@@ -296,31 +387,30 @@ const firebaseConfig = {
 <div class="modal-overlay" id="modal-profile">
   <div class="modal-card">
     <button class="btn-close-modal" onclick="closeModal('modal-profile')">✕</button>
-    <h3>👤 Perfil del Usuario</h3>
-    <div style="text-align:center;margin-bottom:15px">
-      <div class="u-avatar" id="prof-avatar" style="width:60px;height:60px;font-size:1.5rem;margin:0 auto 10px">U</div>
-      <h4 id="prof-name">Nombre Completo</h4>
-      <p style="font-size:.8rem;color:var(--t2)" id="prof-email">correo@dominio.com</p>
+    <div style="text-align:center;margin-bottom:18px">
+      <div class="profile-avatar-big" id="prof-avatar">U</div>
+      <h3 id="prof-name" style="margin-bottom:4px">Nombre Completo</h3>
+      <p style="font-size:.82rem;color:var(--t2)" id="prof-email">correo@dominio.com</p>
     </div>
-    <div class="profile-info-row"><span>Rol Asignado:</span> <strong id="prof-role">Estudiante</strong></div>
-    <div class="profile-info-row"><span>Tipo de Cuenta:</span> <strong id="prof-type">Oficial</strong></div>
-    <div class="profile-info-row"><span>Estado:</span> <span style="color:var(--green)">● Activo</span></div>
+    <div class="profile-info-row"><span>Rol en la App:</span> <span class="badge-role" id="prof-role-badge">Estudiante</span></div>
+    <div class="profile-info-row"><span>Dominio de Cuenta:</span> <strong id="prof-type">Oficial</strong></div>
+    <div class="profile-info-row"><span>Estado del Sistema:</span> <span style="color:var(--green);font-weight:600">● Conectado (Sincronizado)</span></div>
   </div>
 </div>
 
 <div class="modal-overlay" id="modal-config">
   <div class="modal-card">
     <button class="btn-close-modal" onclick="closeModal('modal-config')">✕</button>
-    <h3>⚙️ Configuraciones</h3>
+    <h3>⚙️ Configuraciones Visuales</h3>
     
     <div style="margin-top:15px">
-      <label style="display:flex;align-items:center;justify-content:space-between;cursor:pointer">
+      <label style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-weight:500">
         <span>Modo Oscuro</span>
-        <input type="checkbox" id="chk-dark" onchange="toggleDarkMode(this.checked)">
+        <input type="checkbox" id="chk-dark" onchange="toggleDarkMode(this.checked)" style="width:20px;height:20px">
       </label>
     </div>
-    <hr style="margin:15px 0;border:none;border-bottom:1px solid var(--border)">
-    <p style="font-size:.8rem;color:var(--t2)">Unidad Educativa Luz y Verdad · Sistema Web Sincronizado v2.0</p>
+    <hr style="margin:18px 0;border:none;border-bottom:1px solid var(--border)">
+    <p style="font-size:.8rem;color:var(--t2);text-align:center">Plataforma Educativa Web Sincronizada en la Nube<br><b>U.E. Luz y Verdad</b></p>
   </div>
 </div>
 
@@ -341,11 +431,17 @@ function showPg(p){
   document.getElementById('pg-register').classList.toggle('hidden', p!=='register');
 }
 
+function switchTab(tabId, btn){
+  document.querySelectorAll('.tab-content').forEach(el=>el.classList.add('hidden'));
+  document.querySelectorAll('.tab-btn').forEach(el=>el.classList.remove('active'));
+  document.getElementById(tabId).classList.remove('hidden');
+  btn.classList.add('active');
+}
+
 function toggleUserDropdown(){
   document.getElementById('dd-menu').classList.toggle('show');
 }
 
-// Cerrar dropdown al hacer clic fuera
 window.onclick = function(e){
   if(!e.target.closest('.user-menu-wrapper')){
     document.getElementById('dd-menu').classList.remove('show');
@@ -354,11 +450,16 @@ window.onclick = function(e){
 
 function openProfileModal(){
   const u = window.currentUser;
-  document.getElementById('prof-avatar').textContent = u.nm.charAt(0).toUpperCase();
+  const initial = u.nm ? u.nm.charAt(0).toUpperCase() : 'U';
+  document.getElementById('prof-avatar').textContent = initial;
   document.getElementById('prof-name').textContent = u.nm;
   document.getElementById('prof-email').textContent = u.email;
-  document.getElementById('prof-role').textContent = u.rol;
-  document.getElementById('prof-type').textContent = u.email.endsWith('@luzyverdadsucre.org') ? 'Institucional (@luzyverdadsucre.org)' : 'Externa / Gmail';
+  
+  const b = document.getElementById('prof-role-badge');
+  b.textContent = u.rol;
+  b.className = 'badge-role role-' + (u.rol.includes('Estudiante')?'Estudiante':u.rol.includes('Docente')?'Docente':u.rol.includes('Padre')?'Padre':'Visitante');
+  
+  document.getElementById('prof-type').textContent = u.email.endsWith('@luzyverdadsucre.org') ? 'Institucional (@luzyverdadsucre.org)' : 'Externa / Personal';
   
   document.getElementById('modal-profile').classList.add('active');
   document.getElementById('dd-menu').classList.remove('show');
@@ -377,22 +478,21 @@ function toggleDarkMode(isDark){
   document.body.classList.toggle('dark-mode', isDark);
 }
 
-// Auth Google
+// Google Auth
 async function doGoogleAuth(){
   try {
     await window.fbOps.signInWithPopup(window.fbAuth, window.googleProvider);
     toast('¡Sesión iniciada con Google!');
   } catch(e) {
-    // Si el usuario cierra la ventana emergente, solo muestra aviso en pantalla
     if (e.code === 'auth/popup-closed-by-user') {
       toast('Inicio de sesión cancelado');
     } else {
-      alert('Error al conectar con Google: ' + e.message);
+      alert('Error con Google: ' + e.message);
     }
   }
 }
 
-// Registro Manual
+// Register Manual
 async function doRegister(){
   const nm = v('rg-nm'), em = v('rg-em').toLowerCase(), pw = v('rg-pw'), rol = v('rg-rol');
   const err = document.getElementById('rg-err');
@@ -400,30 +500,30 @@ async function doRegister(){
   if(!nm || !em || !pw){ err.textContent = 'Completa todos los campos.'; return; }
   
   if(em.endsWith('@luzyverdadsucre.org')){
-    err.textContent = 'Las cuentas del colegio deben ingresar obligatoriamente por Google.';
+    err.textContent = 'Las cuentas del colegio deben ingresar por el botón de Google.';
     return;
   }
   
-  if(pw.length < 6){ err.textContent = 'Contraseña mínima de 6 caracteres.'; return; }
+  if(pw.length < 6){ err.textContent = 'Mínimo 6 caracteres en la contraseña.'; return; }
 
   try {
     const res = await window.fbOps.createUserWithEmailAndPassword(window.fbAuth, em, pw);
     await window.fbOps.setDoc(window.fbOps.doc(window.fbDb, "users", res.user.uid), { nm, rol, email: em });
     toast('¡Cuenta registrada con éxito!');
   } catch(e) {
-    err.textContent = 'Error: ' + (e.message.includes('email-already') ? 'El correo ya está en uso' : e.message);
+    err.textContent = 'Error: ' + (e.message.includes('email-already') ? 'El correo ya está registrado' : e.message);
   }
 }
 
 async function doLogin(){
   const em = v('li-em').toLowerCase(), pw = v('li-pw');
   const err = document.getElementById('li-err');
-  if(!em || !pw){ err.textContent = 'Ingresa tu correo y contraseña.'; return; }
+  if(!em || !pw){ err.textContent = 'Ingresa credenciales completas.'; return; }
 
   try {
     await window.fbOps.signInWithEmailAndPassword(window.fbAuth, em, pw);
   } catch(e) {
-    err.textContent = 'Datos incorrectos.';
+    err.textContent = 'Correo o contraseña incorrectos.';
   }
 }
 
@@ -438,33 +538,33 @@ function launchApp(){
   const u = window.currentUser;
   const isSchool = u.email.endsWith('@luzyverdadsucre.org');
   
-  // Actualizar Barra Superior
-  document.getElementById('u-top-avatar').textContent = u.nm.charAt(0).toUpperCase();
+  const initial = u.nm ? u.nm.charAt(0).toUpperCase() : 'U';
+  document.getElementById('u-top-avatar').textContent = initial;
   document.getElementById('u-top-name').textContent = u.nm.split(' ')[0];
   document.getElementById('dd-full-name').textContent = u.nm;
-  document.getElementById('dd-role').textContent = u.rol + (isSchool ? ' (Oficial)' : ' (Externo)');
+  document.getElementById('dd-role').textContent = u.rol;
   
   const b = document.getElementById('banner-perm');
   const mb = document.getElementById('mailbox-container');
 
   if(isSchool){
     b.className = 'perm-notice info';
-    b.innerHTML = `✅ Cuenta Institucional Oficial (<b>${u.email}</b>): Acceso completo a funciones.`;
+    b.innerHTML = `✅ <b>Cuenta Institucional Verificada (<code>${u.email}</code>)</b>: Tienes permisos completos en toda la plataforma.`;
     
     mb.innerHTML = `
       <div class="field">
-        <label>Escribe una sugerencia o mensaje a administración / docentes:</label>
-        <textarea rows="3" placeholder="Escribe tu mensaje aquí..."></textarea>
+        <label>Escribe tu mensaje o sugerencia directa para los docentes / dirección:</label>
+        <textarea rows="4" placeholder="Escribe tu consulta detallada..."></textarea>
       </div>
-      <button class="btn-main" style="width:auto;padding:8px 20px" onclick="toast('Mensaje enviado con éxito')">Enviar Mensaje</button>
+      <button class="btn-main" style="width:auto;padding:10px 24px" onclick="toast('Mensaje enviado exitosamente')">✉️ Enviar Mensaje</button>
     `;
   } else {
     b.className = 'perm-notice warn';
-    b.innerHTML = `🔒 Modo Visitante / Padre (<b>${u.email}</b>): Puedes ver noticias y logros. El envío de sugerencias y mensajes requiere cuenta @luzyverdadsucre.org.`;
+    b.innerHTML = `🔒 <b>Modo Padres / Visitantes (<code>${u.email}</code>)</b>: Puedes consultar noticias y logros. Para envío de correspondencia interna se requiere correo <code>@luzyverdadsucre.org</code>.`;
     
     mb.innerHTML = `
-      <div style="background:var(--off);padding:15px;border-radius:var(--rl);border:1px solid var(--border);color:var(--t2);text-align:center">
-        🔒 <b>Función Bloqueada:</b> El buzón de sugerencias y mensajes está disponible únicamente para cuentas autorizadas con dominio <b>@luzyverdadsucre.org</b>.
+      <div style="background:var(--ice2);padding:20px;border-radius:var(--rM);border:1px dashed var(--border);color:var(--t2);text-align:center">
+        🔒 <b>Acceso Restringido:</b> El envío de sugerencias privadas está reservado para miembros institucionales con correo <b>@luzyverdadsucre.org</b>.
       </div>
     `;
   }
