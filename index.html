@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luz y Verdad – Plataforma Escolar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0b1f3a; --navy2:#122952; --blue:#1a4a8a; --sky:#2e7dd1;
+  --ice:#ddeeff; --ice2:#eef5ff; --off:#f4f7fb; --gold:#c8973a;
+  --t1:#0b1f3a; --t2:#4a5a72; --border:#d0dcee; --green:#1d7a4a;
+  --green-bg:#e6f5ed; --amber-bg:#fef0dc; --amber:#a35c0a; --red:#a32020;
+  --info:#185fa5; --info-bg:#e6f1fb; --rl:12px; --rxl:18px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--off);color:var(--t1);min-height:100vh}
+.hidden{display:none!important}
+
+/* AUTH PAGES */
+.auth-page{min-height:100vh;display:grid;grid-template-columns:1fr 1fr}
+@media(max-width:800px){.auth-page{grid-template-columns:1fr}.auth-hero{display:none}}
+.auth-hero{background:var(--navy);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px;text-align:center;color:#fff}
+.hero-ring{width:80px;height:80px;border-radius:50%;border:3px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:32px;margin-bottom:20px}
+.auth-side{background:#fff;display:flex;align-items:center;justify-content:center;padding:40px}
+.auth-box{width:100%;max-width:380px}
+.auth-box h2{font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--navy);margin-bottom:8px}
+.sub{color:var(--t2);font-size:.88rem;margin-bottom:24px}
+
+.field{margin-bottom:16px;position:relative}
+.field label{display:block;font-size:.75rem;font-weight:600;color:var(--t2);margin-bottom:4px;text-transform:uppercase}
+.field input,.field select{width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--rl);outline:none;font-size:.92rem}
+
+/* CONTRASEÑA CON OJO */
+.pw-wrapper{position:relative;display:flex;align-items:center}
+.pw-wrapper input{padding-right:40px}
+.pw-toggle{position:absolute;right:10px;background:none;border:none;cursor:pointer;font-size:1.1rem;user-select:none}
+
+.btn-main{width:100%;padding:12px;background:var(--navy);color:#fff;border:none;border-radius:var(--rl);font-weight:600;cursor:pointer;margin-top:10px}
+.btn-main:hover{background:var(--blue)}
+.auth-switch{text-align:center;margin-top:18px;font-size:.85rem;color:var(--t2)}
+.auth-switch span{color:var(--sky);font-weight:600;cursor:pointer}
+.err-msg{font-size:.8rem;color:var(--red);margin-top:8px;text-align:center}
+
+/* APP SHELL */
+#app{display:none;flex-direction:column;min-height:100vh}
+#app.on{display:flex}
+#topbar{background:var(--navy);color:#fff;padding:0 20px;height:58px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
+.tb-logo{display:flex;align-items:center;gap:10px;font-family:'Playfair Display',serif}
+.btn-out{padding:6px 12px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;border-radius:6px;cursor:pointer}
+.main-wrap{max-width:1000px;margin:20px auto;width:90%;flex:1}
+.perm-notice{padding:12px 16px;border-radius:var(--rl);font-size:.88rem;margin-bottom:16px}
+.perm-notice.info{background:var(--info-bg);color:var(--info)}
+.perm-notice.warn{background:var(--amber-bg);color:var(--amber)}
+.sc{background:#fff;border:1px solid var(--border);border-radius:var(--rxl);padding:20px;margin-bottom:15px}
+#toast{position:fixed;bottom:20px;right:20px;background:var(--navy);color:#fff;padding:10px 16px;border-radius:8px;display:none}
+</style>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+  import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+  // ⚠️ REEMPLAZA ESTOS DATOS CON TUS CLAVES DE FIREBASE (PASO 4)
+  const firebaseConfig = {
+    apiKey: "REEMPLAZA_CON_TU_API_KEY",
+    authDomain: "REEMPLAZA_CON_TU_AUTH_DOMAIN",
+    projectId: "REEMPLAZA_CON_TU_PROJECT_ID",
+    storageBucket: "REEMPLAZA_CON_TU_STORAGE_BUCKET",
+    messagingSenderId: "REEMPLAZA_CON_TU_MESSAGING_SENDER_ID",
+    appId: "REEMPLAZA_CON_TU_APP_ID"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  window.fbAuth = auth;
+  window.fbDb = db;
+  window.fbOps = { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, doc, setDoc, getDoc };
+
+  // Escuchar estado de sesión
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      const userDoc = await getDoc(doc(db, "users", user.uid));
+      const userData = userDoc.exists() ? userDoc.data() : { nm: user.email.split('@')[0], rol: 'Estudiante' };
+      window.currentUser = { uid: user.uid, email: user.email, ...userData };
+      launchApp();
+    } else {
+      window.currentUser = null;
+      document.getElementById('app').classList.remove('on');
+      showPg('login');
+    }
+  });
+</script>
+</head>
+<body>
+
+<div id="pg-login" class="auth-page">
+  <div class="auth-hero">
+    <div class="hero-ring">🏫</div>
+    <h1>Luz y Verdad</h1>
+    <p>Plataforma Institucional Sucre</p>
+  </div>
+  <div class="auth-side">
+    <div class="auth-box">
+      <h2>Iniciar Sesión</h2>
+      <p class="sub">Ingresa con tu correo institucional o Gmail</p>
+      
+      <div class="field">
+        <label>Correo electrónico</label>
+        <input type="email" id="li-em" placeholder="usuario@luzyverdadsucre.org o gmail.com">
+      </div>
+      
+      <div class="field">
+        <label>Contraseña</label>
+        <div class="pw-wrapper">
+          <input type="password" id="li-pw" placeholder="••••••••">
+          <button type="button" class="pw-toggle" onclick="togglePw('li-pw', this)">👁️</button>
+        </div>
+      </div>
+      
+      <button class="btn-main" onclick="doLogin()">🔑 Ingresar</button>
+      <p class="err-msg" id="li-err"></p>
+      <p class="auth-switch">¿No tienes cuenta? <span onclick="showPg('register')">Regístrate aquí</span></p>
+    </div>
+  </div>
+</div>
+
+<div id="pg-register" class="auth-page hidden">
+  <div class="auth-hero">
+    <div class="hero-ring">✨</div>
+    <h1>Crear Cuenta</h1>
+    <p>Sincronizada en todos tus dispositivos</p>
+  </div>
+  <div class="auth-side">
+    <div class="auth-box">
+      <div style="color:var(--sky);cursor:pointer;font-size:.85rem;margin-bottom:15px" onclick="showPg('login')">← Volver</div>
+      <h2>Registro</h2>
+      <p class="sub">Se admiten correos <b>@luzyverdadsucre.org</b> y <b>@gmail.com</b></p>
+      
+      <div class="field">
+        <label>Nombre Completo</label>
+        <input type="text" id="rg-nm" placeholder="Juan Pérez">
+      </div>
+      <div class="field">
+        <label>Correo Electrónico</label>
+        <input type="email" id="rg-em" placeholder="estudiante@luzyverdadsucre.org">
+      </div>
+      <div class="field">
+        <label>Rol</label>
+        <select id="rg-rol">
+          <option value="Estudiante">Estudiante</option>
+          <option value="Padre">Padre de Familia</option>
+          <option value="Docente">Docente</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Contraseña</label>
+        <div class="pw-wrapper">
+          <input type="password" id="rg-pw" placeholder="Mínimo 6 caracteres">
+          <button type="button" class="pw-toggle" onclick="togglePw('rg-pw', this)">👁️</button>
+        </div>
+      </div>
+      
+      <button class="btn-main" onclick="doRegister()">📝 Crear Cuenta</button>
+      <p class="err-msg" id="rg-err"></p>
+    </div>
+  </div>
+</div>
+
+<div id="app">
+  <div id="topbar">
+    <div class="tb-logo">✝️ Luz y Verdad</div>
+    <div>
+      <span id="u-info" style="font-size:.85rem;margin-right:15px"></span>
+      <button class="btn-out" onclick="doLogout()">🚪 Salir</button>
+    </div>
+  </div>
+
+  <div class="main-wrap">
+    <div id="banner-perm"></div>
+    <div class="sc">
+      <h3>📢 Tablero Principal</h3>
+      <p style="margin-top:8px;color:var(--t2)">Tus datos ahora están guardados de verdad en la nube de Google.</p>
+    </div>
+    <div class="sc">
+      <h3>🏆 Vitrina de Logros</h3>
+      <p style="margin-top:8px;color:var(--t2)">Visibilidad habilitada para todos los usuarios registrados.</p>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+function v(id){ return document.getElementById(id).value.trim(); }
+function toast(m){ const t=document.getElementById('toast'); t.textContent=m; t.style.display='block'; setTimeout(()=>t.style.display='none',3000); }
+
+// Ver/Ocultar contraseña (Ojo 👁️)
+function togglePw(id, btn){
+  const el = document.getElementById(id);
+  if(el.type === 'password'){ el.type = 'text'; btn.textContent = '🙈'; }
+  else { el.type = 'password'; btn.textContent = '👁️'; }
+}
+
+function showPg(p){
+  document.getElementById('pg-login').classList.toggle('hidden', p!=='login');
+  document.getElementById('pg-register').classList.toggle('hidden', p!=='register');
+}
+
+// Validar correo
+function checkEmail(em){
+  const l = em.toLowerCase();
+  return l.endsWith('@luzyverdadsucre.org') || l.endsWith('@gmail.com');
+}
+
+async function doRegister(){
+  const nm = v('rg-nm'), em = v('rg-em').toLowerCase(), pw = v('rg-pw'), rol = v('rg-rol');
+  const err = document.getElementById('rg-err');
+
+  if(!nm || !em || !pw){ err.textContent = 'Completa todos los campos.'; return; }
+  if(!checkEmail(em)){ err.textContent = 'Solo correos @luzyverdadsucre.org o @gmail.com'; return; }
+  if(pw.length < 6){ err.textContent = 'Contraseña mínima de 6 caracteres.'; return; }
+
+  try {
+    const res = await window.fbOps.createUserWithEmailAndPassword(window.fbAuth, em, pw);
+    // Guardar perfil en Firestore
+    await window.fbOps.setDoc(window.fbOps.doc(window.fbDb, "users", res.user.uid), { nm, rol, email: em });
+    toast('¡Cuenta registrada exitosamente!');
+  } catch(e) {
+    err.textContent = 'Error: ' + (e.message.includes('email-already') ? 'El correo ya existe' : e.message);
+  }
+}
+
+async function doLogin(){
+  const em = v('li-em').toLowerCase(), pw = v('li-pw');
+  const err = document.getElementById('li-err');
+  if(!em || !pw){ err.textContent = 'Ingresa tus credenciales.'; return; }
+
+  try {
+    await window.fbOps.signInWithEmailAndPassword(window.fbAuth, em, pw);
+  } catch(e) {
+    err.textContent = 'Correo o contraseña incorrectos.';
+  }
+}
+
+function doLogout(){
+  window.fbOps.signOut(window.fbAuth);
+}
+
+function launchApp(){
+  showPg('none');
+  document.getElementById('app').classList.add('on');
+  
+  const u = window.currentUser;
+  const isSchool = u.email.endsWith('@luzyverdadsucre.org');
+  
+  document.getElementById('u-info').textContent = `${u.nm} (${u.rol})`;
+  
+  const b = document.getElementById('banner-perm');
+  if(isSchool){
+    b.className = 'perm-notice info';
+    b.innerHTML = `✅ Cuenta Institucional (<b>${u.email}</b>): Acceso total a mensajes y publicaciones.`;
+  } else {
+    b.className = 'perm-notice warn';
+    b.innerHTML = `🔒 Cuenta Gmail (<b>${u.email}</b>): Modo visitante. Puedes ver logros y publicaciones, pero la mensajería interna requiere correo institucional.`;
+  }
+}
+</script>
+</body>
+</html>
