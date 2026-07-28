@@ -5,17 +5,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Luz y Verdad – Plataforma Escolar</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --navy:#0b1f3a; --navy2:#122952; --blue:#1a4a8a; --sky:#2e7dd1;
-  --ice:#ddeeff; --ice2:#eef5ff; --off:#f4f7fb; --gold:#c8973a;
-  --t1:#0b1f3a; --t2:#4a5a72; --border:#d0dcee; --green:#1d7a4a;
-  --green-bg:#e6f5ed; --amber-bg:#fef0dc; --amber:#a35c0a; --red:#a32020;
+  --ice:#ddeeff; --off:#f4f7fb; --gold:#c8973a;
+  --t1:#0b1f3a; --t2:#4a5a72; --t3:#8a9ab5; --border:#d0dcee; 
+  --green:#1d7a4a; --green-bg:#e6f5ed; --amber-bg:#fef0dc; --amber:#a35c0a; --red:#a32020;
   --info:#185fa5; --info-bg:#e6f1fb; --rl:12px; --rxl:18px;
 }
+
+body.dark-mode {
+  --off:#0f172a; --t1:#f8fafc; --t2:#94a3b8; --border:#334155;
+  background: var(--off); color: var(--t1);
+}
+
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'DM Sans',sans-serif;background:var(--off);color:var(--t1);min-height:100vh}
+body{font-family:'DM Sans',sans-serif;background:var(--off);color:var(--t1);min-height:100vh;transition:background .3s,color .3s}
 .hidden{display:none!important}
 
 /* AUTH PAGES */
@@ -24,13 +30,15 @@ body{font-family:'DM Sans',sans-serif;background:var(--off);color:var(--t1);min-
 .auth-hero{background:var(--navy);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px;text-align:center;color:#fff}
 .hero-ring{width:80px;height:80px;border-radius:50%;border:3px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:32px;margin-bottom:20px}
 .auth-side{background:#fff;display:flex;align-items:center;justify-content:center;padding:40px}
+body.dark-mode .auth-side{background:#1e293b}
 .auth-box{width:100%;max-width:380px}
 .auth-box h2{font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--navy);margin-bottom:8px}
+body.dark-mode .auth-box h2{color:#fff}
 .sub{color:var(--t2);font-size:.88rem;margin-bottom:20px}
 
 .field{margin-bottom:14px;position:relative}
 .field label{display:block;font-size:.75rem;font-weight:600;color:var(--t2);margin-bottom:4px;text-transform:uppercase}
-.field input,.field select{width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--rl);outline:none;font-size:.92rem}
+.field input,.field select,.field textarea{width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--rl);outline:none;font-size:.92rem;background:transparent;color:inherit}
 
 /* CONTRASEÑA CON OJO */
 .pw-wrapper{position:relative;display:flex;align-items:center}
@@ -45,9 +53,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--off);color:var(--t1);min-
   width:100%;padding:11px;background:#fff;color:#333;border:1.5px solid var(--border);
   border-radius:var(--rl);font-weight:600;cursor:pointer;display:flex;align-items:center;
   justify-content:center;gap:10px;font-size:.9rem;margin-bottom:16px;
-  box-shadow:0 1px 3px rgba(0,0,0,.08);transition:background .2s;
+  box-shadow:0 1px 3px rgba(0,0,0,.08);
 }
-.btn-google:hover{background:#f8f9fa;border-color:#baccdf}
 .divider{display:flex;align-items:center;text-align:center;color:var(--t2);font-size:.78rem;margin:16px 0}
 .divider::before, .divider::after{content:'';flex:1;border-bottom:1px solid var(--border)}
 .divider::before{margin-right:8px} .divider::after{margin-left:8px}
@@ -59,15 +66,48 @@ body{font-family:'DM Sans',sans-serif;background:var(--off);color:var(--t1);min-
 /* APP SHELL */
 #app{display:none;flex-direction:column;min-height:100vh}
 #app.on{display:flex}
-#topbar{background:var(--navy);color:#fff;padding:0 20px;height:58px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
-.tb-logo{display:flex;align-items:center;gap:10px;font-family:'Playfair Display',serif}
-.btn-out{padding:6px 12px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;border-radius:6px;cursor:pointer}
+#topbar{background:var(--navy);color:#fff;padding:0 20px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.tb-logo{display:flex;align-items:center;gap:10px;font-family:'Playfair Display',serif;font-size:1.1rem;cursor:pointer}
+
+/* PERFIL Y MENÚ DESPLEGABLE */
+.user-menu-wrapper{position:relative}
+.user-badge{display:flex;align-items:center;gap:10px;cursor:pointer;padding:6px 12px;border-radius:20px;background:rgba(255,255,255,.1);transition:background .2s}
+.user-badge:hover{background:rgba(255,255,255,.2)}
+.u-avatar{width:32px;height:32px;border-radius:50%;background:var(--gold);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem}
+.u-name-top{font-size:.88rem;font-weight:500;max-width:140px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+.dropdown-menu{
+  position:absolute;top:50px;right:0;width:220px;background:#fff;border-radius:var(--rl);
+  box-shadow:0 10px 25px rgba(0,0,0,.15);border:1px solid var(--border);padding:8px 0;
+  display:none;z-index:200;color:var(--t1);
+}
+body.dark-mode .dropdown-menu{background:#1e293b;color:#fff}
+.dropdown-menu.show{display:block}
+.dd-header{padding:10px 16px;border-bottom:1px solid var(--border)}
+.dd-header small{color:var(--t2);display:block;font-size:.75rem}
+.dd-item{padding:10px 16px;display:flex;align-items:center;gap:10px;font-size:.88rem;cursor:pointer;transition:background .2s}
+.dd-item:hover{background:var(--off)}
+.dd-item.danger{color:var(--red)}
+
 .main-wrap{max-width:1000px;margin:20px auto;width:90%;flex:1}
 .perm-notice{padding:12px 16px;border-radius:var(--rl);font-size:.88rem;margin-bottom:16px}
 .perm-notice.info{background:var(--info-bg);color:var(--info)}
 .perm-notice.warn{background:var(--amber-bg);color:var(--amber)}
 .sc{background:#fff;border:1px solid var(--border);border-radius:var(--rxl);padding:20px;margin-bottom:15px}
-#toast{position:fixed;bottom:20px;right:20px;background:var(--navy);color:#fff;padding:10px 16px;border-radius:8px;display:none;z-index:99}
+body.dark-mode .sc{background:#1e293b}
+
+/* MODALES */
+.modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;z-index:300}
+.modal-overlay.active{display:flex}
+.modal-card{background:#fff;border-radius:var(--rxl);padding:24px;width:90%;max-width:450px;box-shadow:0 15px 30px rgba(0,0,0,.2);position:relative}
+body.dark-mode .modal-card{background:#1e293b;color:#fff}
+.modal-card h3{font-family:'Playfair Display',serif;margin-bottom:15px}
+.btn-close-modal{position:absolute;top:15px;right:15px;background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--t2)}
+
+.profile-info-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:.9rem}
+.profile-info-row span:first-child{color:var(--t2);font-weight:500}
+
+#toast{position:fixed;bottom:20px;right:20px;background:var(--navy);color:#fff;padding:10px 16px;border-radius:8px;display:none;z-index:400}
 </style>
 
 <script type="module">
@@ -94,7 +134,7 @@ const firebaseConfig = {
   window.googleProvider = googleProvider;
   window.fbOps = { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, signOut, doc, setDoc, getDoc };
 
-  // Escuchar estado de sesión
+  // Escuchar inicio de sesión
   onAuthStateChanged(auth, async (user) => {
     if (user) {
       const userDoc = await getDoc(doc(db, "users", user.uid));
@@ -103,7 +143,7 @@ const firebaseConfig = {
       if(!userData) {
         userData = { 
           nm: user.displayName || user.email.split('@')[0], 
-          rol: user.email.endsWith('@luzyverdadsucre.org') ? 'Estudiante' : 'Visitante',
+          rol: user.email.endsWith('@luzyverdadsucre.org') ? 'Estudiante' : 'Visitante / Padre',
           email: user.email 
         };
         await setDoc(doc(db, "users", user.uid), userData);
@@ -163,33 +203,33 @@ const firebaseConfig = {
   <div class="auth-hero">
     <div class="hero-ring">✨</div>
     <h1>Crear Cuenta</h1>
-    <p>Las cuentas @luzyverdadsucre.org deben usar Google</p>
+    <p>Las cuentas @luzyverdadsucre.org deben ingresar por Google</p>
   </div>
   <div class="auth-side">
     <div class="auth-box">
       <div style="color:var(--sky);cursor:pointer;font-size:.85rem;margin-bottom:12px" onclick="showPg('login')">← Volver</div>
       <h2>Registro</h2>
-      <p class="sub">Si tienes correo institucional, usa el botón de Google</p>
+      <p class="sub">Para registrar tu cuenta del colegio, usa Google</p>
       
       <button class="btn-google" onclick="doGoogleAuth()">
         <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
         Registrarse con Google
       </button>
 
-      <div class="divider">o registro manual (Solo correos externos)</div>
+      <div class="divider">o registro manual (Visitantes / Padres)</div>
       
       <div class="field">
         <label>Nombre Completo</label>
         <input type="text" id="rg-nm" placeholder="Juan Pérez">
       </div>
       <div class="field">
-        <label>Correo Electrónico Externo</label>
+        <label>Correo Electrónico Externa</label>
         <input type="email" id="rg-em" placeholder="usuario@gmail.com">
       </div>
       <div class="field">
         <label>Rol</label>
         <select id="rg-rol">
-          <option value="Padre">Padre de Familia</option>
+          <option value="Padre de Familia">Padre de Familia</option>
           <option value="Visitante">Visitante / Externo</option>
         </select>
       </div>
@@ -210,22 +250,77 @@ const firebaseConfig = {
 <div id="app">
   <div id="topbar">
     <div class="tb-logo">✝️ Luz y Verdad</div>
-    <div>
-      <span id="u-info" style="font-size:.85rem;margin-right:15px"></span>
-      <button class="btn-out" onclick="doLogout()">🚪 Salir</button>
+    
+    <div class="user-menu-wrapper">
+      <div class="user-badge" onclick="toggleUserDropdown()">
+        <div class="u-avatar" id="u-top-avatar">U</div>
+        <span class="u-name-top" id="u-top-name">Usuario</span>
+        <span style="font-size:.7rem">▼</span>
+      </div>
+      
+      <div class="dropdown-menu" id="dd-menu">
+        <div class="dd-header">
+          <strong id="dd-full-name">Nombre</strong>
+          <small id="dd-role">Rol</small>
+        </div>
+        <div class="dd-item" onclick="openProfileModal()">👤 Mi Perfil</div>
+        <div class="dd-item" onclick="openConfigModal()">⚙️ Configuraciones</div>
+        <div class="dd-item danger" onclick="doLogout()">🚪 Cerrar Sesión / Cambiar Cuenta</div>
+      </div>
     </div>
   </div>
 
   <div class="main-wrap">
     <div id="banner-perm"></div>
+    
     <div class="sc">
-      <h3>📢 Tablero Principal</h3>
-      <p style="margin-top:8px;color:var(--t2)">Plataforma de la Unidad Educativa Luz y Verdad.</p>
+      <h3>📢 Publicaciones e Informaciones</h3>
+      <p style="margin-top:8px;color:var(--t2)">Visibilidad habilitada para todos los visitantes, padres y estudiantes.</p>
     </div>
+
+    <div class="sc">
+      <h3>💬 Buzón de Mensajes y Sugerencias</h3>
+      <p style="margin-top:6px;color:var(--t2);font-size:.9rem">Espacio para sugerencias directas con el cuerpo docente.</p>
+      
+      <div id="mailbox-container" style="margin-top:15px">
+        </div>
+    </div>
+
     <div class="sc">
       <h3>🏆 Vitrina de Logros</h3>
-      <p style="margin-top:8px;color:var(--t2)">Visibilidad habilitada para toda la comunidad.</p>
+      <p style="margin-top:8px;color:var(--t2)">Alumnos e hitos destacados de la institución.</p>
     </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-profile">
+  <div class="modal-card">
+    <button class="btn-close-modal" onclick="closeModal('modal-profile')">✕</button>
+    <h3>👤 Perfil del Usuario</h3>
+    <div style="text-align:center;margin-bottom:15px">
+      <div class="u-avatar" id="prof-avatar" style="width:60px;height:60px;font-size:1.5rem;margin:0 auto 10px">U</div>
+      <h4 id="prof-name">Nombre Completo</h4>
+      <p style="font-size:.8rem;color:var(--t2)" id="prof-email">correo@dominio.com</p>
+    </div>
+    <div class="profile-info-row"><span>Rol Asignado:</span> <strong id="prof-role">Estudiante</strong></div>
+    <div class="profile-info-row"><span>Tipo de Cuenta:</span> <strong id="prof-type">Oficial</strong></div>
+    <div class="profile-info-row"><span>Estado:</span> <span style="color:var(--green)">● Activo</span></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-config">
+  <div class="modal-card">
+    <button class="btn-close-modal" onclick="closeModal('modal-config')">✕</button>
+    <h3>⚙️ Configuraciones</h3>
+    
+    <div style="margin-top:15px">
+      <label style="display:flex;align-items:center;justify-content:space-between;cursor:pointer">
+        <span>Modo Oscuro</span>
+        <input type="checkbox" id="chk-dark" onchange="toggleDarkMode(this.checked)">
+      </label>
+    </div>
+    <hr style="margin:15px 0;border:none;border-bottom:1px solid var(--border)">
+    <p style="font-size:.8rem;color:var(--t2)">Unidad Educativa Luz y Verdad · Sistema Web Sincronizado v2.0</p>
   </div>
 </div>
 
@@ -246,49 +341,89 @@ function showPg(p){
   document.getElementById('pg-register').classList.toggle('hidden', p!=='register');
 }
 
-// Iniciar Sesión con Google
+function toggleUserDropdown(){
+  document.getElementById('dd-menu').classList.toggle('show');
+}
+
+// Cerrar dropdown al hacer clic fuera
+window.onclick = function(e){
+  if(!e.target.closest('.user-menu-wrapper')){
+    document.getElementById('dd-menu').classList.remove('show');
+  }
+}
+
+function openProfileModal(){
+  const u = window.currentUser;
+  document.getElementById('prof-avatar').textContent = u.nm.charAt(0).toUpperCase();
+  document.getElementById('prof-name').textContent = u.nm;
+  document.getElementById('prof-email').textContent = u.email;
+  document.getElementById('prof-role').textContent = u.rol;
+  document.getElementById('prof-type').textContent = u.email.endsWith('@luzyverdadsucre.org') ? 'Institucional (@luzyverdadsucre.org)' : 'Externa / Gmail';
+  
+  document.getElementById('modal-profile').classList.add('active');
+  document.getElementById('dd-menu').classList.remove('show');
+}
+
+function openConfigModal(){
+  document.getElementById('modal-config').classList.add('active');
+  document.getElementById('dd-menu').classList.remove('show');
+}
+
+function closeModal(id){
+  document.getElementById(id).classList.remove('active');
+}
+
+function toggleDarkMode(isDark){
+  document.body.classList.toggle('dark-mode', isDark);
+}
+
+// Auth Google
 async function doGoogleAuth(){
   try {
     await window.fbOps.signInWithPopup(window.fbAuth, window.googleProvider);
     toast('¡Sesión iniciada con Google!');
   } catch(e) {
-    alert('Error con Google: ' + e.message);
+    // Si el usuario cierra la ventana emergente, solo muestra aviso en pantalla
+    if (e.code === 'auth/popup-closed-by-user') {
+      toast('Inicio de sesión cancelado');
+    } else {
+      alert('Error al conectar con Google: ' + e.message);
+    }
   }
 }
 
-// Registro Manual (Bloqueado para cuentas del colegio)
+// Registro Manual
 async function doRegister(){
   const nm = v('rg-nm'), em = v('rg-em').toLowerCase(), pw = v('rg-pw'), rol = v('rg-rol');
   const err = document.getElementById('rg-err');
 
   if(!nm || !em || !pw){ err.textContent = 'Completa todos los campos.'; return; }
   
-  // Regla: Cuentas del colegio DEBEN usar Google
   if(em.endsWith('@luzyverdadsucre.org')){
-    err.textContent = 'Las cuentas @luzyverdadsucre.org deben iniciar sesión obligatoriamente con el botón de Google.';
+    err.textContent = 'Las cuentas del colegio deben ingresar obligatoriamente por Google.';
     return;
   }
   
-  if(pw.length < 6){ err.textContent = 'La contraseña debe tener al menos 6 caracteres.'; return; }
+  if(pw.length < 6){ err.textContent = 'Contraseña mínima de 6 caracteres.'; return; }
 
   try {
     const res = await window.fbOps.createUserWithEmailAndPassword(window.fbAuth, em, pw);
     await window.fbOps.setDoc(window.fbOps.doc(window.fbDb, "users", res.user.uid), { nm, rol, email: em });
     toast('¡Cuenta registrada con éxito!');
   } catch(e) {
-    err.textContent = 'Error: ' + (e.message.includes('email-already') ? 'El correo ya existe' : e.message);
+    err.textContent = 'Error: ' + (e.message.includes('email-already') ? 'El correo ya está en uso' : e.message);
   }
 }
 
 async function doLogin(){
   const em = v('li-em').toLowerCase(), pw = v('li-pw');
   const err = document.getElementById('li-err');
-  if(!em || !pw){ err.textContent = 'Ingresa tus credenciales.'; return; }
+  if(!em || !pw){ err.textContent = 'Ingresa tu correo y contraseña.'; return; }
 
   try {
     await window.fbOps.signInWithEmailAndPassword(window.fbAuth, em, pw);
   } catch(e) {
-    err.textContent = 'Correo o contraseña incorrectos.';
+    err.textContent = 'Datos incorrectos.';
   }
 }
 
@@ -303,15 +438,35 @@ function launchApp(){
   const u = window.currentUser;
   const isSchool = u.email.endsWith('@luzyverdadsucre.org');
   
-  document.getElementById('u-info').textContent = `${u.nm} (${u.rol})`;
+  // Actualizar Barra Superior
+  document.getElementById('u-top-avatar').textContent = u.nm.charAt(0).toUpperCase();
+  document.getElementById('u-top-name').textContent = u.nm.split(' ')[0];
+  document.getElementById('dd-full-name').textContent = u.nm;
+  document.getElementById('dd-role').textContent = u.rol + (isSchool ? ' (Oficial)' : ' (Externo)');
   
   const b = document.getElementById('banner-perm');
+  const mb = document.getElementById('mailbox-container');
+
   if(isSchool){
     b.className = 'perm-notice info';
-    b.innerHTML = `✅ Cuenta Institucional Oficial (<b>${u.email}</b>): Acceso completo a la plataforma.`;
+    b.innerHTML = `✅ Cuenta Institucional Oficial (<b>${u.email}</b>): Acceso completo a funciones.`;
+    
+    mb.innerHTML = `
+      <div class="field">
+        <label>Escribe una sugerencia o mensaje a administración / docentes:</label>
+        <textarea rows="3" placeholder="Escribe tu mensaje aquí..."></textarea>
+      </div>
+      <button class="btn-main" style="width:auto;padding:8px 20px" onclick="toast('Mensaje enviado con éxito')">Enviar Mensaje</button>
+    `;
   } else {
     b.className = 'perm-notice warn';
-    b.innerHTML = `🔒 Cuenta Externa (<b>${u.email}</b>): Puedes ver logros y publicaciones, pero la mensajería interna requiere correo institucional @luzyverdadsucre.org.`;
+    b.innerHTML = `🔒 Modo Visitante / Padre (<b>${u.email}</b>): Puedes ver noticias y logros. El envío de sugerencias y mensajes requiere cuenta @luzyverdadsucre.org.`;
+    
+    mb.innerHTML = `
+      <div style="background:var(--off);padding:15px;border-radius:var(--rl);border:1px solid var(--border);color:var(--t2);text-align:center">
+        🔒 <b>Función Bloqueada:</b> El buzón de sugerencias y mensajes está disponible únicamente para cuentas autorizadas con dominio <b>@luzyverdadsucre.org</b>.
+      </div>
+    `;
   }
 }
 </script>
