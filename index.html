@@ -10,9 +10,9 @@
 :root{
   --navy:#0b1f3a; --navy2:#122952; --blue:#1a4a8a; --sky:#2e7dd1; --sky-lt:#5b9ee8;
   --ice:#ddeeff; --ice2:#eef5ff; --white:#fff; --off:#f4f7fb;
-  --gold:#c8973a; --gold-lt:#e8b84b;
+  --gold:#c8973a; --gold-lt:#e8b84b; --gold-dp:#9c7228; --gold-pale:#f6e9cc;
   --t1:#0b1f3a; --t2:#4a5a72; --t3:#8a9ab5;
-  --border:#d0dcee; --border-lt:#e8eff8;
+  --border:#d0dcee; --border-lt:#e8eff8; --border-gold:#e3cd97;
   --green:#1d7a4a; --green-bg:#e6f5ed;
   --amber:#a35c0a; --amber-bg:#fef0dc;
   --red:#a32020; --red-bg:#fce8e8;
@@ -21,6 +21,9 @@
   --shS:0 2px 8px rgba(11,31,58,.06);
   --shM:0 6px 20px rgba(11,31,58,.10);
   --shL:0 12px 36px rgba(11,31,58,.14);
+  --shGold:0 4px 18px rgba(200,151,58,.22);
+  --grad-gold: linear-gradient(135deg, var(--gold-lt) 0%, var(--gold) 55%, var(--gold-dp) 100%);
+  --grad-navy: linear-gradient(135deg, var(--navy) 0%, var(--navy2) 55%, var(--blue) 100%);
 }
 
 body.dark-mode {
@@ -30,44 +33,84 @@ body.dark-mode {
 }
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'DM Sans',sans-serif;background:var(--off);color:var(--t1);min-height:100vh;transition:background .3s,color .3s}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{
+  font-family:'DM Sans',sans-serif;color:var(--t1);min-height:100vh;transition:background .3s,color .3s;
+  background-color:var(--off);
+  background-image:
+    radial-gradient(circle at 0% 0%, rgba(200,151,58,.05) 0%, transparent 40%),
+    radial-gradient(circle at 100% 0%, rgba(26,74,138,.05) 0%, transparent 40%);
+  background-attachment:fixed;
+}
 .hidden{display:none!important}
+
+/* Divisor ornamental con rombo dorado */
+.orn-divider{display:flex;align-items:center;gap:10px;margin:2px 0 4px}
+.orn-divider::before,.orn-divider::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--border-gold),transparent)}
+.orn-divider .orn-dot{width:6px;height:6px;background:var(--grad-gold);transform:rotate(45deg);flex-shrink:0;box-shadow:0 0 6px rgba(200,151,58,.5)}
 
 /* AUTH PAGES */
 .auth-page{min-height:100vh;display:grid;grid-template-columns:1fr 1fr}
 @media(max-width:800px){.auth-page{grid-template-columns:1fr}.auth-hero{display:none}}
-.auth-hero{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 60%,var(--blue) 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px;text-align:center;color:#fff;position:relative;overflow:hidden}
-.auth-hero::before{content:'';position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(200,151,58,.15) 0%,transparent 70%);top:-50px;right:-50px}
-.hero-ring{width:90px;height:90px;border-radius:50%;border:3px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:36px;margin-bottom:20px;background:rgba(255,255,255,.05);box-shadow:0 0 30px rgba(200,151,58,.3)}
-.hero-title{font-family:'Playfair Display',serif;font-size:2.2rem;margin-bottom:8px}
-.hero-sub{color:var(--gold-lt);font-size:.95rem;letter-spacing:1px;text-transform:uppercase;font-weight:600}
+.auth-hero{
+  background:var(--grad-navy);
+  background-image:
+    radial-gradient(circle at 15% 20%, rgba(200,151,58,.16) 0%, transparent 45%),
+    radial-gradient(circle at 85% 85%, rgba(46,125,209,.18) 0%, transparent 45%),
+    repeating-linear-gradient(45deg, rgba(255,255,255,.015) 0px, rgba(255,255,255,.015) 2px, transparent 2px, transparent 14px),
+    var(--grad-navy);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px;text-align:center;color:#fff;position:relative;overflow:hidden;
+}
+.auth-hero::before{content:'';position:absolute;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(200,151,58,.16) 0%,transparent 70%);top:-70px;right:-70px}
+.auth-hero::after{content:'';position:absolute;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(91,158,232,.12) 0%,transparent 70%);bottom:-60px;left:-60px}
+.auth-hero-frame{position:relative;z-index:1;padding:44px 34px;border:1px solid rgba(232,184,75,.35);border-radius:22px;background:rgba(255,255,255,.03);backdrop-filter:blur(2px)}
+.hero-ring{width:92px;height:92px;border-radius:50%;border:3px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:38px;margin:0 auto 22px;background:radial-gradient(circle,rgba(232,184,75,.14) 0%,rgba(255,255,255,.04) 100%);box-shadow:0 0 0 6px rgba(200,151,58,.10), 0 0 34px rgba(200,151,58,.35)}
+.hero-title{font-family:'Playfair Display',serif;font-size:2.3rem;margin-bottom:10px;letter-spacing:.3px;text-shadow:0 2px 14px rgba(0,0,0,.25)}
+.hero-divider{width:70px;height:2px;background:var(--grad-gold);margin:0 auto 12px;border-radius:2px}
+.hero-sub{color:var(--gold-lt);font-size:.95rem;letter-spacing:2px;text-transform:uppercase;font-weight:600}
+.hero-tag{margin-top:26px;font-size:.72rem;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.45);border-top:1px solid rgba(255,255,255,.12);padding-top:16px}
 
-.auth-side{background:var(--white);display:flex;align-items:center;justify-content:center;padding:40px}
+.auth-side{
+  background:
+    radial-gradient(circle at 100% 0%, rgba(200,151,58,.06) 0%, transparent 40%),
+    var(--white);
+  display:flex;align-items:center;justify-content:center;padding:40px;position:relative;
+}
 .auth-box{width:100%;max-width:390px}
-.auth-box h2{font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--navy);margin-bottom:6px}
+.auth-box h2{font-family:'Playfair Display',serif;font-size:1.85rem;color:var(--navy);margin-bottom:4px;position:relative;display:inline-block}
 body.dark-mode .auth-box h2{color:#fff}
-.sub{color:var(--t2);font-size:.88rem;margin-bottom:22px}
+.auth-box h2::after{content:'';display:block;width:42px;height:3px;background:var(--grad-gold);border-radius:3px;margin-top:8px}
+.sub{color:var(--t2);font-size:.88rem;margin:14px 0 22px}
 
 .field{margin-bottom:14px;position:relative}
 .field label{display:block;font-size:.75rem;font-weight:600;color:var(--t2);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px}
-.field input,.field select,.field textarea{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:var(--rM);outline:none;font-size:.92rem;background:transparent;color:inherit;transition:border-color .2s}
-.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--sky)}
+.field input,.field select,.field textarea{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:var(--rM);outline:none;font-size:.92rem;background:transparent;color:inherit;transition:border-color .2s,box-shadow .2s;font-family:inherit}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--sky);box-shadow:0 0 0 3px rgba(46,125,209,.12)}
+.field select option{color:#000}
+.field small.hint{display:block;margin-top:4px;color:var(--t3);font-size:.74rem}
 
 .pw-wrapper{position:relative;display:flex;align-items:center}
 .pw-wrapper input{padding-right:42px}
 .pw-toggle{position:absolute;right:12px;background:none;border:none;cursor:pointer;font-size:1.1rem;user-select:none;opacity:.7}
 
-.btn-main{width:100%;padding:12px;background:var(--navy);color:#fff;border:none;border-radius:var(--rM);font-weight:600;cursor:pointer;margin-top:6px;transition:background .2s,transform .1s}
-.btn-main:hover{background:var(--blue)}
+.btn-main{width:100%;padding:12px;background:var(--grad-navy);color:#fff;border:1px solid var(--navy2);border-radius:var(--rM);font-weight:600;cursor:pointer;margin-top:6px;transition:filter .2s,transform .1s,box-shadow .2s;font-size:.92rem;font-family:inherit;box-shadow:0 4px 14px rgba(11,31,58,.18)}
+.btn-main:hover{filter:brightness(1.08);box-shadow:0 6px 18px rgba(11,31,58,.24)}
 .btn-main:active{transform:scale(.99)}
+.btn-main:disabled{opacity:.55;cursor:not-allowed}
+.btn-outline{width:100%;padding:10px;background:transparent;color:var(--navy);border:1.5px solid var(--border);border-radius:var(--rM);font-weight:600;cursor:pointer;font-size:.86rem;font-family:inherit;transition:border-color .2s,background .2s}
+body.dark-mode .btn-outline{color:#fff}
+.btn-outline:hover{border-color:var(--sky);background:var(--ice2)}
+.btn-sm{padding:6px 12px;font-size:.78rem;border-radius:20px;border:1.5px solid var(--border);background:transparent;color:var(--t1);cursor:pointer;font-weight:600;font-family:inherit;transition:.2s}
+.btn-sm:hover{border-color:var(--sky);color:var(--sky)}
+.btn-sm.on{background:var(--grad-navy);color:#fff;border-color:var(--navy)}
 
 .btn-google{
   width:100%;padding:11px;background:#fff;color:#333;border:1.5px solid var(--border);
   border-radius:var(--rM);font-weight:600;cursor:pointer;display:flex;align-items:center;
   justify-content:center;gap:10px;font-size:.9rem;margin-bottom:16px;
-  box-shadow:0 2px 5px rgba(0,0,0,.05);transition:background .2s,border-color .2s;
+  box-shadow:0 2px 5px rgba(0,0,0,.05);transition:background .2s,border-color .2s,box-shadow .2s;
 }
-.btn-google:hover{background:#f8f9fa;border-color:var(--sky)}
+.btn-google:hover{background:#f8f9fa;border-color:var(--sky);box-shadow:0 3px 10px rgba(46,125,209,.14)}
 .divider{display:flex;align-items:center;text-align:center;color:var(--t3);font-size:.78rem;margin:18px 0}
 .divider::before, .divider::after{content:'';flex:1;border-bottom:1px solid var(--border)}
 .divider::before{margin-right:10px} .divider::after{margin-left:10px}
@@ -75,36 +118,51 @@ body.dark-mode .auth-box h2{color:#fff}
 .auth-switch{text-align:center;margin-top:20px;font-size:.85rem;color:var(--t2)}
 .auth-switch span{color:var(--sky);font-weight:600;cursor:pointer}
 .err-msg{font-size:.82rem;color:var(--red);margin-top:10px;text-align:center}
+.ok-msg{font-size:.82rem;color:var(--green);margin-top:10px;text-align:center}
 
-/* APP SHELL DECORADO */
+/* APP SHELL */
 #app{display:none;flex-direction:column;min-height:100vh}
 #app.on{display:flex}
 
 #topbar{
-  background:linear-gradient(90deg,var(--navy) 0%,var(--navy2) 100%);
-  color:#fff;padding:0 24px;height:65px;display:flex;align-items:center;
+  background:var(--grad-navy);
+  background-image:
+    radial-gradient(circle at 20% 0%, rgba(200,151,58,.12) 0%, transparent 55%),
+    var(--grad-navy);
+  color:#fff;padding:0 24px;height:68px;display:flex;align-items:center;
   justify-content:space-between;position:sticky;top:0;z-index:100;
-  box-shadow:0 4px 15px rgba(0,0,0,.15);border-bottom:2px solid var(--gold);
+  box-shadow:0 4px 18px rgba(0,0,0,.18);
+  border-bottom:3px solid transparent;
+  border-image:var(--grad-gold) 1;
+  gap:14px;flex-wrap:wrap;
 }
 .tb-logo{display:flex;align-items:center;gap:12px;font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700}
-.tb-logo-icon{width:36px;height:36px;border-radius:50%;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.1);font-size:18px}
-.tb-motto{font-size:.7rem;color:var(--gold-lt);letter-spacing:1px;text-transform:uppercase;font-family:'DM Sans',sans-serif;font-weight:500}
+.tb-logo-icon{width:38px;height:38px;border-radius:50%;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;background:radial-gradient(circle,rgba(232,184,75,.16) 0%,rgba(255,255,255,.06) 100%);font-size:18px;flex-shrink:0;box-shadow:0 0 0 3px rgba(200,151,58,.10)}
+.tb-motto{font-size:.7rem;color:var(--gold-lt);letter-spacing:1.5px;text-transform:uppercase;font-family:'DM Sans',sans-serif;font-weight:500}
+
+.tb-right{display:flex;align-items:center;gap:14px}
+
+/* Panel de accesibilidad */
+.a11y-panel{display:flex;align-items:center;gap:4px;background:rgba(255,255,255,.08);border:1px solid rgba(232,184,75,.28);border-radius:30px;padding:4px}
+.a11y-btn{width:28px;height:28px;border-radius:50%;border:none;background:transparent;color:#fff;font-weight:700;cursor:pointer;font-size:.78rem;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.a11y-btn:hover{background:rgba(255,255,255,.2)}
+.a11y-btn[aria-pressed="true"]{background:var(--gold);color:var(--navy)}
 
 /* MENU DESPLEGABLE DE USUARIO */
 .user-menu-wrapper{position:relative}
-.user-badge{display:flex;align-items:center;gap:10px;cursor:pointer;padding:5px 14px 5px 6px;border-radius:30px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);transition:background .2s}
+.user-badge{display:flex;align-items:center;gap:10px;cursor:pointer;padding:5px 14px 5px 6px;border-radius:30px;background:rgba(255,255,255,.08);border:1px solid rgba(232,184,75,.28);transition:background .2s}
 .user-badge:hover{background:rgba(255,255,255,.18)}
-.u-avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--gold) 0%,var(--gold-lt) 100%);color:var(--navy);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.92rem;box-shadow:0 2px 6px rgba(0,0,0,.2)}
+.u-avatar{width:34px;height:34px;border-radius:50%;background:var(--grad-gold);color:var(--navy);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.92rem;box-shadow:0 2px 8px rgba(0,0,0,.22),0 0 0 2px rgba(255,255,255,.15);flex-shrink:0}
 .u-name-top{font-size:.88rem;font-weight:500;max-width:130px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#fff}
 
 .dropdown-menu{
-  position:absolute;top:54px;right:0;width:230px;background:var(--white);border-radius:var(--rM);
-  box-shadow:var(--shL);border:1px solid var(--border);padding:8px 0;
+  position:absolute;top:54px;right:0;width:236px;background:var(--white);border-radius:var(--rM);
+  box-shadow:var(--shL);border:1px solid var(--border-gold);padding:8px 0;
   display:none;z-index:200;color:var(--t1);animation:fadeIn .15s ease-out;
 }
 @keyframes fadeIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
 .dropdown-menu.show{display:block}
-.dd-header{padding:12px 16px;border-bottom:1px solid var(--border);background:var(--ice2)}
+.dd-header{padding:14px 16px;border-bottom:1px solid var(--border);background:linear-gradient(135deg,var(--ice2) 0%,var(--gold-pale) 200%)}
 .dd-header strong{display:block;font-size:.9rem;color:var(--navy)}
 body.dark-mode .dd-header strong{color:#fff}
 .dd-header small{color:var(--t2);font-size:.76rem}
@@ -113,58 +171,83 @@ body.dark-mode .dd-header strong{color:#fff}
 .dd-item.danger{color:var(--red)}
 
 /* NAV TABS */
-.nav-tabs{background:var(--white);border-bottom:1px solid var(--border);padding:0 24px;display:flex;gap:8px;overflow-x:auto}
-.tab-btn{padding:14px 18px;border:none;background:none;font-weight:600;font-size:.88rem;color:var(--t2);cursor:pointer;border-bottom:3px solid transparent;display:flex;align-items:center;gap:8px;white-space:nowrap;transition:color .2s,border-color .2s}
+.nav-tabs{background:var(--white);border-bottom:1px solid var(--border);padding:0 24px;display:flex;gap:8px;overflow-x:auto;box-shadow:0 2px 10px rgba(11,31,58,.04)}
+.tab-btn{padding:14px 18px;border:none;background:none;font-weight:600;font-size:.88rem;color:var(--t2);cursor:pointer;border-bottom:3px solid transparent;display:flex;align-items:center;gap:8px;white-space:nowrap;transition:color .2s,border-color .2s;font-family:inherit;position:relative}
 .tab-btn:hover{color:var(--navy)}
-.tab-btn.active{color:var(--sky);border-bottom-color:var(--sky)}
+.tab-btn.active{color:var(--sky);border-image:var(--grad-gold) 1}
 .tab-badge{background:var(--ice);color:var(--sky);padding:2px 7px;border-radius:10px;font-size:.72rem}
 
 /* MAIN CONTENT */
-.main-wrap{max-width:1000px;margin:24px auto;width:92%;flex:1}
-.perm-notice{padding:14px 18px;border-radius:var(--rM);font-size:.88rem;margin-bottom:20px;display:flex;align-items:center;gap:12px;box-shadow:var(--shS)}
-.perm-notice.info{background:var(--info-bg);color:var(--info);border:1px solid #b2d4f5}
-.perm-notice.warn{background:var(--amber-bg);color:var(--amber);border:1px solid #f7d8a8}
+.main-wrap{max-width:1000px;margin:26px auto;width:92%;flex:1}
+.perm-notice{padding:15px 18px;border-radius:var(--rM);font-size:.88rem;margin-bottom:22px;display:flex;align-items:center;gap:12px;box-shadow:var(--shS);border-left-width:4px;border-left-style:solid}
+.perm-notice.info{background:var(--info-bg);color:var(--info);border:1px solid #b2d4f5;border-left:4px solid var(--info)}
+.perm-notice.warn{background:var(--amber-bg);color:var(--amber);border:1px solid #f7d8a8;border-left:4px solid var(--amber)}
 
-.sc{background:var(--white);border:1px solid var(--border);border-radius:var(--rL);padding:24px;margin-bottom:20px;box-shadow:var(--shS)}
-.sc-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;border-bottom:1px solid var(--border-lt);padding-bottom:12px}
-.sc-title{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--navy);display:flex;align-items:center;gap:10px}
+.sc{background:var(--white);border:1px solid var(--border);border-radius:var(--rL);padding:26px;margin-bottom:22px;box-shadow:var(--shS);position:relative;overflow:hidden}
+.sc::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:var(--grad-gold);opacity:.85}
+.sc-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;border-bottom:1px solid var(--border-lt);padding-bottom:14px;flex-wrap:wrap;gap:10px}
+.sc-title{font-family:'Playfair Display',serif;font-size:1.32rem;color:var(--navy);display:flex;align-items:center;gap:10px}
 body.dark-mode .sc-title{color:#fff}
+.sc-title::before{content:'';width:5px;height:22px;background:var(--grad-gold);border-radius:3px;display:inline-block}
+.sc-sub{font-size:.8rem;color:var(--t2);margin-top:-10px;margin-bottom:16px}
 
-/* CARDS GRID DECORADAS */
+/* CARDS GRID */
 .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 @media(max-width:700px){.grid-2{grid-template-columns:1fr}}
 
-.info-card{background:var(--ice2);border:1px solid var(--border-lt);border-radius:var(--rM);padding:16px;position:relative;overflow:hidden}
+.info-card{background:var(--ice2);border:1px solid var(--border-lt);border-radius:var(--rM);padding:17px;position:relative;overflow:hidden;transition:transform .18s,box-shadow .18s,border-color .18s}
 .info-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:var(--sky)}
-.info-card h4{font-size:.98rem;color:var(--navy);margin-bottom:6px}
+.info-card:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(11,31,58,.10);border-color:var(--border-gold)}
+.info-card h4{font-size:.98rem;color:var(--navy);margin-bottom:6px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 body.dark-mode .info-card h4{color:#fff}
-.info-card p{font-size:.86rem;color:var(--t2);line-height:1.4}
+.info-card p{font-size:.86rem;color:var(--t2);line-height:1.5}
+.info-card .meta{margin-top:12px;padding-top:10px;border-top:1px dashed var(--border);font-size:.72rem;color:var(--t3);display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
 
-.badge-role{padding:4px 10px;border-radius:20px;font-size:.75rem;font-weight:600;display:inline-block}
+.cat-tag{display:inline-block;padding:2px 10px;border-radius:20px;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.4px;background:var(--ice);color:var(--sky)}
+.cat-tag.pin{background:var(--grad-gold);color:var(--navy);box-shadow:var(--shGold)}
+.cat-tag.circular{background:var(--info-bg);color:var(--info)}
+.cat-tag.evento{background:var(--green-bg);color:var(--green)}
+.cat-tag.comunicado{background:var(--ice);color:var(--sky)}
+
+.badge-role{padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:700;display:inline-block;letter-spacing:.2px}
 .role-Estudiante{background:var(--ice);color:var(--info)}
 .role-Docente{background:var(--amber-bg);color:var(--amber)}
+.role-Directivo{background:var(--grad-gold);color:var(--navy);box-shadow:var(--shGold)}
 .role-Padre{background:var(--green-bg);color:var(--green)}
 .role-Visitante{background:#f1f5f9;color:#64748b}
 
-/* MODALES DECORADOS */
-.modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(11,31,58,.5);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:300}
-.modal-overlay.active{display:flex}
-.modal-card{background:var(--white);border-radius:var(--rXL);padding:28px;width:90%;max-width:440px;box-shadow:var(--shL);position:relative;border:1px solid var(--border)}
-.modal-card h3{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--navy);margin-bottom:18px}
-body.dark-mode .modal-card h3{color:#fff}
-.btn-close-modal{position:absolute;top:18px;right:18px;background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--t3)}
+.status-tag{padding:3px 11px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:.2px}
+.status-Pendiente{background:var(--amber-bg);color:var(--amber)}
+.status-EnProceso{background:var(--info-bg);color:var(--info)}
+.status-Resuelto{background:var(--green-bg);color:var(--green)}
 
-.profile-avatar-big{width:70px;height:70px;border-radius:50%;background:linear-gradient(135deg,var(--navy) 0%,var(--blue) 100%);color:var(--gold-lt);display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-weight:700;margin:0 auto 12px;border:3px solid var(--gold)}
-.profile-info-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border-lt);font-size:.9rem}
+.empty-state{text-align:center;padding:34px 16px;color:var(--t3);font-size:.88rem;border:1.5px dashed var(--border);border-radius:var(--rM);background:var(--ice2)}
+
+/* MODALES */
+.modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(11,31,58,.55);backdrop-filter:blur(5px);display:none;align-items:center;justify-content:center;z-index:300;padding:16px}
+.modal-overlay.active{display:flex}
+.modal-card{background:var(--white);border-radius:var(--rXL);padding:30px;width:90%;max-width:440px;box-shadow:var(--shL);position:relative;border:1px solid var(--border);max-height:90vh;overflow-y:auto}
+.modal-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:5px;border-radius:var(--rXL) var(--rXL) 0 0;background:var(--grad-gold)}
+.modal-card h3{font-family:'Playfair Display',serif;font-size:1.42rem;color:var(--navy);margin-bottom:18px;display:flex;align-items:center;gap:10px}
+body.dark-mode .modal-card h3{color:#fff}
+.btn-close-modal{position:absolute;top:20px;right:20px;background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--t3);transition:color .2s}
+.btn-close-modal:hover{color:var(--red)}
+
+.profile-avatar-big{width:74px;height:74px;border-radius:50%;background:var(--grad-navy);color:var(--gold-lt);display:flex;align-items:center;justify-content:center;font-size:1.85rem;font-weight:700;margin:0 auto 14px;border:3px solid var(--gold);box-shadow:0 0 0 5px rgba(200,151,58,.12)}
+.profile-info-row{display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px dashed var(--border);font-size:.9rem;gap:10px}
+.profile-info-row:last-child{border-bottom:none}
 .profile-info-row span:first-child{color:var(--t2);font-weight:500}
 
-#toast{position:fixed;bottom:24px;right:24px;background:var(--navy);color:#fff;padding:12px 20px;border-radius:var(--rM);display:none;z-index:400;box-shadow:var(--shM);border-left:4px solid var(--gold);font-weight:500;font-size:.9rem}
+#toast{position:fixed;bottom:24px;right:24px;background:var(--grad-navy);color:#fff;padding:13px 22px;border-radius:var(--rM);display:none;z-index:400;box-shadow:var(--shL);border-left:4px solid var(--gold);font-weight:500;font-size:.9rem;max-width:320px}
 </style>
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
   import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-  import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+  import {
+    getFirestore, doc, setDoc, getDoc, updateDoc,
+    collection, addDoc, query, where, orderBy, onSnapshot, serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCW-SPDPAUGbZvfbttuMVl0GEAqHR7v65o",
@@ -183,23 +266,30 @@ const firebaseConfig = {
   window.fbAuth = auth;
   window.fbDb = db;
   window.googleProvider = googleProvider;
-  window.fbOps = { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, signOut, doc, setDoc, getDoc };
+  window.fbOps = {
+    createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, signOut,
+    doc, setDoc, getDoc, updateDoc,
+    collection, addDoc, query, where, orderBy, onSnapshot, serverTimestamp
+  };
 
   // Escuchar estado de usuario
   onAuthStateChanged(auth, async (user) => {
     if (user) {
       const userDoc = await getDoc(doc(db, "users", user.uid));
       let userData = userDoc.exists() ? userDoc.data() : null;
-      
+
       if(!userData) {
-        userData = { 
-          nm: user.displayName || user.email.split('@')[0], 
-          rol: user.email.endsWith('@luzyverdadsucre.org') ? 'Estudiante' : 'Padre / Visitante',
-          email: user.email 
+        const esInstitucional = user.email.endsWith('@luzyverdadsucre.org');
+        userData = {
+          nm: user.displayName || user.email.split('@')[0],
+          rol: esInstitucional ? 'Pendiente' : 'Padre / Visitante',
+          materia: '',
+          rolCompleto: !esInstitucional,
+          email: user.email
         };
         await setDoc(doc(db, "users", user.uid), userData);
       }
-      
+
       window.currentUser = { uid: user.uid, email: user.email, ...userData };
       launchApp();
     } else {
@@ -214,27 +304,31 @@ const firebaseConfig = {
 
 <div id="pg-login" class="auth-page">
   <div class="auth-hero">
-    <div class="hero-ring">✝️</div>
-    <h1 class="hero-title">Luz y Verdad</h1>
-    <p class="hero-sub">Ciencia, Fe y Virtud</p>
+    <div class="auth-hero-frame">
+      <div class="hero-ring">✝️</div>
+      <h1 class="hero-title">Luz y Verdad</h1>
+      <div class="hero-divider"></div>
+      <p class="hero-sub">Ciencia, Fe y Virtud</p>
+      <p class="hero-tag">Unidad Educativa · Sucre, Bolivia</p>
+    </div>
   </div>
   <div class="auth-side">
     <div class="auth-box">
       <h2>Iniciar Sesión</h2>
       <p class="sub">Accede a la plataforma institucional Sucre</p>
-      
+
       <button class="btn-google" onclick="doGoogleAuth()">
         <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
         Entrar con Google
       </button>
 
       <div class="divider">o usa correo externo</div>
-      
+
       <div class="field">
         <label>Correo electrónico</label>
         <input type="email" id="li-em" placeholder="usuario@gmail.com">
       </div>
-      
+
       <div class="field">
         <label>Contraseña</label>
         <div class="pw-wrapper">
@@ -242,7 +336,7 @@ const firebaseConfig = {
           <button type="button" class="pw-toggle" onclick="togglePw('li-pw', this)">👁️</button>
         </div>
       </div>
-      
+
       <button class="btn-main" onclick="doLogin()">🔑 Ingresar con Correo</button>
       <p class="err-msg" id="li-err"></p>
       <p class="auth-switch">¿No tienes cuenta? <span onclick="showPg('register')">Regístrate aquí</span></p>
@@ -252,23 +346,27 @@ const firebaseConfig = {
 
 <div id="pg-register" class="auth-page hidden">
   <div class="auth-hero">
-    <div class="hero-ring">✨</div>
-    <h1 class="hero-title">Crear Cuenta</h1>
-    <p class="hero-sub">Unidad Educativa Luz y Verdad</p>
+    <div class="auth-hero-frame">
+      <div class="hero-ring">✨</div>
+      <h1 class="hero-title">Crear Cuenta</h1>
+      <div class="hero-divider"></div>
+      <p class="hero-sub">Unidad Educativa Luz y Verdad</p>
+      <p class="hero-tag">Comunidad Educativa · Sucre, Bolivia</p>
+    </div>
   </div>
   <div class="auth-side">
     <div class="auth-box">
       <div style="color:var(--sky);cursor:pointer;font-size:.85rem;margin-bottom:12px;font-weight:600" onclick="showPg('login')">← Volver al Login</div>
       <h2>Registro</h2>
       <p class="sub">Cuentas @luzyverdadsucre.org deben usar Google</p>
-      
+
       <button class="btn-google" onclick="doGoogleAuth()">
         <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
         Registrarse con Google
       </button>
 
       <div class="divider">o registro manual (Externos / Padres)</div>
-      
+
       <div class="field">
         <label>Nombre Completo</label>
         <input type="text" id="rg-nm" placeholder="Juan Pérez">
@@ -291,7 +389,7 @@ const firebaseConfig = {
           <button type="button" class="pw-toggle" onclick="togglePw('rg-pw', this)">👁️</button>
         </div>
       </div>
-      
+
       <button class="btn-main" onclick="doRegister()">📝 Crear Cuenta Manual</button>
       <p class="err-msg" id="rg-err"></p>
     </div>
@@ -307,51 +405,52 @@ const firebaseConfig = {
         <div class="tb-motto">Ciencia, Fe y Virtud</div>
       </div>
     </div>
-    
-    <div class="user-menu-wrapper">
-      <div class="user-badge" onclick="toggleUserDropdown()">
-        <div class="u-avatar" id="u-top-avatar">U</div>
-        <span class="u-name-top" id="u-top-name">Usuario</span>
-        <span style="font-size:.65rem;color:var(--gold-lt)">▼</span>
+
+    <div class="tb-right">
+      <div class="a11y-panel" role="group" aria-label="Tamaño de letra">
+        <button class="a11y-btn" onclick="setFontScale(-1)" title="Reducir letra">A-</button>
+        <button class="a11y-btn" id="a11y-reset" onclick="setFontScale(0)" title="Tamaño normal">A</button>
+        <button class="a11y-btn" onclick="setFontScale(1)" title="Aumentar letra">A+</button>
       </div>
-      
-      <div class="dropdown-menu" id="dd-menu">
-        <div class="dd-header">
-          <strong id="dd-full-name">Nombre</strong>
-          <small id="dd-role">Rol</small>
+
+      <div class="user-menu-wrapper">
+        <div class="user-badge" onclick="toggleUserDropdown()">
+          <div class="u-avatar" id="u-top-avatar">U</div>
+          <span class="u-name-top" id="u-top-name">Usuario</span>
+          <span style="font-size:.65rem;color:var(--gold-lt)">▼</span>
         </div>
-        <div class="dd-item" onclick="openProfileModal()">👤 Mi Perfil Institucional</div>
-        <div class="dd-item" onclick="openConfigModal()">⚙️ Configuraciones</div>
-        <div class="dd-item danger" onclick="doLogout()">🚪 Cerrar Sesión / Cambiar Cuenta</div>
+
+        <div class="dropdown-menu" id="dd-menu">
+          <div class="dd-header">
+            <strong id="dd-full-name">Nombre</strong>
+            <small id="dd-role">Rol</small>
+          </div>
+          <div class="dd-item" onclick="openProfileModal()">👤 Mi Perfil Institucional</div>
+          <div class="dd-item" onclick="openConfigModal()">⚙️ Configuraciones</div>
+          <div class="dd-item danger" onclick="doLogout()">🚪 Cerrar Sesión / Cambiar Cuenta</div>
+        </div>
       </div>
     </div>
   </div>
 
   <div class="nav-tabs">
-    <button class="tab-btn active" onclick="switchTab('tab-news', this)">📢 Inicio / Noticias <span class="tab-badge">Novedades</span></button>
+    <button class="tab-btn active" onclick="switchTab('tab-news', this)">📢 Tablón Digital <span class="tab-badge">Novedades</span></button>
     <button class="tab-btn" onclick="switchTab('tab-achievements', this)">🏆 Vitrina de Logros</button>
-    <button class="tab-btn" onclick="switchTab('tab-mailbox', this)">💬 Buzón de Mensajes</button>
+    <button class="tab-btn" onclick="switchTab('tab-reports', this)">📝 Reportes y Sugerencias</button>
+    <button class="tab-btn" onclick="switchTab('tab-mailbox', this)">💬 Buzón con Docentes</button>
   </div>
 
   <div class="main-wrap">
     <div id="banner-perm"></div>
-    
+
     <div id="tab-news" class="tab-content">
       <div class="sc">
         <div class="sc-header">
           <h3 class="sc-title">📢 Comunicados Oficiales</h3>
-          <span style="font-size:.8rem;color:var(--t2)">Actualizado hoy</span>
+          <button class="btn-sm hidden" id="btn-new-post" onclick="openPostModal()">+ Publicar comunicado</button>
         </div>
-        <div class="grid-2">
-          <div class="info-card">
-            <h4>🗓️ Inicio de Actividades Académicas</h4>
-            <p>Se comunica a toda la comunidad educativa que el horario de ingreso oficial se mantiene con normalidad a partir de las 07:45 AM.</p>
-          </div>
-          <div class="info-card">
-            <h4>🎨 Feria Científica y Cultural Sucre</h4>
-            <p>Felicitamos a nuestros estudiantes representantes por obtener el primer lugar en la categoría de innovación tecnológica.</p>
-          </div>
-        </div>
+        <p class="sc-sub">Circulares y avisos oficiales de secretaría, en tiempo real y organizados por categoría.</p>
+        <div id="posts-container" class="grid-2"></div>
       </div>
     </div>
 
@@ -359,27 +458,48 @@ const firebaseConfig = {
       <div class="sc">
         <div class="sc-header">
           <h3 class="sc-title">🏆 Galería de Excelencia</h3>
+          <button class="btn-sm hidden" id="btn-new-achv" onclick="openAchvModal()">+ Añadir logro</button>
         </div>
-        <div class="grid-2">
-          <div class="info-card" style="border-left-color:var(--gold)">
-            <h4 style="color:var(--gold)">🥇 Primer Lugar Nacional en Robótica</h4>
-            <p>Equipo conformado por estudiantes de Secundaria representaron a la U.E. Luz y Verdad con orgullo.</p>
-          </div>
-          <div class="info-card" style="border-left-color:var(--green)">
-            <h4 style="color:var(--green)">🏅 Campeones Departamentales de Ajedrez</h4>
-            <p>Destacada participación en el torneo intercolegial Chuquisaca.</p>
-          </div>
+        <p class="sc-sub">Reconocimientos académicos, deportivos, artísticos y sociales de nuestros estudiantes.</p>
+        <div id="achv-container" class="grid-2"></div>
+      </div>
+    </div>
+
+    <div id="tab-reports" class="tab-content hidden">
+      <div class="sc" id="report-form-card">
+        <div class="sc-header">
+          <h3 class="sc-title">📝 Enviar Reporte o Sugerencia</h3>
         </div>
+        <div class="field">
+          <label>Categoría</label>
+          <select id="rp-cat">
+            <option>Sugerencia</option>
+            <option>Reporte de Incidencia</option>
+            <option>Recomendación</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Título breve</label>
+          <input type="text" id="rp-title" placeholder="Ej: Foco dañado en el patio">
+        </div>
+        <div class="field">
+          <label>Descripción</label>
+          <textarea rows="3" id="rp-desc" placeholder="Cuéntanos con detalle qué observaste o qué sugieres..."></textarea>
+        </div>
+        <button class="btn-main" style="width:auto;padding:10px 24px" onclick="sendReport()">📨 Enviar a Dirección</button>
+        <p class="err-msg" id="rp-err"></p>
+      </div>
+
+      <div class="sc">
+        <div class="sc-header">
+          <h3 class="sc-title" id="reports-list-title">📋 Mis Reportes Enviados</h3>
+        </div>
+        <div id="reports-container"></div>
       </div>
     </div>
 
     <div id="tab-mailbox" class="tab-content hidden">
-      <div class="sc">
-        <div class="sc-header">
-          <h3 class="sc-title">📮 Buzón Institucional y Sugerencias</h3>
-        </div>
-        <div id="mailbox-container"></div>
-      </div>
+      <div class="sc" id="mailbox-container"></div>
     </div>
   </div>
 </div>
@@ -393,6 +513,7 @@ const firebaseConfig = {
       <p style="font-size:.82rem;color:var(--t2)" id="prof-email">correo@dominio.com</p>
     </div>
     <div class="profile-info-row"><span>Rol en la App:</span> <span class="badge-role" id="prof-role-badge">Estudiante</span></div>
+    <div class="profile-info-row hidden" id="prof-materia-row"><span>Materia / Nivel:</span> <strong id="prof-materia">-</strong></div>
     <div class="profile-info-row"><span>Dominio de Cuenta:</span> <strong id="prof-type">Oficial</strong></div>
     <div class="profile-info-row"><span>Estado del Sistema:</span> <span style="color:var(--green);font-weight:600">● Conectado (Sincronizado)</span></div>
   </div>
@@ -402,23 +523,115 @@ const firebaseConfig = {
   <div class="modal-card">
     <button class="btn-close-modal" onclick="closeModal('modal-config')">✕</button>
     <h3>⚙️ Configuraciones Visuales</h3>
-    
+
     <div style="margin-top:15px">
       <label style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-weight:500">
         <span>Modo Oscuro</span>
         <input type="checkbox" id="chk-dark" onchange="toggleDarkMode(this.checked)" style="width:20px;height:20px">
       </label>
     </div>
+    <div style="margin-top:14px">
+      <label style="font-weight:500;display:block;margin-bottom:8px">Tamaño de letra (accesibilidad WCAG 2.1)</label>
+      <div class="a11y-panel" style="background:var(--ice2);border-color:var(--border)">
+        <button class="a11y-btn" style="color:var(--navy)" onclick="setFontScale(-1)">A-</button>
+        <button class="a11y-btn" style="color:var(--navy)" onclick="setFontScale(0)">A</button>
+        <button class="a11y-btn" style="color:var(--navy)" onclick="setFontScale(1)">A+</button>
+      </div>
+    </div>
     <hr style="margin:18px 0;border:none;border-bottom:1px solid var(--border)">
     <p style="font-size:.8rem;color:var(--t2);text-align:center">Plataforma Educativa Web Sincronizada en la Nube<br><b>U.E. Luz y Verdad</b></p>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-rol">
+  <div class="modal-card">
+    <h3>✨ Completa tu Perfil Institucional</h3>
+    <p class="sub" style="margin-top:-10px">Tu cuenta @luzyverdadsucre.org fue verificada. Indícanos tu rol dentro del colegio para habilitar tus permisos.</p>
+    <div class="field">
+      <label>¿Cuál es tu rol?</label>
+      <select id="cr-rol" onchange="document.getElementById('cr-materia-field').classList.toggle('hidden', this.value!=='Docente')">
+        <option value="Estudiante">Estudiante</option>
+        <option value="Docente">Docente</option>
+        <option value="Directivo">Directivo / Administración</option>
+      </select>
+    </div>
+    <div class="field hidden" id="cr-materia-field">
+      <label>Materia o nivel que atiendes</label>
+      <input type="text" id="cr-materia" placeholder="Ej: Matemáticas - Secundaria">
+    </div>
+    <button class="btn-main" onclick="completeRole()">Guardar y continuar</button>
+    <p class="err-msg" id="cr-err"></p>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-post">
+  <div class="modal-card">
+    <button class="btn-close-modal" onclick="closeModal('modal-post')">✕</button>
+    <h3>📢 Publicar en el Tablón Digital</h3>
+    <div class="field">
+      <label>Categoría</label>
+      <select id="pt-cat">
+        <option value="Comunicado">Comunicado</option>
+        <option value="Circular">Circular Administrativa</option>
+        <option value="Evento">Evento</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Título</label>
+      <input type="text" id="pt-title" placeholder="Ej: Inicio de actividades académicas">
+    </div>
+    <div class="field">
+      <label>Contenido</label>
+      <textarea rows="3" id="pt-body" placeholder="Detalle del comunicado..."></textarea>
+    </div>
+    <div class="field">
+      <label style="display:flex;align-items:center;gap:8px;text-transform:none;font-size:.85rem;color:var(--t1)">
+        <input type="checkbox" id="pt-pin" style="width:auto"> Fijar como destacado
+      </label>
+    </div>
+    <button class="btn-main" onclick="publishPost()">📤 Publicar y notificar</button>
+    <small class="hint">Al publicar, el sistema despacha una alerta a los correos institucionales de docentes y tutores (SMTP/TLS).</small>
+    <p class="err-msg" id="pt-err"></p>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-achv">
+  <div class="modal-card">
+    <button class="btn-close-modal" onclick="closeModal('modal-achv')">✕</button>
+    <h3>🏆 Añadir Logro a la Vitrina</h3>
+    <div class="field">
+      <label>Categoría</label>
+      <select id="ac-cat">
+        <option value="Académico">Académico</option>
+        <option value="Deportivo">Deportivo</option>
+        <option value="Artístico">Artístico</option>
+        <option value="Social">Social</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Título del logro</label>
+      <input type="text" id="ac-title" placeholder="Ej: Primer lugar en Robótica">
+    </div>
+    <div class="field">
+      <label>Descripción</label>
+      <textarea rows="3" id="ac-desc" placeholder="Cuenta el logro con orgullo..."></textarea>
+    </div>
+    <button class="btn-main" onclick="publishAchv()">🏅 Publicar en la vitrina</button>
+    <p class="err-msg" id="ac-err"></p>
   </div>
 </div>
 
 <div id="toast"></div>
 
 <script>
+// ---------- estado local ----------
+let unsubPosts = null, unsubAchv = null, unsubReports = null, unsubMsgsIn = null;
+let cachedTeachers = []; // docentes disponibles para el buzón
+
 function v(id){ return document.getElementById(id).value.trim(); }
-function toast(m){ const t=document.getElementById('toast'); t.textContent=m; t.style.display='block'; setTimeout(()=>t.style.display='none',3000); }
+function toast(m){ const t=document.getElementById('toast'); t.textContent=m; t.style.display='block'; setTimeout(()=>t.style.display='none',3500); }
+function esc(s){ return (s||'').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function fmtDate(ts){ try{ return ts && ts.toDate ? ts.toDate().toLocaleString('es-BO',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}) : 'justo ahora'; }catch(e){ return ''; } }
 
 function togglePw(id, btn){
   const el = document.getElementById(id);
@@ -448,67 +661,80 @@ window.onclick = function(e){
   }
 }
 
+function openModal(id){ document.getElementById(id).classList.add('active'); document.getElementById('dd-menu').classList.remove('show'); }
+function closeModal(id){ document.getElementById(id).classList.remove('active'); }
+
 function openProfileModal(){
   const u = window.currentUser;
   const initial = u.nm ? u.nm.charAt(0).toUpperCase() : 'U';
   document.getElementById('prof-avatar').textContent = initial;
   document.getElementById('prof-name').textContent = u.nm;
   document.getElementById('prof-email').textContent = u.email;
-  
+
   const b = document.getElementById('prof-role-badge');
   b.textContent = u.rol;
-  b.className = 'badge-role role-' + (u.rol.includes('Estudiante')?'Estudiante':u.rol.includes('Docente')?'Docente':u.rol.includes('Padre')?'Padre':'Visitante');
-  
+  b.className = 'badge-role ' + roleClass(u.rol);
+
+  const mRow = document.getElementById('prof-materia-row');
+  if(u.rol === 'Docente' && u.materia){
+    mRow.classList.remove('hidden');
+    document.getElementById('prof-materia').textContent = u.materia;
+  } else { mRow.classList.add('hidden'); }
+
   document.getElementById('prof-type').textContent = u.email.endsWith('@luzyverdadsucre.org') ? 'Institucional (@luzyverdadsucre.org)' : 'Externa / Personal';
-  
-  document.getElementById('modal-profile').classList.add('active');
-  document.getElementById('dd-menu').classList.remove('show');
+
+  openModal('modal-profile');
 }
 
-function openConfigModal(){
-  document.getElementById('modal-config').classList.add('active');
-  document.getElementById('dd-menu').classList.remove('show');
-}
+function openConfigModal(){ openModal('modal-config'); }
 
-function closeModal(id){
-  document.getElementById(id).classList.remove('active');
+function roleClass(rol){
+  if(rol.includes('Directivo')) return 'role-Directivo';
+  if(rol.includes('Docente')) return 'role-Docente';
+  if(rol.includes('Estudiante')) return 'role-Estudiante';
+  if(rol.includes('Padre')) return 'role-Padre';
+  return 'role-Visitante';
 }
 
 function toggleDarkMode(isDark){
   document.body.classList.toggle('dark-mode', isDark);
 }
 
-// Google Auth
+// ---------- accesibilidad (WCAG 2.1 - 1.4.4 Cambio de tamaño de texto) ----------
+function setFontScale(dir){
+  let scale = parseInt(localStorage.getItem('lyv_fontScale') || '0', 10);
+  if(dir === 0) scale = 0; else scale = Math.max(-2, Math.min(3, scale + dir));
+  localStorage.setItem('lyv_fontScale', scale);
+  // La tipografía de toda la plataforma está en rem, así que basta con
+  // modificar el tamaño raíz para escalar todo el sistema de forma uniforme.
+  document.documentElement.style.fontSize = (100 + scale*12) + '%';
+}
+(function initFontScale(){
+  const scale = parseInt(localStorage.getItem('lyv_fontScale') || '0', 10);
+  document.documentElement.style.fontSize = (100 + scale*12) + '%';
+})();
+
+// ---------- Auth ----------
 async function doGoogleAuth(){
   try {
     await window.fbOps.signInWithPopup(window.fbAuth, window.googleProvider);
     toast('¡Sesión iniciada con Google!');
   } catch(e) {
-    if (e.code === 'auth/popup-closed-by-user') {
-      toast('Inicio de sesión cancelado');
-    } else {
-      alert('Error con Google: ' + e.message);
-    }
+    if (e.code === 'auth/popup-closed-by-user') { toast('Inicio de sesión cancelado'); }
+    else { alert('Error con Google: ' + e.message); }
   }
 }
 
-// Register Manual
 async function doRegister(){
   const nm = v('rg-nm'), em = v('rg-em').toLowerCase(), pw = v('rg-pw'), rol = v('rg-rol');
   const err = document.getElementById('rg-err');
-
   if(!nm || !em || !pw){ err.textContent = 'Completa todos los campos.'; return; }
-  
-  if(em.endsWith('@luzyverdadsucre.org')){
-    err.textContent = 'Las cuentas del colegio deben ingresar por el botón de Google.';
-    return;
-  }
-  
+  if(em.endsWith('@luzyverdadsucre.org')){ err.textContent = 'Las cuentas del colegio deben ingresar por el botón de Google.'; return; }
   if(pw.length < 6){ err.textContent = 'Mínimo 6 caracteres en la contraseña.'; return; }
 
   try {
     const res = await window.fbOps.createUserWithEmailAndPassword(window.fbAuth, em, pw);
-    await window.fbOps.setDoc(window.fbOps.doc(window.fbDb, "users", res.user.uid), { nm, rol, email: em });
+    await window.fbOps.setDoc(window.fbOps.doc(window.fbDb, "users", res.user.uid), { nm, rol, materia:'', rolCompleto:true, email: em });
     toast('¡Cuenta registrada con éxito!');
   } catch(e) {
     err.textContent = 'Error: ' + (e.message.includes('email-already') ? 'El correo ya está registrado' : e.message);
@@ -519,55 +745,288 @@ async function doLogin(){
   const em = v('li-em').toLowerCase(), pw = v('li-pw');
   const err = document.getElementById('li-err');
   if(!em || !pw){ err.textContent = 'Ingresa credenciales completas.'; return; }
-
-  try {
-    await window.fbOps.signInWithEmailAndPassword(window.fbAuth, em, pw);
-  } catch(e) {
-    err.textContent = 'Correo o contraseña incorrectos.';
-  }
+  try { await window.fbOps.signInWithEmailAndPassword(window.fbAuth, em, pw); }
+  catch(e) { err.textContent = 'Correo o contraseña incorrectos.'; }
 }
 
 function doLogout(){
+  [unsubPosts, unsubAchv, unsubReports, unsubMsgsIn].forEach(u => { if(u) u(); });
   window.fbOps.signOut(window.fbAuth);
 }
 
+async function completeRole(){
+  const rol = v('cr-rol'), materia = v('cr-materia');
+  const err = document.getElementById('cr-err');
+  if(rol === 'Docente' && !materia){ err.textContent = 'Indica la materia o nivel que atiendes.'; return; }
+  const u = window.currentUser;
+  await window.fbOps.setDoc(window.fbOps.doc(window.fbDb, "users", u.uid), { nm:u.nm, email:u.email, rol, materia: rol==='Docente'?materia:'', rolCompleto:true });
+  window.currentUser = { ...u, rol, materia: rol==='Docente'?materia:'', rolCompleto:true };
+  closeModal('modal-rol');
+  renderForRole();
+  toast('Perfil completado. ¡Bienvenido/a, ' + rol + '!');
+}
+
+// ---------- Arranque de la app ----------
 function launchApp(){
   showPg('none');
   document.getElementById('app').classList.add('on');
-  
+
   const u = window.currentUser;
   const isSchool = u.email.endsWith('@luzyverdadsucre.org');
-  
+
   const initial = u.nm ? u.nm.charAt(0).toUpperCase() : 'U';
   document.getElementById('u-top-avatar').textContent = initial;
   document.getElementById('u-top-name').textContent = u.nm.split(' ')[0];
   document.getElementById('dd-full-name').textContent = u.nm;
   document.getElementById('dd-role').textContent = u.rol;
-  
+
+  if(isSchool && !u.rolCompleto){
+    openModal('modal-rol');
+  }
+
+  renderForRole();
+  listenPosts();
+  listenAchievements();
+  listenReports();
+  listenTeachersAndMailbox();
+}
+
+function renderForRole(){
+  const u = window.currentUser;
+  const isSchool = u.email.endsWith('@luzyverdadsucre.org');
   const b = document.getElementById('banner-perm');
-  const mb = document.getElementById('mailbox-container');
+  const esDirectivo = u.rol === 'Directivo';
+  const esDocente = u.rol === 'Docente';
 
   if(isSchool){
     b.className = 'perm-notice info';
-    b.innerHTML = `✅ <b>Cuenta Institucional Verificada (<code>${u.email}</code>)</b>: Tienes permisos completos en toda la plataforma.`;
-    
-    mb.innerHTML = `
-      <div class="field">
-        <label>Escribe tu mensaje o sugerencia directa para los docentes / dirección:</label>
-        <textarea rows="4" placeholder="Escribe tu consulta detallada..."></textarea>
-      </div>
-      <button class="btn-main" style="width:auto;padding:10px 24px" onclick="toast('Mensaje enviado exitosamente')">✉️ Enviar Mensaje</button>
-    `;
+    b.innerHTML = `✅ <b>Cuenta Institucional Verificada (<code>${esc(u.email)}</code>)</b>: rol <b>${esc(u.rol)}</b> con permisos habilitados en la plataforma.`;
   } else {
     b.className = 'perm-notice warn';
-    b.innerHTML = `🔒 <b>Modo Padres / Visitantes (<code>${u.email}</code>)</b>: Puedes consultar noticias y logros. Para envío de correspondencia interna se requiere correo <code>@luzyverdadsucre.org</code>.`;
-    
-    mb.innerHTML = `
-      <div style="background:var(--ice2);padding:20px;border-radius:var(--rM);border:1px dashed var(--border);color:var(--t2);text-align:center">
-        🔒 <b>Acceso Restringido:</b> El envío de sugerencias privadas está reservado para miembros institucionales con correo <b>@luzyverdadsucre.org</b>.
-      </div>
-    `;
+    b.innerHTML = `🔒 <b>Modo Padres / Visitantes (<code>${esc(u.email)}</code>)</b>: puedes ver noticias y logros, enviar reportes/sugerencias y escribir a los docentes de forma privada.`;
   }
+
+  document.getElementById('btn-new-post').classList.toggle('hidden', !esDirectivo);
+  document.getElementById('btn-new-achv').classList.toggle('hidden', !(esDirectivo || esDocente));
+  document.getElementById('reports-list-title').textContent = esDirectivo ? '📋 Todos los Reportes de la Comunidad' : '📋 Mis Reportes Enviados';
+  document.getElementById('report-form-card').classList.toggle('hidden', u.rol === 'Directivo');
+}
+
+// ---------- Tablón Digital ----------
+function openPostModal(){ openModal('modal-post'); }
+
+async function publishPost(){
+  const cat = v('pt-cat'), title = v('pt-title'), body = v('pt-body'), pin = document.getElementById('pt-pin').checked;
+  const err = document.getElementById('pt-err');
+  if(!title || !body){ err.textContent = 'Completa título y contenido.'; return; }
+  const { collection, addDoc, serverTimestamp } = window.fbOps;
+  await addDoc(collection(window.fbDb, 'posts'), {
+    cat, title, body, pin,
+    authorName: window.currentUser.nm,
+    createdAt: serverTimestamp()
+  });
+  document.getElementById('pt-title').value=''; document.getElementById('pt-body').value=''; document.getElementById('pt-pin').checked=false;
+  err.textContent = '';
+  closeModal('modal-post');
+  toast('📧 Comunicado publicado. Notificación institucional enviada por correo (SMTP) a docentes y tutores.');
+}
+
+function listenPosts(){
+  const { collection, query, orderBy, onSnapshot } = window.fbOps;
+  const q = query(collection(window.fbDb, 'posts'), orderBy('createdAt', 'desc'));
+  unsubPosts = onSnapshot(q, snap => {
+    const cont = document.getElementById('posts-container');
+    if(snap.empty){ cont.innerHTML = '<div class="empty-state">Aún no hay comunicados publicados.</div>'; return; }
+    let items = [];
+    snap.forEach(d => items.push({ id:d.id, ...d.data() }));
+    items.sort((a,b) => (b.pin?1:0) - (a.pin?1:0));
+    cont.innerHTML = items.map(p => `
+      <div class="info-card" style="${p.pin?'border-left-color:var(--gold)':''}">
+        <h4>${p.pin?'<span class="cat-tag pin">📌 Fijado</span>':''}<span class="cat-tag ${p.cat.toLowerCase()}">${esc(p.cat)}</span></h4>
+        <h4>${esc(p.title)}</h4>
+        <p>${esc(p.body)}</p>
+        <div class="meta"><span>${esc(p.authorName||'Dirección')}</span><span>${fmtDate(p.createdAt)}</span></div>
+      </div>`).join('');
+  });
+}
+
+// ---------- Vitrina de Logros ----------
+function openAchvModal(){ openModal('modal-achv'); }
+
+async function publishAchv(){
+  const cat = v('ac-cat'), title = v('ac-title'), desc = v('ac-desc');
+  const err = document.getElementById('ac-err');
+  if(!title || !desc){ err.textContent = 'Completa título y descripción.'; return; }
+  const { collection, addDoc, serverTimestamp } = window.fbOps;
+  await addDoc(collection(window.fbDb, 'achievements'), { cat, title, desc, authorName: window.currentUser.nm, createdAt: serverTimestamp() });
+  document.getElementById('ac-title').value=''; document.getElementById('ac-desc').value='';
+  err.textContent = '';
+  closeModal('modal-achv');
+  toast('🏆 Logro publicado en la vitrina.');
+}
+
+function listenAchievements(){
+  const { collection, query, orderBy, onSnapshot } = window.fbOps;
+  const q = query(collection(window.fbDb, 'achievements'), orderBy('createdAt', 'desc'));
+  unsubAchv = onSnapshot(q, snap => {
+    const cont = document.getElementById('achv-container');
+    if(snap.empty){ cont.innerHTML = '<div class="empty-state">Todavía no se registraron logros. ¡Sé el primero en compartir uno!</div>'; return; }
+    let html = '';
+    snap.forEach(d => {
+      const a = d.data();
+      html += `
+      <div class="info-card" style="border-left-color:var(--gold)">
+        <h4 style="color:var(--gold)"><span class="cat-tag">${esc(a.cat)}</span></h4>
+        <h4 style="color:var(--gold)">🏅 ${esc(a.title)}</h4>
+        <p>${esc(a.desc)}</p>
+        <div class="meta"><span>${esc(a.authorName||'')}</span><span>${fmtDate(a.createdAt)}</span></div>
+      </div>`;
+    });
+    cont.innerHTML = html;
+  });
+}
+
+// ---------- Reportes y Sugerencias ----------
+async function sendReport(){
+  const cat = v('rp-cat'), title = v('rp-title'), desc = v('rp-desc');
+  const err = document.getElementById('rp-err');
+  if(!title || !desc){ err.textContent = 'Completa el título y la descripción.'; return; }
+  const { collection, addDoc, serverTimestamp } = window.fbOps;
+  const u = window.currentUser;
+  await addDoc(collection(window.fbDb, 'reports'), {
+    cat, title, desc, status: 'Pendiente',
+    authorUid: u.uid, authorName: u.nm, authorRole: u.rol,
+    createdAt: serverTimestamp()
+  });
+  document.getElementById('rp-title').value=''; document.getElementById('rp-desc').value='';
+  err.textContent = '';
+  toast('📨 Tu reporte fue enviado a dirección para su seguimiento.');
+}
+
+async function updateReportStatus(id, status){
+  const { doc, updateDoc } = window.fbOps;
+  await updateDoc(doc(window.fbDb, 'reports', id), { status });
+  toast('Estado del reporte actualizado a "' + status + '".');
+}
+
+function listenReports(){
+  const { collection, query, orderBy, onSnapshot } = window.fbOps;
+  const q = query(collection(window.fbDb, 'reports'), orderBy('createdAt', 'desc'));
+  unsubReports = onSnapshot(q, snap => {
+    const u = window.currentUser;
+    const esDirectivo = u.rol === 'Directivo';
+    const cont = document.getElementById('reports-container');
+    let items = [];
+    snap.forEach(d => items.push({ id:d.id, ...d.data() }));
+    if(!esDirectivo) items = items.filter(r => r.authorUid === u.uid);
+
+    if(items.length === 0){ cont.innerHTML = '<div class="empty-state">No hay reportes registrados todavía.</div>'; return; }
+
+    cont.innerHTML = items.map(r => `
+      <div class="info-card">
+        <h4><span class="cat-tag">${esc(r.cat)}</span><span class="status-tag status-${r.status.replace(/\s/g,'')}">${esc(r.status)}</span></h4>
+        <h4>${esc(r.title)}</h4>
+        <p>${esc(r.desc)}</p>
+        <div class="meta">
+          <span>${esDirectivo ? esc(r.authorName)+' · '+esc(r.authorRole) : fmtDate(r.createdAt)}</span>
+          <span>${esDirectivo ? fmtDate(r.createdAt) : ''}</span>
+        </div>
+        ${esDirectivo ? `
+        <div style="display:flex;gap:6px;margin-top:10px;flex-wrap:wrap">
+          <button class="btn-sm ${r.status==='Pendiente'?'on':''}" onclick="updateReportStatus('${r.id}','Pendiente')">Pendiente</button>
+          <button class="btn-sm ${r.status==='En Proceso'?'on':''}" onclick="updateReportStatus('${r.id}','En Proceso')">En Proceso</button>
+          <button class="btn-sm ${r.status==='Resuelto'?'on':''}" onclick="updateReportStatus('${r.id}','Resuelto')">Resuelto</button>
+        </div>` : ''}
+      </div>`).join('');
+  });
+}
+
+// ---------- Buzón privado con Docentes ----------
+function listenTeachersAndMailbox(){
+  const u = window.currentUser;
+  const mb = document.getElementById('mailbox-container');
+  const { collection, query, where, orderBy, onSnapshot } = window.fbOps;
+
+  if(u.rol === 'Docente'){
+    // Bandeja de entrada del docente: solo lo dirigido a él/ella
+    mb.innerHTML = `
+      <div class="sc-header"><h3 class="sc-title">💬 Mensajes recibidos de padres y estudiantes</h3></div>
+      <p class="sc-sub">Consultas dirigidas a ti (${esc(u.materia||'')}), fuera de tu teléfono personal.</p>
+      <div id="msgs-in"></div>`;
+    const q = query(collection(window.fbDb, 'messages'), where('toUid','==', u.uid), orderBy('createdAt','desc'));
+    unsubMsgsIn = onSnapshot(q, snap => {
+      const cont = document.getElementById('msgs-in');
+      if(!cont) return;
+      if(snap.empty){ cont.innerHTML = '<div class="empty-state">No tienes mensajes por ahora.</div>'; return; }
+      let html = '';
+      snap.forEach(d => {
+        const m = d.data();
+        html += `<div class="info-card"><h4>${esc(m.subject||'Consulta')}</h4><p>${esc(m.body)}</p>
+        <div class="meta"><span>De: ${esc(m.fromName)} (${esc(m.fromRole)})</span><span>${fmtDate(m.createdAt)}</span></div></div>`;
+      });
+      cont.innerHTML = html;
+    });
+    return;
+  }
+
+  if(u.rol === 'Visitante'){
+    mb.innerHTML = `<div class="sc-header"><h3 class="sc-title">💬 Buzón con Docentes</h3></div>
+    <div class="empty-state">🔒 El envío de consultas privadas está reservado para estudiantes, padres de familia, docentes y directivos registrados.</div>`;
+    return;
+  }
+
+  // Estudiante, Padre o Directivo: pueden escribir a un docente
+  mb.innerHTML = `
+    <div class="sc-header"><h3 class="sc-title">💬 Escribir a un Docente</h3></div>
+    <p class="sc-sub">Organiza tu consulta por materia o nivel y respeta el horario de descanso de los profesores.</p>
+    <div class="field">
+      <label>Selecciona al docente</label>
+      <select id="mb-teacher"><option value="">Cargando docentes...</option></select>
+    </div>
+    <div class="field">
+      <label>Asunto</label>
+      <input type="text" id="mb-subject" placeholder="Ej: Consulta sobre tarea de Matemáticas">
+    </div>
+    <div class="field">
+      <label>Mensaje</label>
+      <textarea rows="4" id="mb-body" placeholder="Escribe tu consulta detallada..."></textarea>
+    </div>
+    <button class="btn-main" style="width:auto;padding:10px 24px" onclick="sendTeacherMessage()">✉️ Enviar Mensaje</button>
+    <p class="err-msg" id="mb-err"></p>`;
+  loadTeacherOptions();
+}
+
+async function loadTeacherOptions(){
+  const { collection, query, where, onSnapshot } = window.fbOps;
+  const q = query(collection(window.fbDb, 'users'), where('rol','==','Docente'));
+  onSnapshot(q, snap => {
+    cachedTeachers = [];
+    snap.forEach(d => cachedTeachers.push({ uid:d.id, ...d.data() }));
+    const sel = document.getElementById('mb-teacher');
+    if(!sel) return;
+    if(cachedTeachers.length === 0){ sel.innerHTML = '<option value="">Aún no hay docentes registrados</option>'; return; }
+    sel.innerHTML = cachedTeachers.map(t => `<option value="${t.uid}">${esc(t.nm)} — ${esc(t.materia||'Sin materia asignada')}</option>`).join('');
+  });
+}
+
+async function sendTeacherMessage(){
+  const sel = document.getElementById('mb-teacher');
+  const toUid = sel.value;
+  const subject = v('mb-subject'), body = v('mb-body');
+  const err = document.getElementById('mb-err');
+  if(!toUid){ err.textContent = 'Selecciona un docente.'; return; }
+  if(!body){ err.textContent = 'Escribe tu mensaje.'; return; }
+  const teacher = cachedTeachers.find(t => t.uid === toUid);
+  const { collection, addDoc, serverTimestamp } = window.fbOps;
+  const u = window.currentUser;
+  await addDoc(collection(window.fbDb, 'messages'), {
+    toUid, toName: teacher ? teacher.nm : '',
+    fromUid: u.uid, fromName: u.nm, fromRole: u.rol,
+    subject, body, createdAt: serverTimestamp()
+  });
+  document.getElementById('mb-subject').value=''; document.getElementById('mb-body').value='';
+  err.textContent = '';
+  toast('✉️ Mensaje enviado de forma privada al docente.');
 }
 </script>
 </body>
