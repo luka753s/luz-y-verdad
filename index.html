@@ -286,6 +286,63 @@ body.dark-mode .fp-title{color:#fff}
 
 .fp-catbar{padding:0 18px 8px;display:flex;gap:6px;flex-wrap:wrap}
 
+.demo-banner{
+  display:flex;align-items:center;gap:10px;padding:11px 16px;border-radius:var(--rM);
+  background:var(--gold-pale);color:var(--gold-dp);font-size:.8rem;font-weight:600;
+  border:1px dashed var(--border-gold);margin-bottom:16px;
+}
+body.dark-mode .demo-banner{background:rgba(200,151,58,.12);color:var(--gold-lt)}
+
+/* ====== BUZÓN ESTILO CHAT (WhatsApp / Instagram DM) ====== */
+.contact-list{display:flex;flex-direction:column;gap:2px}
+.contact-item{
+  display:flex;align-items:center;gap:13px;padding:12px 10px;border-radius:var(--rM);
+  cursor:pointer;transition:background .15s;border-bottom:1px solid var(--border-lt);
+}
+.contact-item:last-child{border-bottom:none}
+.contact-item:hover{background:var(--ice2)}
+.contact-avatar{
+  width:48px;height:48px;border-radius:50%;background:var(--grad-navy);color:var(--gold-lt);
+  display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.08rem;
+  flex-shrink:0;border:2px solid var(--gold);box-shadow:0 2px 8px rgba(11,31,58,.16);
+}
+.contact-info{flex:1;min-width:0}
+.contact-name{font-weight:700;font-size:.92rem;color:var(--navy);display:flex;align-items:center;gap:7px}
+body.dark-mode .contact-name{color:#fff}
+.contact-sub{font-size:.78rem;color:var(--t2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
+.contact-chevron{color:var(--t3);font-size:1.1rem;flex-shrink:0}
+.contact-badge-demo{font-size:.6rem;background:var(--ice);color:var(--sky);padding:1px 7px;border-radius:10px;font-weight:700;text-transform:uppercase;letter-spacing:.3px}
+
+.chat-view{display:flex;flex-direction:column;height:530px}
+.chat-header{display:flex;align-items:center;gap:12px;padding-bottom:14px;margin-bottom:10px;border-bottom:1px solid var(--border-lt)}
+.chat-back{background:none;border:none;font-size:1.25rem;cursor:pointer;color:var(--sky);padding:4px 6px 4px 0;line-height:1}
+.chat-header .contact-avatar{width:42px;height:42px;font-size:.95rem}
+.chat-headtext{min-width:0}
+.chat-headtext .contact-name{font-size:.95rem}
+.chat-headtext .contact-sub{font-size:.76rem}
+
+.chat-messages{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:9px;padding:8px 6px;scroll-behavior:smooth}
+.bubble{max-width:74%;padding:9px 13px;border-radius:16px;font-size:.87rem;line-height:1.42;word-wrap:break-word}
+.bubble.received{align-self:flex-start;background:var(--ice2);color:var(--t1);border-bottom-left-radius:4px}
+body.dark-mode .bubble.received{background:var(--ice)}
+.bubble.sent{align-self:flex-end;background:var(--grad-navy);color:#fff;border-bottom-right-radius:4px}
+.bubble-time{font-size:.64rem;opacity:.65;margin-top:4px;display:block;text-align:right}
+
+.chat-input-bar{display:flex;align-items:flex-end;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid var(--border-lt)}
+.chat-input-bar textarea{
+  flex:1;resize:none;padding:10px 15px;border:1.5px solid var(--border);border-radius:22px;
+  font-family:inherit;font-size:.88rem;outline:none;max-height:90px;background:transparent;color:inherit;
+}
+.chat-input-bar textarea:focus{border-color:var(--sky);box-shadow:0 0 0 3px rgba(46,125,209,.12)}
+.chat-send-btn{
+  width:42px;height:42px;border-radius:50%;background:var(--grad-navy);color:#fff;border:none;
+  cursor:pointer;font-size:1.05rem;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 3px 10px rgba(11,31,58,.2);transition:filter .15s,transform .1s;
+}
+.chat-send-btn:hover{filter:brightness(1.1)}
+.chat-send-btn:active{transform:scale(.95)}
+.chat-empty-hint{text-align:center;color:var(--t3);font-size:.82rem;padding:40px 10px}
+
 
 /* MODALES */
 .modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(11,31,58,.55);backdrop-filter:blur(5px);display:none;align-items:center;justify-content:center;z-index:300;padding:16px}
@@ -570,7 +627,29 @@ const firebaseConfig = {
     </div>
 
     <div id="tab-mailbox" class="tab-content hidden">
-      <div class="sc" id="mailbox-container"></div>
+      <div class="sc">
+        <div id="mb-contacts-view">
+          <div class="sc-header"><h3 class="sc-title" id="mb-contacts-title">💬 Docentes</h3></div>
+          <p class="sc-sub" id="mb-contacts-sub"></p>
+          <div id="mb-contacts-list" class="contact-list"></div>
+        </div>
+
+        <div id="mb-chat-view" class="chat-view hidden">
+          <div class="chat-header">
+            <button class="chat-back" onclick="closeChatView()">←</button>
+            <div class="contact-avatar" id="chat-avatar">P</div>
+            <div class="chat-headtext">
+              <div class="contact-name" id="chat-name">Profesor</div>
+              <div class="contact-sub" id="chat-sub">Materia</div>
+            </div>
+          </div>
+          <div class="chat-messages" id="chat-messages"></div>
+          <div class="chat-input-bar">
+            <textarea id="chat-input" rows="1" placeholder="Escribe un mensaje..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChatMessage();}"></textarea>
+            <button class="chat-send-btn" onclick="sendChatMessage()">➤</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -696,8 +775,7 @@ const firebaseConfig = {
 
 <script>
 // ---------- estado local ----------
-let unsubPosts = null, unsubAchv = null, unsubReports = null, unsubMsgsIn = null;
-let cachedTeachers = []; // docentes disponibles para el buzón
+let unsubPosts = null, unsubAchv = null, unsubReports = null;
 
 function v(id){ return document.getElementById(id).value.trim(); }
 function toast(m){ const t=document.getElementById('toast'); t.textContent=m; t.style.display='block'; setTimeout(()=>t.style.display='none',3500); }
@@ -821,7 +899,7 @@ async function doLogin(){
 }
 
 function doLogout(){
-  [unsubPosts, unsubAchv, unsubReports, unsubMsgsIn].forEach(u => { if(u) u(); });
+  [unsubPosts, unsubAchv, unsubReports, unsubChatMsgs].forEach(u => { if(u) u(); });
   window.fbOps.signOut(window.fbAuth);
 }
 
@@ -922,12 +1000,45 @@ function postAvatarInitial(name){
   return (name||'D').trim().charAt(0).toUpperCase();
 }
 
+const EXAMPLE_POSTS = [
+  { id:'ej-1', cat:'Circular', pin:true, authorName:'Dirección Académica', title:'Inicio del segundo trimestre', body:'Se informa a toda la comunidad educativa que las clases del segundo trimestre inician el lunes 17 de agosto. Se ruega puntualidad y uniforme completo.', likes:18, dateLabel:'hace 2 horas' },
+  { id:'ej-2', cat:'Evento', pin:false, authorName:'Secretaría', title:'Feria de Ciencias 2026', body:'Invitamos a estudiantes de secundaria a inscribir sus proyectos para la Feria de Ciencias, a realizarse el 5 de septiembre en el patio principal.', likes:9, dateLabel:'hace 5 horas' },
+  { id:'ej-3', cat:'Comunicado', pin:false, authorName:'Dirección Académica', title:'Reunión de padres de familia', body:'Se convoca a los padres de familia a la reunión trimestral el sábado 22 de agosto a horas 9:00, en el auditorio del colegio.', likes:5, dateLabel:'hace 1 día' }
+];
+
+function renderExamplePosts(cont){
+  const html = EXAMPLE_POSTS.map(p => `
+    <article class="feed-post ${p.pin?'pinned':''}">
+      ${p.pin ? `<div class="fp-pin-strip">📌 Comunicado fijado por Dirección</div>` : ''}
+      <div class="fp-head">
+        <div class="fp-avatar">${esc(postAvatarInitial(p.authorName))}</div>
+        <div class="fp-headtext">
+          <div class="fp-name-row"><span class="fp-name">${esc(p.authorName)}</span><span class="fp-verified" title="Cuenta institucional">✔️</span></div>
+          <div class="fp-time">${esc(p.dateLabel)}<span class="dot"></span>Luz y Verdad</div>
+        </div>
+      </div>
+      <div class="fp-catbar"><span class="cat-tag ${p.cat.toLowerCase()}">${esc(p.cat)}</span><span class="contact-badge-demo">Ejemplo</span></div>
+      <div class="fp-body">
+        <h4 class="fp-title">${esc(p.title)}</h4>
+        <p class="fp-text">${esc(p.body)}</p>
+      </div>
+      <div class="fp-footer">
+        <div class="fp-actions">
+          <button class="fp-action"><span class="ic">🤍</span> Me importa <span class="like-count">${p.likes}</span></button>
+          <button class="fp-action"><span class="ic">💬</span> Comentar</button>
+          <button class="fp-action"><span class="ic">↗️</span> Compartir</button>
+        </div>
+      </div>
+    </article>`).join('');
+  cont.innerHTML = `<div class="demo-banner">👁️ Vista previa de ejemplo — estos comunicados desaparecerán en cuanto se publique uno real.</div>` + html;
+}
+
 function listenPosts(){
   const { collection, query, orderBy, onSnapshot } = window.fbOps;
   const q = query(collection(window.fbDb, 'posts'), orderBy('createdAt', 'desc'));
   unsubPosts = onSnapshot(q, snap => {
     const cont = document.getElementById('posts-container');
-    if(snap.empty){ cont.innerHTML = '<div class="empty-state">Aún no hay comunicados publicados.</div>'; return; }
+    if(snap.empty){ renderExamplePosts(cont); return; }
     let items = [];
     snap.forEach(d => items.push({ id:d.id, ...d.data() }));
     items.sort((a,b) => (b.pin?1:0) - (a.pin?1:0));
@@ -983,12 +1094,29 @@ async function publishAchv(){
   toast('🏆 Logro publicado en la vitrina.');
 }
 
+const EXAMPLE_ACHIEVEMENTS = [
+  { cat:'Académico', title:'Primer lugar en Olimpiada de Matemáticas', desc:'Estudiantes de 5to de secundaria representaron al colegio en la fase departamental, obteniendo el primer puesto.', authorName:'Prof. Ana Rojas', dateLabel:'hace 3 días' },
+  { cat:'Deportivo', title:'Campeones del torneo interescolar de fútsal', desc:'El equipo masculino de secundaria se coronó campeón invicto del torneo interescolar de Sucre.', authorName:'Prof. Carlos Fernández', dateLabel:'hace 1 semana' },
+  { cat:'Artístico', title:'Mención de honor en pintura', desc:'Una estudiante de 3ro de secundaria obtuvo mención de honor en el concurso departamental de pintura juvenil.', authorName:'Dirección Académica', dateLabel:'hace 2 semanas' }
+];
+
 function listenAchievements(){
   const { collection, query, orderBy, onSnapshot } = window.fbOps;
   const q = query(collection(window.fbDb, 'achievements'), orderBy('createdAt', 'desc'));
   unsubAchv = onSnapshot(q, snap => {
     const cont = document.getElementById('achv-container');
-    if(snap.empty){ cont.innerHTML = '<div class="empty-state">Todavía no se registraron logros. ¡Sé el primero en compartir uno!</div>'; return; }
+    if(snap.empty){
+      let html = `<div class="demo-banner" style="grid-column:1/-1">👁️ Vista previa de ejemplo — estos logros desaparecerán en cuanto se publique uno real.</div>`;
+      html += EXAMPLE_ACHIEVEMENTS.map(a => `
+      <div class="info-card" style="border-left-color:var(--gold)">
+        <h4 style="color:var(--gold)"><span class="cat-tag">${esc(a.cat)}</span><span class="contact-badge-demo">Ejemplo</span></h4>
+        <h4 style="color:var(--gold)">🏅 ${esc(a.title)}</h4>
+        <p>${esc(a.desc)}</p>
+        <div class="meta"><span>${esc(a.authorName)}</span><span>${esc(a.dateLabel)}</span></div>
+      </div>`).join('');
+      cont.innerHTML = html;
+      return;
+    }
     let html = '';
     snap.forEach(d => {
       const a = d.data();
@@ -1059,92 +1187,186 @@ function listenReports(){
   });
 }
 
-// ---------- Buzón privado con Docentes ----------
+// ---------- Buzón privado con Docentes (estilo chat) ----------
+const DEMO_TEACHERS = [
+  { uid:'demo-1', nm:'Prof. Ana María Rojas', materia:'Matemáticas · Secundaria' },
+  { uid:'demo-2', nm:'Prof. Carlos Fernández', materia:'Lenguaje · Secundaria' },
+  { uid:'demo-3', nm:'Prof. Lucía Vargas', materia:'Sistemas Informáticos' }
+];
+const DEMO_THREADS = {
+  'demo-1': [
+    { from:'them', body:'Buenas tardes, ¿en qué puedo ayudarte?', t:'10:02' },
+    { from:'me', body:'Profesora, tengo una duda sobre la tarea de ecuaciones cuadráticas.', t:'10:05' },
+    { from:'them', body:'Claro, revisa el ejercicio 4 de tu cuaderno, usa el mismo método de factorización.', t:'10:07' },
+    { from:'me', body:'¡Muchas gracias! Ya lo reviso.', t:'10:08' }
+  ],
+  'demo-2': [
+    { from:'them', body:'Hola, recuerda que el ensayo se entrega el viernes.', t:'09:14' },
+    { from:'me', body:'Profesor, ¿puede ser en formato digital?', t:'09:20' },
+    { from:'them', body:'Sí, súbelo como PDF a la carpeta compartida.', t:'09:21' }
+  ],
+  'demo-3': [
+    { from:'them', body:'¿Cómo va el avance de tu proyecto de grado?', t:'16:40' },
+    { from:'me', body:'Vamos bien, ya tenemos el diseño de la plataforma casi listo.', t:'16:42' },
+    { from:'them', body:'Excelente, nos vemos en la próxima tutoría para revisarlo.', t:'16:43' }
+  ]
+};
+
+let activeChat = null; // { uid, nm, materia, isDemo }
+let unsubChatMsgs = null;
+let cachedTeacherContacts = [];
+
+function contactInitial(name){ return (name||'?').trim().charAt(0).toUpperCase(); }
+
 function listenTeachersAndMailbox(){
   const u = window.currentUser;
-  const mb = document.getElementById('mailbox-container');
-  const { collection, query, where, orderBy, onSnapshot } = window.fbOps;
+  document.getElementById('mb-chat-view').classList.add('hidden');
+  document.getElementById('mb-contacts-view').classList.remove('hidden');
 
-  if(u.rol === 'Docente'){
-    // Bandeja de entrada del docente: solo lo dirigido a él/ella
-    mb.innerHTML = `
-      <div class="sc-header"><h3 class="sc-title">💬 Mensajes recibidos de padres y estudiantes</h3></div>
-      <p class="sc-sub">Consultas dirigidas a ti (${esc(u.materia||'')}), fuera de tu teléfono personal.</p>
-      <div id="msgs-in"></div>`;
-    const q = query(collection(window.fbDb, 'messages'), where('toUid','==', u.uid), orderBy('createdAt','desc'));
-    unsubMsgsIn = onSnapshot(q, snap => {
-      const cont = document.getElementById('msgs-in');
-      if(!cont) return;
-      if(snap.empty){ cont.innerHTML = '<div class="empty-state">No tienes mensajes por ahora.</div>'; return; }
-      let html = '';
-      snap.forEach(d => {
-        const m = d.data();
-        html += `<div class="info-card"><h4>${esc(m.subject||'Consulta')}</h4><p>${esc(m.body)}</p>
-        <div class="meta"><span>De: ${esc(m.fromName)} (${esc(m.fromRole)})</span><span>${fmtDate(m.createdAt)}</span></div></div>`;
-      });
-      cont.innerHTML = html;
-    });
-    return;
-  }
+  const title = document.getElementById('mb-contacts-title');
+  const sub = document.getElementById('mb-contacts-sub');
+  const list = document.getElementById('mb-contacts-list');
 
   if(u.rol === 'Visitante'){
-    mb.innerHTML = `<div class="sc-header"><h3 class="sc-title">💬 Buzón con Docentes</h3></div>
-    <div class="empty-state">🔒 El envío de consultas privadas está reservado para estudiantes, padres de familia, docentes y directivos registrados.</div>`;
+    title.textContent = '💬 Buzón con Docentes';
+    sub.textContent = '';
+    list.innerHTML = '<div class="empty-state">🔒 El chat privado está reservado para estudiantes, padres de familia, docentes y directivos registrados.</div>';
     return;
   }
 
-  // Estudiante, Padre o Directivo: pueden escribir a un docente
-  mb.innerHTML = `
-    <div class="sc-header"><h3 class="sc-title">💬 Escribir a un Docente</h3></div>
-    <p class="sc-sub">Organiza tu consulta por materia o nivel y respeta el horario de descanso de los profesores.</p>
-    <div class="field">
-      <label>Selecciona al docente</label>
-      <select id="mb-teacher"><option value="">Cargando docentes...</option></select>
-    </div>
-    <div class="field">
-      <label>Asunto</label>
-      <input type="text" id="mb-subject" placeholder="Ej: Consulta sobre tarea de Matemáticas">
-    </div>
-    <div class="field">
-      <label>Mensaje</label>
-      <textarea rows="4" id="mb-body" placeholder="Escribe tu consulta detallada..."></textarea>
-    </div>
-    <button class="btn-main" style="width:auto;padding:10px 24px" onclick="sendTeacherMessage()">✉️ Enviar Mensaje</button>
-    <p class="err-msg" id="mb-err"></p>`;
-  loadTeacherOptions();
+  if(u.rol === 'Docente'){
+    title.textContent = '💬 Tus conversaciones';
+    sub.textContent = 'Consultas de padres y estudiantes dirigidas a ti (' + esc(u.materia||'') + ').';
+    listenTeacherContacts();
+    return;
+  }
+
+  // Estudiante, Padre o Directivo: ven la lista de docentes para escribirles
+  title.textContent = '💬 Docentes';
+  sub.textContent = 'Toca a un docente para abrir la conversación, como en un chat privado.';
+  loadTeacherContactsForStudent();
 }
 
-async function loadTeacherOptions(){
+async function loadTeacherContactsForStudent(){
   const { collection, query, where, onSnapshot } = window.fbOps;
   const q = query(collection(window.fbDb, 'users'), where('rol','==','Docente'));
   onSnapshot(q, snap => {
-    cachedTeachers = [];
-    snap.forEach(d => cachedTeachers.push({ uid:d.id, ...d.data() }));
-    const sel = document.getElementById('mb-teacher');
-    if(!sel) return;
-    if(cachedTeachers.length === 0){ sel.innerHTML = '<option value="">Aún no hay docentes registrados</option>'; return; }
-    sel.innerHTML = cachedTeachers.map(t => `<option value="${t.uid}">${esc(t.nm)} — ${esc(t.materia||'Sin materia asignada')}</option>`).join('');
+    let real = [];
+    snap.forEach(d => real.push({ uid:d.id, ...d.data() }));
+    cachedTeacherContacts = real;
+    renderContactsList(real.length ? real.map(t=>({uid:t.uid, nm:t.nm, materia:t.materia, isDemo:false})) : DEMO_TEACHERS.map(t=>({...t, isDemo:true})));
   });
 }
 
-async function sendTeacherMessage(){
-  const sel = document.getElementById('mb-teacher');
-  const toUid = sel.value;
-  const subject = v('mb-subject'), body = v('mb-body');
-  const err = document.getElementById('mb-err');
-  if(!toUid){ err.textContent = 'Selecciona un docente.'; return; }
-  if(!body){ err.textContent = 'Escribe tu mensaje.'; return; }
-  const teacher = cachedTeachers.find(t => t.uid === toUid);
+function listenTeacherContacts(){
+  const { collection, query, where, orderBy, onSnapshot } = window.fbOps;
+  const u = window.currentUser;
+  const q = query(collection(window.fbDb, 'messages'), where('toUid','==', u.uid), orderBy('createdAt','desc'));
+  onSnapshot(q, snap => {
+    const seen = {};
+    let contacts = [];
+    snap.forEach(d => {
+      const m = d.data();
+      if(!seen[m.fromUid]){ seen[m.fromUid] = true; contacts.push({ uid:m.fromUid, nm:m.fromName, materia:m.fromRole, isDemo:false }); }
+    });
+    const list = document.getElementById('mb-contacts-list');
+    if(!list) return;
+    if(contacts.length === 0){ list.innerHTML = '<div class="empty-state">Aún no recibiste mensajes de padres o estudiantes.</div>'; return; }
+    renderContactsList(contacts);
+  });
+}
+
+let renderedContacts = [];
+function renderContactsList(contacts){
+  renderedContacts = contacts;
+  const list = document.getElementById('mb-contacts-list');
+  if(!contacts.length){ list.innerHTML = '<div class="empty-state">No hay contactos disponibles todavía.</div>'; return; }
+  list.innerHTML = contacts.map((c, i) => `
+    <div class="contact-item" onclick="openChat(renderedContacts[${i}])">
+      <div class="contact-avatar">${esc(contactInitial(c.nm))}</div>
+      <div class="contact-info">
+        <div class="contact-name">${esc(c.nm)} ${c.isDemo?'<span class="contact-badge-demo">Ejemplo</span>':''}</div>
+        <div class="contact-sub">${esc(c.materia||'')}</div>
+      </div>
+      <span class="contact-chevron">›</span>
+    </div>`).join('');
+}
+
+function chatConvId(uidA, uidB){ return [uidA, uidB].sort().join('_'); }
+
+function openChat(contact){
+  activeChat = contact;
+  document.getElementById('mb-contacts-view').classList.add('hidden');
+  document.getElementById('mb-chat-view').classList.remove('hidden');
+  document.getElementById('chat-avatar').textContent = contactInitial(contact.nm);
+  document.getElementById('chat-name').textContent = contact.nm;
+  document.getElementById('chat-sub').textContent = contact.materia || '';
+  document.getElementById('chat-input').value = '';
+
+  if(unsubChatMsgs){ unsubChatMsgs(); unsubChatMsgs = null; }
+
+  if(contact.isDemo){
+    renderDemoThread(contact.uid);
+    return;
+  }
+
+  const u = window.currentUser;
+  const convId = chatConvId(u.uid, contact.uid);
+  const { collection, query, where, orderBy, onSnapshot } = window.fbOps;
+  const q = query(collection(window.fbDb, 'messages'), where('convId','==', convId), orderBy('createdAt','asc'));
+  unsubChatMsgs = onSnapshot(q, snap => {
+    const cont = document.getElementById('chat-messages');
+    if(snap.empty){ cont.innerHTML = '<div class="chat-empty-hint">Aún no hay mensajes. Escribe el primero 👋</div>'; return; }
+    let html = '';
+    snap.forEach(d => {
+      const m = d.data();
+      const mine = m.fromUid === u.uid;
+      html += `<div class="bubble ${mine?'sent':'received'}">${esc(m.body)}<span class="bubble-time">${fmtDate(m.createdAt)}</span></div>`;
+    });
+    cont.innerHTML = html;
+    cont.scrollTop = cont.scrollHeight;
+  });
+}
+
+function renderDemoThread(uid){
+  const thread = DEMO_THREADS[uid] || [];
+  const cont = document.getElementById('chat-messages');
+  cont.innerHTML = thread.map(m => `<div class="bubble ${m.from==='me'?'sent':'received'}">${esc(m.body)}<span class="bubble-time">${esc(m.t)}</span></div>`).join('');
+  cont.scrollTop = cont.scrollHeight;
+}
+
+function closeChatView(){
+  if(unsubChatMsgs){ unsubChatMsgs(); unsubChatMsgs = null; }
+  activeChat = null;
+  document.getElementById('mb-chat-view').classList.add('hidden');
+  document.getElementById('mb-contacts-view').classList.remove('hidden');
+}
+
+async function sendChatMessage(){
+  const input = document.getElementById('chat-input');
+  const body = input.value.trim();
+  if(!body || !activeChat) return;
+
+  if(activeChat.isDemo){
+    DEMO_THREADS[activeChat.uid] = DEMO_THREADS[activeChat.uid] || [];
+    const now = new Date();
+    const t = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
+    DEMO_THREADS[activeChat.uid].push({ from:'me', body, t });
+    input.value = '';
+    renderDemoThread(activeChat.uid);
+    return;
+  }
+
   const { collection, addDoc, serverTimestamp } = window.fbOps;
   const u = window.currentUser;
+  const convId = chatConvId(u.uid, activeChat.uid);
+  input.value = '';
   await addDoc(collection(window.fbDb, 'messages'), {
-    toUid, toName: teacher ? teacher.nm : '',
+    convId,
+    toUid: activeChat.uid, toName: activeChat.nm,
     fromUid: u.uid, fromName: u.nm, fromRole: u.rol,
-    subject, body, createdAt: serverTimestamp()
+    body, createdAt: serverTimestamp()
   });
-  document.getElementById('mb-subject').value=''; document.getElementById('mb-body').value='';
-  err.textContent = '';
-  toast('✉️ Mensaje enviado de forma privada al docente.');
 }
 </script>
 </body>
