@@ -3,8 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="google-site-verification" content="yLe796VDhPtTf0Z14aSDkBMvTGNN_rCEQzRoEnSdf3E" />
-<head>
-<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Luz y Verdad – Plataforma Escolar y Comunicados | Sucre</title>
 <meta name="description" content="Plataforma escolar oficial de la Unidad Educativa Luz y Verdad en Sucre, Bolivia. Consulta comunicados, anuncios, logros de estudiantes y buzón escolar.">
@@ -110,6 +108,10 @@ body.dark-mode .auth-box h2{color:#fff}
 .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--sky);box-shadow:0 0 0 3px rgba(46,125,209,.12)}
 .field select option{color:#000}
 .field small.hint{display:block;margin-top:4px;color:var(--t3);font-size:.74rem}
+
+/* Estilo para casilla de mantener sesión iniciada */
+.checkbox-field{display:flex;align-items:center;gap:8px;margin-bottom:14px;font-size:.85rem;color:var(--t2);cursor:pointer}
+.checkbox-field input{width:16px;height:16px;accent-color:var(--sky);cursor:pointer}
 
 .pw-wrapper{position:relative;display:flex;align-items:center}
 .pw-wrapper input{padding-right:42px}
@@ -359,7 +361,6 @@ body.dark-mode .bubble.received{background:var(--ice)}
 .chat-send-btn:active{transform:scale(.95)}
 .chat-empty-hint{text-align:center;color:var(--t3);font-size:.82rem;padding:40px 10px}
 
-
 /* MODALES */
 .modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(11,31,58,.55);backdrop-filter:blur(5px);display:none;align-items:center;justify-content:center;z-index:300;padding:16px}
 .modal-overlay.active{display:flex}
@@ -380,7 +381,18 @@ body.dark-mode .modal-card h3{color:#fff}
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+  import { 
+    getAuth, 
+    createUserWithEmailAndPassword, 
+    signInWithEmailAndPassword, 
+    signInWithPopup, 
+    GoogleAuthProvider, 
+    signOut, 
+    onAuthStateChanged,
+    setPersistence,
+    browserSessionPersistence,
+    browserLocalPersistence
+  } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
   import {
     getFirestore, doc, setDoc, getDoc, updateDoc,
     collection, addDoc, query, where, orderBy, onSnapshot, serverTimestamp
@@ -405,6 +417,7 @@ const firebaseConfig = {
   window.googleProvider = googleProvider;
   window.fbOps = {
     createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, signOut,
+    setPersistence, browserSessionPersistence, browserLocalPersistence,
     doc, setDoc, getDoc, updateDoc,
     collection, addDoc, query, where, orderBy, onSnapshot, serverTimestamp
   };
@@ -481,6 +494,12 @@ const firebaseConfig = {
         </div>
       </div>
 
+      <!-- OPCIÓN DE MANTENER LA SESIÓN INICIADA -->
+      <label class="checkbox-field">
+        <input type="checkbox" id="chk-remember" checked>
+        <span>Mantener la sesión iniciada</span>
+      </label>
+
       <button class="btn-main" onclick="doLogin()">🔑 Ingresar con Correo</button>
       <p class="err-msg" id="li-err"></p>
       <p class="auth-switch">¿No tienes cuenta? <span onclick="showPg('register')">Regístrate aquí</span></p>
@@ -540,6 +559,7 @@ const firebaseConfig = {
   </div>
 </div>
 
+<!-- PLATAFORMA PRINCIPAL (SE CARGA TRAS EL LOGIN) -->
 <div id="app">
   <div id="topbar">
     <div class="tb-logo">
@@ -577,8 +597,10 @@ const firebaseConfig = {
     </div>
   </div>
 
+  <!-- NAVEGACIÓN EN PANTALLA PRINCIPAL -->
   <div class="nav-tabs">
-    <button class="tab-btn active" onclick="switchTab('tab-news', this)">📢 Tablón Digital <span class="tab-badge">Novedades</span></button>
+    <button class="tab-btn active" id="btn-tab-home" onclick="switchTab('tab-home', this)">🏠 Inicio</button>
+    <button class="tab-btn" onclick="switchTab('tab-news', this)">📢 Tablón Digital <span class="tab-badge">Novedades</span></button>
     <button class="tab-btn" onclick="switchTab('tab-achievements', this)">🏆 Vitrina de Logros</button>
     <button class="tab-btn" onclick="switchTab('tab-reports', this)">📝 Reportes y Sugerencias</button>
     <button class="tab-btn" onclick="switchTab('tab-mailbox', this)">💬 Buzón con Docentes</button>
@@ -587,7 +609,30 @@ const firebaseConfig = {
   <div class="main-wrap">
     <div id="banner-perm"></div>
 
-    <div id="tab-news" class="tab-content">
+    <!-- SECCIÓN / PANTALLA DE INICIO POST-LOGIN -->
+    <div id="tab-home" class="tab-content">
+      <div class="sc" style="background: linear-gradient(135deg, var(--white) 0%, var(--ice2) 100%);">
+        <div class="sc-header">
+          <h3 class="sc-title">Bienvenido/a a la Plataforma Institucional</h3>
+        </div>
+        <p style="font-size: 1rem; line-height: 1.6; color: var(--t1); margin-bottom: 20px;">
+          Hola <strong id="welcome-user-name">Usuario</strong>, has ingresado con éxito al portal de la Unidad Educativa <strong>Luz y Verdad</strong>. 
+          Desde aquí puedes estar al tanto de los últimos avisos escolares, interactuar con el cuerpo docente y gestionar tus consultas de manera segura.
+        </p>
+        <div class="grid-2">
+          <div class="info-card" onclick="switchTab('tab-news', document.querySelectorAll('.tab-btn')[1])" style="cursor:pointer;">
+            <h4>📢 Comunicados Recientes</h4>
+            <p>Revisa avisos oficiales, circulares y próximos eventos escolares.</p>
+          </div>
+          <div class="info-card" onclick="switchTab('tab-mailbox', document.querySelectorAll('.tab-btn')[4])" style="cursor:pointer;">
+            <h4>💬 Buzón Directo</h4>
+            <p>Contacta directamente a tus profesores o personal administrativo.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="tab-news" class="tab-content hidden">
       <div class="sc">
         <div class="sc-header">
           <h3 class="sc-title">📢 Comunicados Oficiales</h3>
@@ -790,8 +835,7 @@ const firebaseConfig = {
 <div id="toast"></div>
 
 <script>
-// ---------- estado local ----------
-let unsubPosts = null, unsubAchv = null, unsubReports = null;
+let unsubPosts = null, unsubAchv = null, unsubReports = null, unsubChatMsgs = null;
 
 function v(id){ return document.getElementById(id).value.trim(); }
 function toast(m){ const t=document.getElementById('toast'); t.textContent=m; t.style.display='block'; setTimeout(()=>t.style.display='none',3500); }
@@ -813,7 +857,7 @@ function switchTab(tabId, btn){
   document.querySelectorAll('.tab-content').forEach(el=>el.classList.add('hidden'));
   document.querySelectorAll('.tab-btn').forEach(el=>el.classList.remove('active'));
   document.getElementById(tabId).classList.remove('hidden');
-  btn.classList.add('active');
+  if(btn) btn.classList.add('active');
 }
 
 function toggleUserDropdown(){
@@ -865,13 +909,10 @@ function toggleDarkMode(isDark){
   document.body.classList.toggle('dark-mode', isDark);
 }
 
-// ---------- accesibilidad (WCAG 2.1 - 1.4.4 Cambio de tamaño de texto) ----------
 function setFontScale(dir){
   let scale = parseInt(localStorage.getItem('lyv_fontScale') || '0', 10);
   if(dir === 0) scale = 0; else scale = Math.max(-2, Math.min(3, scale + dir));
   localStorage.setItem('lyv_fontScale', scale);
-  // La tipografía de toda la plataforma está en rem, así que basta con
-  // modificar el tamaño raíz para escalar todo el sistema de forma uniforme.
   document.documentElement.style.fontSize = (100 + scale*12) + '%';
 }
 (function initFontScale(){
@@ -882,6 +923,9 @@ function setFontScale(dir){
 // ---------- Auth ----------
 async function doGoogleAuth(){
   try {
+    const remember = document.getElementById('chk-remember').checked;
+    const persistence = remember ? window.fbOps.browserLocalPersistence : window.fbOps.browserSessionPersistence;
+    await window.fbOps.setPersistence(window.fbAuth, persistence);
     await window.fbOps.signInWithPopup(window.fbAuth, window.googleProvider);
     toast('¡Sesión iniciada con Google!');
   } catch(e) {
@@ -908,9 +952,15 @@ async function doRegister(){
 
 async function doLogin(){
   const em = v('li-em').toLowerCase(), pw = v('li-pw');
+  const remember = document.getElementById('chk-remember').checked;
   const err = document.getElementById('li-err');
   if(!em || !pw){ err.textContent = 'Ingresa credenciales completas.'; return; }
-  try { await window.fbOps.signInWithEmailAndPassword(window.fbAuth, em, pw); }
+  try {
+    // Configura si la sesión debe recordarse o ser temporal de navegador
+    const persistence = remember ? window.fbOps.browserLocalPersistence : window.fbOps.browserSessionPersistence;
+    await window.fbOps.setPersistence(window.fbAuth, persistence);
+    await window.fbOps.signInWithEmailAndPassword(window.fbAuth, em, pw);
+  }
   catch(e) { err.textContent = 'Correo o contraseña incorrectos.'; }
 }
 
@@ -942,8 +992,12 @@ function launchApp(){
   const initial = u.nm ? u.nm.charAt(0).toUpperCase() : 'U';
   document.getElementById('u-top-avatar').textContent = initial;
   document.getElementById('u-top-name').textContent = u.nm.split(' ')[0];
+  document.getElementById('welcome-user-name').textContent = u.nm;
   document.getElementById('dd-full-name').textContent = u.nm;
   document.getElementById('dd-role').textContent = u.rol;
+
+  // Cargar pestaña Inicio por defecto tras hacer login
+  switchTab('tab-home', document.getElementById('btn-tab-home'));
 
   if(isSchool && !u.rolCompleto){
     openModal('modal-rol');
@@ -1008,7 +1062,7 @@ function getPostReactions(){
 }
 function setPostReaction(postId, key){
   const r = getPostReactions();
-  r[postId] = (r[postId] === key) ? null : key; // tocar la misma reacción la quita
+  r[postId] = (r[postId] === key) ? null : key;
   if(!r[postId]) delete r[postId];
   localStorage.setItem('lyv_post_reactions', JSON.stringify(r));
   return r[postId] || null;
@@ -1220,7 +1274,7 @@ function listenReports(){
   });
 }
 
-// ---------- Buzón privado con Docentes (estilo chat) ----------
+// ---------- Buzón privado con Docentes ----------
 const DEMO_TEACHERS = [
   { uid:'demo-1', nm:'Prof. Ana María Rojas', materia:'Matemáticas · Secundaria' },
   { uid:'demo-2', nm:'Prof. Carlos Fernández', materia:'Lenguaje · Secundaria' },
@@ -1245,8 +1299,7 @@ const DEMO_THREADS = {
   ]
 };
 
-let activeChat = null; // { uid, nm, materia, isDemo }
-let unsubChatMsgs = null;
+let activeChat = null;
 let cachedTeacherContacts = [];
 
 function contactInitial(name){ return (name||'?').trim().charAt(0).toUpperCase(); }
@@ -1274,7 +1327,6 @@ function listenTeachersAndMailbox(){
     return;
   }
 
-  // Estudiante, Padre o Directivo: ven la lista de docentes para escribirles
   title.textContent = '💬 Docentes';
   sub.textContent = 'Toca a un docente para abrir la conversación, como en un chat privado.';
   loadTeacherContactsForStudent();
