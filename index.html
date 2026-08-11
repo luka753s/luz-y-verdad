@@ -980,56 +980,97 @@ async function publishPost(){
   toast('📧 Comunicado publicado. Notificación institucional enviada por correo (SMTP) a docentes y tutores.');
 }
 
-function getLikedPosts(){
-  try{ return JSON.parse(localStorage.getItem('lyv_liked_posts')||'{}'); }catch(e){ return {}; }
+const REACTIONS = [
+  { key:'like', emoji:'👍', label:'Me gusta' },
+  { key:'love', emoji:'❤️', label:'Me encanta' },
+  { key:'haha', emoji:'😄', label:'Me alegra' },
+  { key:'clap', emoji:'👏', label:'Aplausos' }
+];
+
+function getPostReactions(){
+  try{ return JSON.parse(localStorage.getItem('lyv_post_reactions')||'{}'); }catch(e){ return {}; }
 }
-function toggleLike(postId, btn){
-  const liked = getLikedPosts();
-  const wasLiked = !!liked[postId];
-  liked[postId] = !wasLiked;
-  localStorage.setItem('lyv_liked_posts', JSON.stringify(liked));
-  const countEl = btn.querySelector('.like-count');
-  let count = parseInt(countEl.textContent, 10) || 0;
-  count = wasLiked ? Math.max(0, count-1) : count+1;
-  countEl.textContent = count;
-  btn.classList.toggle('liked', !wasLiked);
-  btn.querySelector('.ic').textContent = wasLiked ? '🤍' : '❤️';
+function setPostReaction(postId, key){
+  const r = getPostReactions();
+  r[postId] = (r[postId] === key) ? null : key; // tocar la misma reacción la quita
+  if(!r[postId]) delete r[postId];
+  localStorage.setItem('lyv_post_reactions', JSON.stringify(r));
+  return r[postId] || null;
+}
+
+let postBaseCounts = {};
+let renderedPosts = [];
+
+function renderReactionBar(postId){
+  const base = postBaseCounts[postId] || { like:0, love:0, haha:0, clap:0 };
+  const mine = getPostReactions()[postId] || null;
+  const btns = REACTIONS.map(r => {
+    const count = (base[r.key]||0) + (mine === r.key ? 1 : 0);
+    return `<button class="rx-btn ${mine===r.key?'active':''}" onclick="reactToPost('${postId}','${r.key}',this)" title="${r.label}">
+      <span class="rx-emoji">${r.emoji}</span><span class="rx-count">${count}</span>
+    </button>`;
+  }).join('');
+  return `<div class="fp-reactions" data-post="${postId}">${btns}</div>`;
+}
+
+function reactToPost(postId, key){
+  setPostReaction(postId, key);
+  const bar = document.querySelector(`.fp-reactions[data-post="${postId}"]`);
+  if(bar) bar.outerHTML = renderReactionBar(postId);
+}
+
+function sharePostByIndex(i){
+  const p = renderedPosts[i];
+  if(!p) return;
+  const text = `📢 ${p.title}\n\n${p.body}\n\n— ${p.authorName || 'Dirección'} · U.E. Luz y Verdad`;
+  if(navigator.share){
+    navigator.share({ title: p.title, text }).catch(()=>{});
+  } else if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(()=> toast('📋 Comunicado copiado, listo para compartir'))
+      .catch(()=> toast('No se pudo copiar el comunicado.'));
+  } else {
+    toast('Tu navegador no permite compartir automáticamente.');
+  }
 }
 
 function postAvatarInitial(name){
   return (name||'D').trim().charAt(0).toUpperCase();
 }
 
-const EXAMPLE_POSTS = [
-  { id:'ej-1', cat:'Circular', pin:true, authorName:'Dirección Académica', title:'Inicio del segundo trimestre', body:'Se informa a toda la comunidad educativa que las clases del segundo trimestre inician el lunes 17 de agosto. Se ruega puntualidad y uniforme completo.', likes:18, dateLabel:'hace 2 horas' },
-  { id:'ej-2', cat:'Evento', pin:false, authorName:'Secretaría', title:'Feria de Ciencias 2026', body:'Invitamos a estudiantes de secundaria a inscribir sus proyectos para la Feria de Ciencias, a realizarse el 5 de septiembre en el patio principal.', likes:9, dateLabel:'hace 5 horas' },
-  { id:'ej-3', cat:'Comunicado', pin:false, authorName:'Dirección Académica', title:'Reunión de padres de familia', body:'Se convoca a los padres de familia a la reunión trimestral el sábado 22 de agosto a horas 9:00, en el auditorio del colegio.', likes:5, dateLabel:'hace 1 día' }
-];
-
-function renderExamplePosts(cont){
-  const html = EXAMPLE_POSTS.map(p => `
+function feedPostHTML(p, i, extraTag){
+  return `
     <article class="feed-post ${p.pin?'pinned':''}">
       ${p.pin ? `<div class="fp-pin-strip">📌 Comunicado fijado por Dirección</div>` : ''}
       <div class="fp-head">
         <div class="fp-avatar">${esc(postAvatarInitial(p.authorName))}</div>
         <div class="fp-headtext">
-          <div class="fp-name-row"><span class="fp-name">${esc(p.authorName)}</span><span class="fp-verified" title="Cuenta institucional">✔️</span></div>
+          <div class="fp-name-row"><span class="fp-name">${esc(p.authorName || 'Dirección')}</span><span class="fp-verified" title="Cuenta institucional">✔️</span></div>
           <div class="fp-time">${esc(p.dateLabel)}<span class="dot"></span>Luz y Verdad</div>
         </div>
       </div>
-      <div class="fp-catbar"><span class="cat-tag ${p.cat.toLowerCase()}">${esc(p.cat)}</span><span class="contact-badge-demo">Ejemplo</span></div>
+      <div class="fp-catbar"><span class="cat-tag ${p.cat.toLowerCase()}">${esc(p.cat)}</span>${extraTag||''}</div>
       <div class="fp-body">
         <h4 class="fp-title">${esc(p.title)}</h4>
         <p class="fp-text">${esc(p.body)}</p>
       </div>
       <div class="fp-footer">
-        <div class="fp-actions">
-          <button class="fp-action"><span class="ic">🤍</span> Me importa <span class="like-count">${p.likes}</span></button>
-          <button class="fp-action"><span class="ic">💬</span> Comentar</button>
-          <button class="fp-action"><span class="ic">↗️</span> Compartir</button>
-        </div>
+        ${renderReactionBar(p.id)}
+        <button class="fp-share-btn" onclick="sharePostByIndex(${i})"><span class="ic">↗️</span> Compartir</button>
       </div>
-    </article>`).join('');
+    </article>`;
+}
+
+const EXAMPLE_POSTS = [
+  { id:'ej-1', cat:'Circular', pin:true, authorName:'Dirección Académica', title:'Inicio del segundo trimestre', body:'Se informa a toda la comunidad educativa que las clases del segundo trimestre inician el lunes 17 de agosto. Se ruega puntualidad y uniforme completo.', dateLabel:'hace 2 horas', base:{like:14,love:9,haha:2,clap:6} },
+  { id:'ej-2', cat:'Evento', pin:false, authorName:'Secretaría', title:'Feria de Ciencias 2026', body:'Invitamos a estudiantes de secundaria a inscribir sus proyectos para la Feria de Ciencias, a realizarse el 5 de septiembre en el patio principal.', dateLabel:'hace 5 horas', base:{like:7,love:3,haha:1,clap:4} },
+  { id:'ej-3', cat:'Comunicado', pin:false, authorName:'Dirección Académica', title:'Reunión de padres de familia', body:'Se convoca a los padres de familia a la reunión trimestral el sábado 22 de agosto a horas 9:00, en el auditorio del colegio.', dateLabel:'hace 1 día', base:{like:4,love:1,haha:0,clap:2} }
+];
+
+function renderExamplePosts(cont){
+  renderedPosts = EXAMPLE_POSTS;
+  postBaseCounts = {};
+  EXAMPLE_POSTS.forEach(p => { postBaseCounts[p.id] = p.base; });
+  const html = EXAMPLE_POSTS.map((p, i) => feedPostHTML(p, i, '<span class="contact-badge-demo">Ejemplo</span>')).join('');
   cont.innerHTML = `<div class="demo-banner">👁️ Vista previa de ejemplo — estos comunicados desaparecerán en cuanto se publique uno real.</div>` + html;
 }
 
@@ -1042,40 +1083,16 @@ function listenPosts(){
     let items = [];
     snap.forEach(d => items.push({ id:d.id, ...d.data() }));
     items.sort((a,b) => (b.pin?1:0) - (a.pin?1:0));
-    const liked = getLikedPosts();
 
-    cont.innerHTML = items.map(p => {
-      const isLiked = !!liked[p.id];
-      const baseLikes = p.pin ? 12 : 4; // pequeño número base para que el feed no se vea vacío
-      return `
-      <article class="feed-post ${p.pin?'pinned':''}">
-        ${p.pin ? `<div class="fp-pin-strip">📌 Comunicado fijado por Dirección</div>` : ''}
-        <div class="fp-head">
-          <div class="fp-avatar">${esc(postAvatarInitial(p.authorName))}</div>
-          <div class="fp-headtext">
-            <div class="fp-name-row">
-              <span class="fp-name">${esc(p.authorName || 'Dirección')}</span>
-              <span class="fp-verified" title="Cuenta institucional">✔️</span>
-            </div>
-            <div class="fp-time">${fmtDate(p.createdAt)}<span class="dot"></span>Luz y Verdad</div>
-          </div>
-        </div>
-        <div class="fp-catbar"><span class="cat-tag ${p.cat.toLowerCase()}">${esc(p.cat)}</span></div>
-        <div class="fp-body">
-          <h4 class="fp-title">${esc(p.title)}</h4>
-          <p class="fp-text">${esc(p.body)}</p>
-        </div>
-        <div class="fp-footer">
-          <div class="fp-actions">
-            <button class="fp-action ${isLiked?'liked':''}" onclick="toggleLike('${p.id}', this)">
-              <span class="ic">${isLiked?'❤️':'🤍'}</span> Me importa <span class="like-count">${baseLikes + (isLiked?1:0)}</span>
-            </button>
-            <button class="fp-action"><span class="ic">💬</span> Comentar</button>
-            <button class="fp-action"><span class="ic">↗️</span> Compartir</button>
-          </div>
-        </div>
-      </article>`;
-    }).join('');
+    renderedPosts = items.map(p => ({ ...p, dateLabel: fmtDate(p.createdAt) }));
+    postBaseCounts = {};
+    items.forEach(p => {
+      postBaseCounts[p.id] = p.pin
+        ? { like:9, love:6, haha:2, clap:5 }
+        : { like:3, love:2, haha:1, clap:2 };
+    });
+
+    cont.innerHTML = renderedPosts.map((p, i) => feedPostHTML(p, i)).join('');
   });
 }
 
