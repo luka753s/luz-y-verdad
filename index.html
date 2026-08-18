@@ -2,26 +2,12 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="google-site-verification" content="yLe796VDhPtTf0Z14aSDkBMvTGNN_rCEQzRoEnSdf3E" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Luz y Verdad – Plataforma Escolar y Comunicados | Sucre</title>
-<meta name="description" content="Plataforma escolar oficial de la Unidad Educativa Luz y Verdad en Sucre, Bolivia. Consulta comunicados, anuncios, logros de estudiantes y buzón escolar.">
-<meta name="keywords" content="Luz y Verdad, plataforma escolar, colegio Luz y Verdad, comunicados Luz y Verdad Sucre, colegio Sucre Bolivia">
+<title>Luz y Verdad – Plataforma Escolar | Sucre</title>
 <link rel="icon" type="image/jpg" href="escudo.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<meta property="og:site_name" content="Unidad Educativa Luz y Verdad">
-<meta property="og:title" content="Luz y Verdad – Plataforma Escolar">
-<meta property="og:description" content="Plataforma digital de comunicados y avisos escolares de la U.E. Luz y Verdad.">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "Unidad Educativa Luz y Verdad",
-  "alternateName": ["Luz y Verdad", "Plataforma Escolar Luz y Verdad"],
-  "url": "https://luka753s.github.io/luz-y-verdad/"
-}
-</script>
+
 <style>
 :root{
   --navy:#0b1f3a; --navy2:#122952; --blue:#1a4a8a; --sky:#2e7dd1; --sky-lt:#5b9ee8;
@@ -60,7 +46,7 @@ body{
 }
 .hidden{display:none!important}
 
-/* Divisor ornamental con rombo dorado */
+/* Divisor ornamental */
 .orn-divider{display:flex;align-items:center;gap:10px;margin:2px 0 4px}
 .orn-divider::before,.orn-divider::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--border-gold),transparent)}
 .orn-divider .orn-dot{width:6px;height:6px;background:var(--grad-gold);transform:rotate(45deg);flex-shrink:0;box-shadow:0 0 6px rgba(200,151,58,.5)}
@@ -80,12 +66,10 @@ body{
 .auth-hero::before{content:'';position:absolute;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(200,151,58,.16) 0%,transparent 70%);top:-70px;right:-70px}
 .auth-hero::after{content:'';position:absolute;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(91,158,232,.12) 0%,transparent 70%);bottom:-60px;left:-60px}
 .auth-hero-frame{position:relative;z-index:1;padding:44px 34px;border:1px solid rgba(232,184,75,.35);border-radius:22px;background:rgba(255,255,255,.03);backdrop-filter:blur(2px)}
-.hero-ring{width:92px;height:92px;border-radius:50%;border:3px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:38px;margin:0 auto 22px;background:radial-gradient(circle,rgba(232,184,75,.14) 0%,rgba(255,255,255,.04) 100%);box-shadow:0 0 0 6px rgba(200,151,58,.10), 0 0 34px rgba(200,151,58,.35);overflow:hidden}
-.hero-ring img{width:100%;height:100%;object-fit:cover}
+.hero-ring{width:92px;height:92px;border-radius:50%;border:3px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:38px;margin:0 auto 22px;background:radial-gradient(circle,rgba(232,184,75,.14) 0%,rgba(255,255,255,.04) 100%);box-shadow:0 0 0 6px rgba(200,151,58,.10), 0 0 34px rgba(200,151,58,.35)}
 .hero-title{font-family:'Playfair Display',serif;font-size:2.3rem;margin-bottom:10px;letter-spacing:.3px;text-shadow:0 2px 14px rgba(0,0,0,.25)}
 .hero-divider{width:70px;height:2px;background:var(--grad-gold);margin:0 auto 12px;border-radius:2px}
 .hero-sub{color:var(--gold-lt);font-size:.95rem;letter-spacing:2px;text-transform:uppercase;font-weight:600}
-.hero-tag{margin-top:26px;font-size:.72rem;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.45);border-top:1px solid rgba(255,255,255,.12);padding-top:16px}
 .hero-quote{margin-top:20px;font-size:.86rem;line-height:1.55;color:rgba(255,255,255,.78);font-style:italic;max-width:300px}
 .hero-features{list-style:none;margin-top:24px;text-align:left;display:flex;flex-direction:column;gap:13px}
 .hero-features li{display:flex;align-items:center;gap:12px;font-size:.83rem;color:rgba(255,255,255,.88)}
@@ -108,11 +92,6 @@ body.dark-mode .auth-box h2{color:#fff}
 .field input,.field select,.field textarea{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:var(--rM);outline:none;font-size:.92rem;background:transparent;color:inherit;transition:border-color .2s,box-shadow .2s;font-family:inherit}
 .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--sky);box-shadow:0 0 0 3px rgba(46,125,209,.12)}
 .field select option{color:#000}
-.field small.hint{display:block;margin-top:4px;color:var(--t3);font-size:.74rem}
-
-/* Estilo para casilla de mantener sesión iniciada */
-.checkbox-field{display:flex;align-items:center;gap:8px;margin-bottom:14px;font-size:.85rem;color:var(--t2);cursor:pointer}
-.checkbox-field input{width:16px;height:16px;accent-color:var(--sky);cursor:pointer}
 
 .pw-wrapper{position:relative;display:flex;align-items:center}
 .pw-wrapper input{padding-right:42px}
@@ -120,14 +99,6 @@ body.dark-mode .auth-box h2{color:#fff}
 
 .btn-main{width:100%;padding:12px;background:var(--grad-navy);color:#fff;border:1px solid var(--navy2);border-radius:var(--rM);font-weight:600;cursor:pointer;margin-top:6px;transition:filter .2s,transform .1s,box-shadow .2s;font-size:.92rem;font-family:inherit;box-shadow:0 4px 14px rgba(11,31,58,.18)}
 .btn-main:hover{filter:brightness(1.08);box-shadow:0 6px 18px rgba(11,31,58,.24)}
-.btn-main:active{transform:scale(.99)}
-.btn-main:disabled{opacity:.55;cursor:not-allowed}
-.btn-outline{width:100%;padding:10px;background:transparent;color:var(--navy);border:1.5px solid var(--border);border-radius:var(--rM);font-weight:600;cursor:pointer;font-size:.86rem;font-family:inherit;transition:border-color .2s,background .2s}
-body.dark-mode .btn-outline{color:#fff}
-.btn-outline:hover{border-color:var(--sky);background:var(--ice2)}
-.btn-sm{padding:6px 12px;font-size:.78rem;border-radius:20px;border:1.5px solid var(--border);background:transparent;color:var(--t1);cursor:pointer;font-weight:600;font-family:inherit;transition:.2s}
-.btn-sm:hover{border-color:var(--sky);color:var(--sky)}
-.btn-sm.on{background:var(--grad-navy);color:#fff;border-color:var(--navy)}
 
 .btn-google{
   width:100%;padding:11px;background:#fff;color:#333;border:1.5px solid var(--border);
@@ -142,12 +113,9 @@ body.dark-mode .btn-outline{color:#fff}
 
 .auth-switch{text-align:center;margin-top:20px;font-size:.85rem;color:var(--t2)}
 .auth-switch span{color:var(--sky);font-weight:600;cursor:pointer}
-.err-msg{font-size:.82rem;color:var(--red);margin-top:10px;text-align:center}
-.ok-msg{font-size:.82rem;color:var(--green);margin-top:10px;text-align:center}
 
 /* APP SHELL */
-#app{display:none;flex-direction:column;min-height:100vh}
-#app.on{display:flex}
+#app{display:flex;flex-direction:column;min-height:100vh}
 
 #topbar{
   background:var(--grad-navy);
@@ -162,19 +130,15 @@ body.dark-mode .btn-outline{color:#fff}
   gap:14px;flex-wrap:wrap;
 }
 .tb-logo{display:flex;align-items:center;gap:12px;font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700}
-.tb-logo-icon{width:42px;height:42px;border-radius:50%;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;background:radial-gradient(circle,rgba(232,184,75,.16) 0%,rgba(255,255,255,.06) 100%);flex-shrink:0;box-shadow:0 0 0 3px rgba(200,151,58,.10);overflow:hidden}
-.tb-logo-icon img{width:100%;height:100%;object-fit:cover}
+.tb-logo-icon{width:38px;height:38px;border-radius:50%;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;background:radial-gradient(circle,rgba(232,184,75,.16) 0%,rgba(255,255,255,.06) 100%);font-size:18px;flex-shrink:0;box-shadow:0 0 0 3px rgba(200,151,58,.10)}
 .tb-motto{font-size:.7rem;color:var(--gold-lt);letter-spacing:1.5px;text-transform:uppercase;font-family:'DM Sans',sans-serif;font-weight:500}
 
 .tb-right{display:flex;align-items:center;gap:14px}
 
-/* Panel de accesibilidad */
 .a11y-panel{display:flex;align-items:center;gap:4px;background:rgba(255,255,255,.08);border:1px solid rgba(232,184,75,.28);border-radius:30px;padding:4px}
 .a11y-btn{width:28px;height:28px;border-radius:50%;border:none;background:transparent;color:#fff;font-weight:700;cursor:pointer;font-size:.78rem;display:flex;align-items:center;justify-content:center;transition:background .2s}
 .a11y-btn:hover{background:rgba(255,255,255,.2)}
-.a11y-btn[aria-pressed="true"]{background:var(--gold);color:var(--navy)}
 
-/* MENU DESPLEGABLE DE USUARIO */
 .user-menu-wrapper{position:relative}
 .user-badge{display:flex;align-items:center;gap:10px;cursor:pointer;padding:5px 14px 5px 6px;border-radius:30px;background:rgba(255,255,255,.08);border:1px solid rgba(232,184,75,.28);transition:background .2s}
 .user-badge:hover{background:rgba(255,255,255,.18)}
@@ -196,377 +160,93 @@ body.dark-mode .dd-header strong{color:#fff}
 .dd-item:hover{background:var(--ice)}
 .dd-item.danger{color:var(--red)}
 
-/* NAV TABS */
 .nav-tabs{background:var(--white);border-bottom:1px solid var(--border);padding:0 24px;display:flex;gap:8px;overflow-x:auto;box-shadow:0 2px 10px rgba(11,31,58,.04)}
-.tab-btn{padding:14px 18px;border:none;background:none;font-weight:600;font-size:.88rem;color:var(--t2);cursor:pointer;border-bottom:3px solid transparent;display:flex;align-items:center;gap:8px;white-space:nowrap;transition:color .2s,border-color .2s;font-family:inherit;position:relative}
+.tab-btn{padding:14px 18px;border:none;background:none;font-weight:600;font-size:.88rem;color:var(--t2);cursor:pointer;border-bottom:3px solid transparent;display:flex;align-items:center;gap:8px;white-space:nowrap;transition:color .2s,border-color .2s;font-family:inherit}
 .tab-btn:hover{color:var(--navy)}
 .tab-btn.active{color:var(--sky);border-image:var(--grad-gold) 1}
 .tab-badge{background:var(--ice);color:var(--sky);padding:2px 7px;border-radius:10px;font-size:.72rem}
 
-/* MAIN CONTENT */
 .main-wrap{max-width:1000px;margin:26px auto;width:92%;flex:1}
-.perm-notice{padding:15px 18px;border-radius:var(--rM);font-size:.88rem;margin-bottom:22px;display:flex;align-items:center;gap:12px;box-shadow:var(--shS);border-left-width:4px;border-left-style:solid}
-.perm-notice.info{background:var(--info-bg);color:var(--info);border:1px solid #b2d4f5;border-left:4px solid var(--info)}
-.perm-notice.warn{background:var(--amber-bg);color:var(--amber);border:1px solid #f7d8a8;border-left:4px solid var(--amber)}
-
 .sc{background:var(--white);border:1px solid var(--border);border-radius:var(--rL);padding:26px;margin-bottom:22px;box-shadow:var(--shS);position:relative;overflow:hidden}
 .sc::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:var(--grad-gold);opacity:.85}
 .sc-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;border-bottom:1px solid var(--border-lt);padding-bottom:14px;flex-wrap:wrap;gap:10px}
 .sc-title{font-family:'Playfair Display',serif;font-size:1.32rem;color:var(--navy);display:flex;align-items:center;gap:10px}
 body.dark-mode .sc-title{color:#fff}
 .sc-title::before{content:'';width:5px;height:22px;background:var(--grad-gold);border-radius:3px;display:inline-block}
-.sc-sub{font-size:.8rem;color:var(--t2);margin-top:-10px;margin-bottom:16px}
 
-/* CARDS GRID */
 .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 @media(max-width:700px){.grid-2{grid-template-columns:1fr}}
 
-.info-card{background:var(--ice2);border:1px solid var(--border-lt);border-radius:var(--rM);padding:17px;position:relative;overflow:hidden;transition:transform .18s,box-shadow .18s,border-color .18s}
+.info-card{background:var(--ice2);border:1px solid var(--border-lt);border-radius:var(--rM);padding:17px;position:relative;overflow:hidden}
 .info-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:var(--sky)}
-.info-card:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(11,31,58,.10);border-color:var(--border-gold)}
 .info-card h4{font-size:.98rem;color:var(--navy);margin-bottom:6px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 body.dark-mode .info-card h4{color:#fff}
 .info-card p{font-size:.86rem;color:var(--t2);line-height:1.5}
-.info-card .meta{margin-top:12px;padding-top:10px;border-top:1px dashed var(--border);font-size:.72rem;color:var(--t3);display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
-
-.cat-tag{display:inline-block;padding:2px 10px;border-radius:20px;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.4px;background:var(--ice);color:var(--sky)}
-.cat-tag.pin{background:var(--grad-gold);color:var(--navy);box-shadow:var(--shGold)}
-.cat-tag.circular{background:var(--info-bg);color:var(--info)}
-.cat-tag.evento{background:var(--green-bg);color:var(--green)}
-.cat-tag.comunicado{background:var(--ice);color:var(--sky)}
-
-.badge-role{padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:700;display:inline-block;letter-spacing:.2px}
-.role-Estudiante{background:var(--ice);color:var(--info)}
-.role-Docente{background:var(--amber-bg);color:var(--amber)}
-.role-Directivo{background:var(--grad-gold);color:var(--navy);box-shadow:var(--shGold)}
-.role-Padre{background:var(--green-bg);color:var(--green)}
-.role-Visitante{background:#f1f5f9;color:#64748b}
-
-.status-tag{padding:3px 11px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:.2px}
-.status-Pendiente{background:var(--amber-bg);color:var(--amber)}
-.status-EnProceso{background:var(--info-bg);color:var(--info)}
-.status-Resuelto{background:var(--green-bg);color:var(--green)}
-
-.empty-state{text-align:center;padding:34px 16px;color:var(--t3);font-size:.88rem;border:1.5px dashed var(--border);border-radius:var(--rM);background:var(--ice2)}
-
-/* ====== FEED ESTILO RED SOCIAL (Tablón Digital) ====== */
-.feed{display:flex;flex-direction:column;gap:16px;max-width:600px;margin:0 auto}
-
-.feed-post{
-  background:var(--white);border:1px solid var(--border-lt);border-radius:var(--rL);
-  overflow:hidden;box-shadow:var(--shS);transition:box-shadow .2s,border-color .2s,transform .15s;
-  position:relative;
-}
-.feed-post:hover{box-shadow:var(--shM);border-color:var(--border-gold)}
-.feed-post.pinned{border-color:var(--border-gold);box-shadow:0 6px 20px rgba(200,151,58,.14)}
-.feed-post.pinned::before{
-  content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:var(--grad-gold);
-}
-
-.fp-pin-strip{
-  display:flex;align-items:center;gap:6px;padding:9px 18px;background:var(--gold-pale);
-  color:var(--gold-dp);font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;
-  border-bottom:1px solid var(--border-gold);
-}
-body.dark-mode .fp-pin-strip{background:rgba(200,151,58,.14);color:var(--gold-lt)}
-
-.fp-head{display:flex;align-items:center;gap:12px;padding:16px 18px 10px}
-.fp-avatar{
-  width:44px;height:44px;border-radius:50%;background:var(--grad-navy);color:var(--gold-lt);
-  display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.05rem;
-  flex-shrink:0;border:2px solid var(--gold);box-shadow:0 2px 8px rgba(11,31,58,.18);
-}
-.fp-headtext{flex:1;min-width:0}
-.fp-name-row{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
-.fp-name{font-weight:700;font-size:.94rem;color:var(--navy)}
-body.dark-mode .fp-name{color:#fff}
-.fp-verified{color:var(--sky);font-size:.85rem}
-.fp-time{font-size:.76rem;color:var(--t3);margin-top:1px;display:flex;align-items:center;gap:6px}
-.fp-time .dot{width:3px;height:3px;border-radius:50%;background:var(--t3);display:inline-block}
-
-.fp-body{padding:2px 18px 14px}
-.fp-title{font-family:'Playfair Display',serif;font-size:1.08rem;color:var(--navy);margin-bottom:6px;line-height:1.3}
-body.dark-mode .fp-title{color:#fff}
-.fp-text{font-size:.9rem;line-height:1.55;color:var(--t1);white-space:pre-wrap}
-
-.fp-footer{
-  display:flex;align-items:center;justify-content:space-between;padding:11px 18px;
-  border-top:1px solid var(--border-lt);
-}
-.fp-actions{display:flex;align-items:center;gap:4px}
-.fp-action{
-  display:flex;align-items:center;gap:6px;background:none;border:none;cursor:pointer;
-  padding:7px 12px;border-radius:20px;font-size:.82rem;font-weight:600;color:var(--t2);
-  font-family:inherit;transition:background .18s,color .18s;
-}
-.fp-action:hover{background:var(--ice2);color:var(--sky)}
-.fp-action.liked{color:#d13a5c}
-.fp-action.liked:hover{background:#fde8ee}
-.fp-action .ic{font-size:.95rem}
-
-.fp-catbar{padding:0 18px 8px;display:flex;gap:6px;flex-wrap:wrap}
-
-.demo-banner{
-  display:flex;align-items:center;gap:10px;padding:11px 16px;border-radius:var(--rM);
-  background:var(--gold-pale);color:var(--gold-dp);font-size:.8rem;font-weight:600;
-  border:1px dashed var(--border-gold);margin-bottom:16px;
-}
-body.dark-mode .demo-banner{background:rgba(200,151,58,.12);color:var(--gold-lt)}
-
-/* ====== BUZÓN ESTILO CHAT (WhatsApp / Instagram DM) ====== */
-.contact-list{display:flex;flex-direction:column;gap:2px}
-.contact-item{
-  display:flex;align-items:center;gap:13px;padding:12px 10px;border-radius:var(--rM);
-  cursor:pointer;transition:background .15s;border-bottom:1px solid var(--border-lt);
-}
-.contact-item:last-child{border-bottom:none}
-.contact-item:hover{background:var(--ice2)}
-.contact-avatar{
-  width:48px;height:48px;border-radius:50%;background:var(--grad-navy);color:var(--gold-lt);
-  display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.08rem;
-  flex-shrink:0;border:2px solid var(--gold);box-shadow:0 2px 8px rgba(11,31,58,.16);
-}
-.contact-info{flex:1;min-width:0}
-.contact-name{font-weight:700;font-size:.92rem;color:var(--navy);display:flex;align-items:center;gap:7px}
-body.dark-mode .contact-name{color:#fff}
-.contact-sub{font-size:.78rem;color:var(--t2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
-.contact-chevron{color:var(--t3);font-size:1.1rem;flex-shrink:0}
-.contact-badge-demo{font-size:.6rem;background:var(--ice);color:var(--sky);padding:1px 7px;border-radius:10px;font-weight:700;text-transform:uppercase;letter-spacing:.3px}
-
-.chat-view{display:flex;flex-direction:column;height:530px}
-.chat-header{display:flex;align-items:center;gap:12px;padding-bottom:14px;margin-bottom:10px;border-bottom:1px solid var(--border-lt)}
-.chat-back{background:none;border:none;font-size:1.25rem;cursor:pointer;color:var(--sky);padding:4px 6px 4px 0;line-height:1}
-.chat-header .contact-avatar{width:42px;height:42px;font-size:.95rem}
-.chat-headtext{min-width:0}
-.chat-headtext .contact-name{font-size:.95rem}
-.chat-headtext .contact-sub{font-size:.76rem}
-
-.chat-messages{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:9px;padding:8px 6px;scroll-behavior:smooth}
-.bubble{max-width:74%;padding:9px 13px;border-radius:16px;font-size:.87rem;line-height:1.42;word-wrap:break-word}
-.bubble.received{align-self:flex-start;background:var(--ice2);color:var(--t1);border-bottom-left-radius:4px}
-body.dark-mode .bubble.received{background:var(--ice)}
-.bubble.sent{align-self:flex-end;background:var(--grad-navy);color:#fff;border-bottom-right-radius:4px}
-.bubble-time{font-size:.64rem;opacity:.65;margin-top:4px;display:block;text-align:right}
-
-.chat-input-bar{display:flex;align-items:flex-end;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid var(--border-lt)}
-.chat-input-bar textarea{
-  flex:1;resize:none;padding:10px 15px;border:1.5px solid var(--border);border-radius:22px;
-  font-family:inherit;font-size:.88rem;outline:none;max-height:90px;background:transparent;color:inherit;
-}
-.chat-input-bar textarea:focus{border-color:var(--sky);box-shadow:0 0 0 3px rgba(46,125,209,.12)}
-.chat-send-btn{
-  width:42px;height:42px;border-radius:50%;background:var(--grad-navy);color:#fff;border:none;
-  cursor:pointer;font-size:1.05rem;flex-shrink:0;display:flex;align-items:center;justify-content:center;
-  box-shadow:0 3px 10px rgba(11,31,58,.2);transition:filter .15s,transform .1s;
-}
-.chat-send-btn:hover{filter:brightness(1.1)}
-.chat-send-btn:active{transform:scale(.95)}
-.chat-empty-hint{text-align:center;color:var(--t3);font-size:.82rem;padding:40px 10px}
-
-/* MODALES */
-.modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(11,31,58,.55);backdrop-filter:blur(5px);display:none;align-items:center;justify-content:center;z-index:300;padding:16px}
-.modal-overlay.active{display:flex}
-.modal-card{background:var(--white);border-radius:var(--rXL);padding:30px;width:90%;max-width:440px;box-shadow:var(--shL);position:relative;border:1px solid var(--border);max-height:90vh;overflow-y:auto}
-.modal-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:5px;border-radius:var(--rXL) var(--rXL) 0 0;background:var(--grad-gold)}
-.modal-card h3{font-family:'Playfair Display',serif;font-size:1.42rem;color:var(--navy);margin-bottom:18px;display:flex;align-items:center;gap:10px}
-body.dark-mode .modal-card h3{color:#fff}
-.btn-close-modal{position:absolute;top:20px;right:20px;background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--t3);transition:color .2s}
-.btn-close-modal:hover{color:var(--red)}
-
-.profile-avatar-big{width:74px;height:74px;border-radius:50%;background:var(--grad-navy);color:var(--gold-lt);display:flex;align-items:center;justify-content:center;font-size:1.85rem;font-weight:700;margin:0 auto 14px;border:3px solid var(--gold);box-shadow:0 0 0 5px rgba(200,151,58,.12)}
-.profile-info-row{display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px dashed var(--border);font-size:.9rem;gap:10px}
-.profile-info-row:last-child{border-bottom:none}
-.profile-info-row span:first-child{color:var(--t2);font-weight:500}
-
-#toast{position:fixed;bottom:24px;right:24px;background:var(--grad-navy);color:#fff;padding:13px 22px;border-radius:var(--rM);display:none;z-index:400;box-shadow:var(--shL);border-left:4px solid var(--gold);font-weight:500;font-size:.9rem;max-width:320px}
 </style>
-
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-  import { 
-    getAuth, 
-    createUserWithEmailAndPassword, 
-    signInWithEmailAndPassword, 
-    signInWithPopup, 
-    GoogleAuthProvider, 
-    signOut, 
-    onAuthStateChanged,
-    setPersistence,
-    browserSessionPersistence,
-    browserLocalPersistence
-  } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-  import {
-    getFirestore, doc, setDoc, getDoc, updateDoc,
-    collection, addDoc, query, where, orderBy, onSnapshot, serverTimestamp
-  } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyCkK3HCo5S2JxcIhVsUbu5dDu4ktBhJW6Q",
-  authDomain: "luz-y-verdad-18f66.firebaseapp.com",
-  projectId: "luz-y-verdad-18f66",
-  storageBucket: "luz-y-verdad-18f66.firebasestorage.app",
-  messagingSenderId: "163077460122",
-  appId: "1:163077460122:web:40b69ccf9095f428030f23",
-  measurementId: "G-C67YQZ7355"
-};
-
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
-  const googleProvider = new GoogleAuthProvider();
-
-  window.fbAuth = auth;
-  window.fbDb = db;
-  window.googleProvider = googleProvider;
-  window.fbOps = {
-    createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, signOut,
-    setPersistence, browserSessionPersistence, browserLocalPersistence,
-    doc, setDoc, getDoc, updateDoc,
-    collection, addDoc, query, where, orderBy, onSnapshot, serverTimestamp
-  };
-
-  // Escuchar estado de usuario
-  onAuthStateChanged(auth, async (user) => {
-    if (user) {
-      const userDoc = await getDoc(doc(db, "users", user.uid));
-      let userData = userDoc.exists() ? userDoc.data() : null;
-
-      if(!userData) {
-        const esInstitucional = user.email.endsWith('@luzyverdadsucre.org');
-        userData = {
-          nm: user.displayName || user.email.split('@')[0],
-          rol: esInstitucional ? 'Pendiente' : 'Padre / Visitante',
-          materia: '',
-          rolCompleto: !esInstitucional,
-          email: user.email
-        };
-        await setDoc(doc(db, "users", user.uid), userData);
-      }
-
-      window.currentUser = { uid: user.uid, email: user.email, ...userData };
-      launchApp();
-    } else {
-      window.currentUser = null;
-      document.getElementById('app').classList.remove('on');
-      showPg('login');
-    }
-  });
-</script>
 </head>
 <body>
 
-<div id="pg-login" class="auth-page">
+<!-- 1. PANTALLA DE AUTENTICACIÓN / LOGIN (Mostrar/Ocultar con la clase .hidden) -->
+<div id="auth-container" class="auth-page">
+  <!-- Columna Ilustrativa (Hero) -->
   <div class="auth-hero">
     <div class="auth-hero-frame">
-      <div class="hero-ring"><img src="escudo.jpg" alt="Escudo Luz y Verdad"></div>
-      <h1 class="hero-title">Luz y Verdad</h1>
+      <div class="hero-ring">🏛️</div>
+      <div class="hero-title">Luz y Verdad</div>
       <div class="hero-divider"></div>
-      <p class="hero-sub">Ciencia, Fe y Virtud</p>
-      <p class="hero-quote">"Uniendo a directivos, docentes, estudiantes y familias en un solo espacio digital, seguro y ordenado."</p>
+      <div class="hero-sub">Unidad Educativa</div>
+      <p class="hero-quote">"Ciencia, Fe y Virtud al servicio de la educación integral."</p>
       <ul class="hero-features">
-        <li><span class="hf-icon">📢</span> Tablón digital con comunicados oficiales</li>
-        <li><span class="hf-icon">🏆</span> Vitrina de logros de los estudiantes</li>
-        <li><span class="hf-icon">📝</span> Reportes y sugerencias con seguimiento</li>
-        <li><span class="hf-icon">💬</span> Buzón privado y directo con docentes</li>
+        <li><div class="hf-icon">📢</div> Tablón de noticias y comunicados</li>
+        <li><div class="hf-icon">🏆</div> Reconocimiento y logros institucionales</li>
+        <li><div class="hf-icon">💬</div> Comunicación directa con el plantel</li>
       </ul>
-      <p class="hero-tag">Unidad Educativa · Sucre, Bolivia</p>
     </div>
   </div>
+
+  <!-- Columna Formulario de Ingreso -->
   <div class="auth-side">
     <div class="auth-box">
       <h2>Iniciar Sesión</h2>
-      <p class="sub">Accede a la plataforma institucional Sucre</p>
+      <p class="sub">Ingresa con tus credenciales institucionales</p>
 
-      <button class="btn-google" onclick="doGoogleAuth()">
-        <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
-        Entrar con Google
+      <button type="button" class="btn-google">
+        <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.74-.06-1.28-.19-1.84H9v3.34h4.96c-.1.83-.64 2.08-1.84 2.92l2.84 2.2c1.7-1.57 2.68-3.88 2.68-6.62z"/><path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.84-2.2c-.76.53-1.78.9-3.12.9-2.38 0-4.41-1.57-5.13-3.7l-2.9 2.22C2.43 15.98 5.45 18 9 18z"/><path fill="#FBBC05" d="M3.87 10.82c-.2-.58-.31-1.21-.31-1.82s.11-1.24.31-1.82L.97 4.96C.35 6.18 0 7.55 0 9s.35 2.82.97 4.04l2.9-2.22z"/><path fill="#EA4335" d="M9 3.58c1.32 0 2.5.45 3.44 1.35l2.58-2.58C13.46.89 11.43 0 9 0 5.45 0 2.43 2.02.97 4.96l2.9 2.22C4.59 5.15 6.62 3.58 9 3.58z"/></svg>
+        Continuar con Google
       </button>
 
-      <div class="divider">o usa correo externo</div>
+      <div class="divider">o usa tu correo registrado</div>
 
-      <div class="field">
-        <label>Correo electrónico</label>
-        <input type="email" id="li-em" placeholder="usuario@gmail.com">
-      </div>
-
-      <div class="field">
-        <label>Contraseña</label>
-        <div class="pw-wrapper">
-          <input type="password" id="li-pw" placeholder="••••••••">
-          <button type="button" class="pw-toggle" onclick="togglePw('li-pw', this)">👁️</button>
+      <form onsubmit="return false;">
+        <div class="field">
+          <label for="login-email">Correo Electrónico</label>
+          <input type="email" id="login-email" placeholder="usuario@luzyverdad.edu.bo">
         </div>
+
+        <div class="field">
+          <label for="login-pw">Contraseña</label>
+          <div class="pw-wrapper">
+            <input type="password" id="login-pw" placeholder="••••••••">
+            <button type="button" class="pw-toggle">👁️</button>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-main">Ingresar a la Plataforma</button>
+      </form>
+
+      <div class="auth-switch">
+        ¿No tienes una cuenta aún? <span>Regístrate aquí</span>
       </div>
-
-      <!-- OPCIÓN DE MANTENER LA SESIÓN INICIADA -->
-      <label class="checkbox-field">
-        <input type="checkbox" id="chk-remember" checked>
-        <span>Mantener la sesión iniciada</span>
-      </label>
-
-      <button class="btn-main" onclick="doLogin()">🔑 Ingresar con Correo</button>
-      <p class="err-msg" id="li-err"></p>
-      <p class="auth-switch">¿No tienes cuenta? <span onclick="showPg('register')">Regístrate aquí</span></p>
     </div>
   </div>
 </div>
 
-<div id="pg-register" class="auth-page hidden">
-  <div class="auth-hero">
-    <div class="auth-hero-frame">
-      <div class="hero-ring"><img src="escudo.jpg" alt="Escudo Luz y Verdad"></div>
-      <h1 class="hero-title">Crear Cuenta</h1>
-      <div class="hero-divider"></div>
-      <p class="hero-sub">Unidad Educativa Luz y Verdad</p>
-      <p class="hero-tag">Comunidad Educativa · Sucre, Bolivia</p>
-    </div>
-  </div>
-  <div class="auth-side">
-    <div class="auth-box">
-      <div style="color:var(--sky);cursor:pointer;font-size:.85rem;margin-bottom:12px;font-weight:600" onclick="showPg('login')">← Volver al Login</div>
-      <h2>Registro</h2>
-      <p class="sub">Cuentas @luzyverdadsucre.org deben usar Google</p>
 
-      <button class="btn-google" onclick="doGoogleAuth()">
-        <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
-        Registrarse con Google
-      </button>
-
-      <div class="divider">o registro manual (Externos / Padres)</div>
-
-      <div class="field">
-        <label>Nombre Completo</label>
-        <input type="text" id="rg-nm" placeholder="Juan Pérez">
-      </div>
-      <div class="field">
-        <label>Correo Electrónico Externa</label>
-        <input type="email" id="rg-em" placeholder="usuario@gmail.com">
-      </div>
-      <div class="field">
-        <label>Rol</label>
-        <select id="rg-rol">
-          <option value="Padre de Familia">Padre de Familia</option>
-          <option value="Visitante">Visitante / Externo</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>Contraseña</label>
-        <div class="pw-wrapper">
-          <input type="password" id="rg-pw" placeholder="Mínimo 6 caracteres">
-          <button type="button" class="pw-toggle" onclick="togglePw('rg-pw', this)">👁️</button>
-        </div>
-      </div>
-
-      <button class="btn-main" onclick="doRegister()">📝 Crear Cuenta Manual</button>
-      <p class="err-msg" id="rg-err"></p>
-    </div>
-  </div>
-</div>
-
-<!-- PLATAFORMA PRINCIPAL (SE CARGA TRAS EL LOGIN) -->
-<div id="app">
+<!-- 2. PLATAFORMA PRINCIPAL (Oculta por defecto con la clase .hidden) -->
+<div id="app" class="hidden">
   <div id="topbar">
     <div class="tb-logo">
-      <div class="tb-logo-icon"><img src="escudo.jpg" alt="Logo"></div>
+      <div class="tb-logo-icon">🏛️</div>
       <div>
         <div>Luz y Verdad</div>
         <div class="tb-motto">Ciencia, Fe y Virtud</div>
@@ -574,892 +254,89 @@ const firebaseConfig = {
     </div>
 
     <div class="tb-right">
-      <div class="a11y-panel" role="group" aria-label="Tamaño de letra">
+      <!-- Panel de accesibilidad -->
+      <div class="a11y-panel">
         <button class="a11y-btn" onclick="setFontScale(-1)" title="Reducir letra">A-</button>
-        <button class="a11y-btn" id="a11y-reset" onclick="setFontScale(0)" title="Tamaño normal">A</button>
+        <button class="a11y-btn" onclick="setFontScale(0)" title="Tamaño normal">A</button>
         <button class="a11y-btn" onclick="setFontScale(1)" title="Aumentar letra">A+</button>
       </div>
 
+      <!-- Menú desplegable de usuario -->
       <div class="user-menu-wrapper">
         <div class="user-badge" onclick="toggleUserDropdown()">
-          <div class="u-avatar" id="u-top-avatar">U</div>
-          <span class="u-name-top" id="u-top-name">Usuario</span>
+          <div class="u-avatar">U</div>
+          <span class="u-name-top">Usuario</span>
           <span style="font-size:.65rem;color:var(--gold-lt)">▼</span>
         </div>
 
         <div class="dropdown-menu" id="dd-menu">
           <div class="dd-header">
-            <strong id="dd-full-name">Nombre</strong>
-            <small id="dd-role">Rol</small>
+            <strong>Nombre de Usuario</strong>
+            <small>Rol de Usuario</small>
           </div>
-          <div class="dd-item" onclick="openProfileModal()">👤 Mi Perfil Institucional</div>
-          <div class="dd-item" onclick="openConfigModal()">⚙️ Configuraciones</div>
-          <div class="dd-item danger" onclick="doLogout()">🚪 Cerrar Sesión / Cambiar Cuenta</div>
+          <div class="dd-item">👤 Mi Perfil Institucional</div>
+          <div class="dd-item">⚙️ Configuraciones</div>
+          <div class="dd-item danger">🚪 Cerrar Sesión</div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- NAVEGACIÓN EN PANTALLA PRINCIPAL -->
+  <!-- NAVEGACIÓN PRINCIPAL -->
   <div class="nav-tabs">
-    <button class="tab-btn active" id="btn-tab-home" onclick="switchTab('tab-home', this)">🏠 Inicio</button>
-    <button class="tab-btn" onclick="switchTab('tab-news', this)">📢 Tablón Digital <span class="tab-badge">Novedades</span></button>
-    <button class="tab-btn" onclick="switchTab('tab-achievements', this)">🏆 Vitrina de Logros</button>
-    <button class="tab-btn" onclick="switchTab('tab-reports', this)">📝 Reportes y Sugerencias</button>
-    <button class="tab-btn" onclick="switchTab('tab-mailbox', this)">💬 Buzón con Docentes</button>
+    <button class="tab-btn active">🏠 Inicio</button>
+    <button class="tab-btn">📢 Tablón Digital <span class="tab-badge">Novedades</span></button>
+    <button class="tab-btn">🏆 Vitrina de Logros</button>
+    <button class="tab-btn">📝 Reportes y Sugerencias</button>
+    <button class="tab-btn">💬 Buzón con Docentes</button>
   </div>
 
   <div class="main-wrap">
-    <div id="banner-perm"></div>
-
-    <!-- SECCIÓN / PANTALLA DE INICIO POST-LOGIN -->
-    <div id="tab-home" class="tab-content">
-      <div class="sc" style="background: linear-gradient(135deg, var(--white) 0%, var(--ice2) 100%);">
-        <div class="sc-header">
-          <h3 class="sc-title">Bienvenido/a a la Plataforma Institucional</h3>
-        </div>
-        <p style="font-size: 1rem; line-height: 1.6; color: var(--t1); margin-bottom: 20px;">
-          Hola <strong id="welcome-user-name">Usuario</strong>, has ingresado con éxito al portal de la Unidad Educativa <strong>Luz y Verdad</strong>. 
-          Desde aquí puedes estar al tanto de los últimos avisos escolares, interactuar con el cuerpo docente y gestionar tus consultas de manera segura.
-        </p>
-        <div class="grid-2">
-          <div class="info-card" onclick="switchTab('tab-news', document.querySelectorAll('.tab-btn')[1])" style="cursor:pointer;">
-            <h4>📢 Comunicados Recientes</h4>
-            <p>Revisa avisos oficiales, circulares y próximos eventos escolares.</p>
-          </div>
-          <div class="info-card" onclick="switchTab('tab-mailbox', document.querySelectorAll('.tab-btn')[4])" style="cursor:pointer;">
-            <h4>💬 Buzón Directo</h4>
-            <p>Contacta directamente a tus profesores o personal administrativo.</p>
-          </div>
-        </div>
+    <div class="sc">
+      <div class="sc-header">
+        <h3 class="sc-title">Bienvenido/a a la Plataforma Institucional</h3>
       </div>
-    </div>
-
-    <div id="tab-news" class="tab-content hidden">
-      <div class="sc">
-        <div class="sc-header">
-          <h3 class="sc-title">📢 Comunicados Oficiales</h3>
-          <button class="btn-sm hidden" id="btn-new-post" onclick="openPostModal()">+ Publicar comunicado</button>
+      <p style="font-size: 1rem; line-height: 1.6; color: var(--t1); margin-bottom: 20px;">
+        Plataforma base de la Unidad Educativa <strong>Luz y Verdad</strong>.
+      </p>
+      <div class="grid-2">
+        <div class="info-card">
+          <h4>📢 Comunicados Recientes</h4>
+          <p>Sección para avisos oficiales, circulares y eventos escolares.</p>
         </div>
-        <p class="sc-sub">Circulares y avisos oficiales de secretaría, en tiempo real y organizados por categoría.</p>
-        <div id="posts-container" class="feed"></div>
-      </div>
-    </div>
-
-    <div id="tab-achievements" class="tab-content hidden">
-      <div class="sc">
-        <div class="sc-header">
-          <h3 class="sc-title">🏆 Galería de Excelencia</h3>
-          <button class="btn-sm hidden" id="btn-new-achv" onclick="openAchvModal()">+ Añadir logro</button>
-        </div>
-        <p class="sc-sub">Reconocimientos académicos, deportivos, artísticos y sociales de nuestros estudiantes.</p>
-        <div id="achv-container" class="grid-2"></div>
-      </div>
-    </div>
-
-    <div id="tab-reports" class="tab-content hidden">
-      <div class="sc" id="report-form-card">
-        <div class="sc-header">
-          <h3 class="sc-title">📝 Enviar Reporte o Sugerencia</h3>
-        </div>
-        <div class="field">
-          <label>Categoría</label>
-          <select id="rp-cat">
-            <option>Sugerencia</option>
-            <option>Reporte de Incidencia</option>
-            <option>Recomendación</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>Título breve</label>
-          <input type="text" id="rp-title" placeholder="Ej: Foco dañado en el patio">
-        </div>
-        <div class="field">
-          <label>Descripción</label>
-          <textarea rows="3" id="rp-desc" placeholder="Cuéntanos con detalle qué observaste o qué sugieres..."></textarea>
-        </div>
-        <button class="btn-main" style="width:auto;padding:10px 24px" onclick="sendReport()">📨 Enviar a Dirección</button>
-        <p class="err-msg" id="rp-err"></p>
-      </div>
-
-      <div class="sc">
-        <div class="sc-header">
-          <h3 class="sc-title" id="reports-list-title">📋 Mis Reportes Enviados</h3>
-        </div>
-        <div id="reports-container"></div>
-      </div>
-    </div>
-
-    <div id="tab-mailbox" class="tab-content hidden">
-      <div class="sc">
-        <div id="mb-contacts-view">
-          <div class="sc-header"><h3 class="sc-title" id="mb-contacts-title">💬 Docentes</h3></div>
-          <p class="sc-sub" id="mb-contacts-sub"></p>
-          <div id="mb-contacts-list" class="contact-list"></div>
-        </div>
-
-        <div id="mb-chat-view" class="chat-view hidden">
-          <div class="chat-header">
-            <button class="chat-back" onclick="closeChatView()">←</button>
-            <div class="contact-avatar" id="chat-avatar">P</div>
-            <div class="chat-headtext">
-              <div class="contact-name" id="chat-name">Profesor</div>
-              <div class="contact-sub" id="chat-sub">Materia</div>
-            </div>
-          </div>
-          <div class="chat-messages" id="chat-messages"></div>
-          <div class="chat-input-bar">
-            <textarea id="chat-input" rows="1" placeholder="Escribe un mensaje..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChatMessage();}"></textarea>
-            <button class="chat-send-btn" onclick="sendChatMessage()">➤</button>
-          </div>
+        <div class="info-card">
+          <h4>💬 Buzón Directo</h4>
+          <p>Sección para contacto directo con profesores o personal administrativo.</p>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<div class="modal-overlay" id="modal-profile">
-  <div class="modal-card">
-    <button class="btn-close-modal" onclick="closeModal('modal-profile')">✕</button>
-    <div style="text-align:center;margin-bottom:18px">
-      <div class="profile-avatar-big" id="prof-avatar">U</div>
-      <h3 id="prof-name" style="margin-bottom:4px">Nombre Completo</h3>
-      <p style="font-size:.82rem;color:var(--t2)" id="prof-email">correo@dominio.com</p>
-    </div>
-    <div class="profile-info-row"><span>Rol en la App:</span> <span class="badge-role" id="prof-role-badge">Estudiante</span></div>
-    <div class="profile-info-row hidden" id="prof-materia-row"><span>Materia / Nivel:</span> <strong id="prof-materia">-</strong></div>
-    <div class="profile-info-row"><span>Dominio de Cuenta:</span> <strong id="prof-type">Oficial</strong></div>
-    <div class="profile-info-row"><span>Estado del Sistema:</span> <span style="color:var(--green);font-weight:600">● Conectado (Sincronizado)</span></div>
-  </div>
-</div>
-
-<div class="modal-overlay" id="modal-config">
-  <div class="modal-card">
-    <button class="btn-close-modal" onclick="closeModal('modal-config')">✕</button>
-    <h3>⚙️ Configuraciones Visuales</h3>
-
-    <div style="margin-top:15px">
-      <label style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-weight:500">
-        <span>Modo Oscuro</span>
-        <input type="checkbox" id="chk-dark" onchange="toggleDarkMode(this.checked)" style="width:20px;height:20px">
-      </label>
-    </div>
-    <div style="margin-top:14px">
-      <label style="font-weight:500;display:block;margin-bottom:8px">Tamaño de letra (accesibilidad WCAG 2.1)</label>
-      <div class="a11y-panel" style="background:var(--ice2);border-color:var(--border)">
-        <button class="a11y-btn" style="color:var(--navy)" onclick="setFontScale(-1)">A-</button>
-        <button class="a11y-btn" style="color:var(--navy)" onclick="setFontScale(0)">A</button>
-        <button class="a11y-btn" style="color:var(--navy)" onclick="setFontScale(1)">A+</button>
-      </div>
-    </div>
-    <hr style="margin:18px 0;border:none;border-bottom:1px solid var(--border)">
-    <p style="font-size:.8rem;color:var(--t2);text-align:center">Plataforma Educativa Web Sincronizada en la Nube<br><b>U.E. Luz y Verdad</b></p>
-  </div>
-</div>
-
-<div class="modal-overlay" id="modal-rol">
-  <div class="modal-card">
-    <h3>✨ Completa tu Perfil Institucional</h3>
-    <p class="sub" style="margin-top:-10px">Tu cuenta @luzyverdadsucre.org fue verificada. Indícanos tu rol dentro del colegio para habilitar tus permisos.</p>
-    <div class="field">
-      <label>¿Cuál es tu rol?</label>
-      <select id="cr-rol" onchange="document.getElementById('cr-materia-field').classList.toggle('hidden', this.value!=='Docente')">
-        <option value="Estudiante">Estudiante</option>
-        <option value="Docente">Docente</option>
-        <option value="Directivo">Directivo / Administración</option>
-      </select>
-    </div>
-    <div class="field hidden" id="cr-materia-field">
-      <label>Materia o nivel que atiendes</label>
-      <input type="text" id="cr-materia" placeholder="Ej: Matemáticas - Secundaria">
-    </div>
-    <button class="btn-main" onclick="completeRole()">Guardar y continuar</button>
-    <p class="err-msg" id="cr-err"></p>
-  </div>
-</div>
-
-<div class="modal-overlay" id="modal-post">
-  <div class="modal-card">
-    <button class="btn-close-modal" onclick="closeModal('modal-post')">✕</button>
-    <h3>📢 Publicar en el Tablón Digital</h3>
-    <div class="field">
-      <label>Categoría</label>
-      <select id="pt-cat">
-        <option value="Comunicado">Comunicado</option>
-        <option value="Circular">Circular Administrativa</option>
-        <option value="Evento">Evento</option>
-      </select>
-    </div>
-    <div class="field">
-      <label>Título</label>
-      <input type="text" id="pt-title" placeholder="Ej: Inicio de actividades académicas">
-    </div>
-    <div class="field">
-      <label>Contenido</label>
-      <textarea rows="3" id="pt-body" placeholder="Detalle del comunicado..."></textarea>
-    </div>
-    <div class="field">
-      <label style="display:flex;align-items:center;gap:8px;text-transform:none;font-size:.85rem;color:var(--t1)">
-        <input type="checkbox" id="pt-pin" style="width:auto"> Fijar como destacado
-      </label>
-    </div>
-    <button class="btn-main" onclick="publishPost()">📤 Publicar y notificar</button>
-    <small class="hint">Al publicar, el sistema despacha una alerta a los correos institucionales de docentes y tutores (SMTP/TLS).</small>
-    <p class="err-msg" id="pt-err"></p>
-  </div>
-</div>
-
-<div class="modal-overlay" id="modal-achv">
-  <div class="modal-card">
-    <button class="btn-close-modal" onclick="closeModal('modal-achv')">✕</button>
-    <h3>🏆 Añadir Logro a la Vitrina</h3>
-    <div class="field">
-      <label>Categoría</label>
-      <select id="ac-cat">
-        <option value="Académico">Académico</option>
-        <option value="Deportivo">Deportivo</option>
-        <option value="Artístico">Artístico</option>
-        <option value="Social">Social</option>
-      </select>
-    </div>
-    <div class="field">
-      <label>Título del logro</label>
-      <input type="text" id="ac-title" placeholder="Ej: Primer lugar en Robótica">
-    </div>
-    <div class="field">
-      <label>Descripción</label>
-      <textarea rows="3" id="ac-desc" placeholder="Cuenta el logro con orgullo..."></textarea>
-    </div>
-    <button class="btn-main" onclick="publishAchv()">🏅 Publicar en la vitrina</button>
-    <p class="err-msg" id="ac-err"></p>
-  </div>
-</div>
-
-<div id="toast"></div>
-
+<!-- FUNCIONES VISUALES ESENCIALES (MODO OSCURO, TAMAÑO DE LETRA Y MENÚ) -->
 <script>
-let unsubPosts = null, unsubAchv = null, unsubReports = null, unsubChatMsgs = null;
-
-function v(id){ return document.getElementById(id).value.trim(); }
-function toast(m){ const t=document.getElementById('toast'); t.textContent=m; t.style.display='block'; setTimeout(()=>t.style.display='none',3500); }
-function esc(s){ return (s||'').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
-function fmtDate(ts){ try{ return ts && ts.toDate ? ts.toDate().toLocaleString('es-BO',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}) : 'justo ahora'; }catch(e){ return ''; } }
-
-function togglePw(id, btn){
-  const el = document.getElementById(id);
-  if(el.type === 'password'){ el.type = 'text'; btn.textContent = '🙈'; }
-  else { el.type = 'password'; btn.textContent = '👁️'; }
-}
-
-function showPg(p){
-  document.getElementById('pg-login').classList.toggle('hidden', p!=='login');
-  document.getElementById('pg-register').classList.toggle('hidden', p!=='register');
-}
-
-function switchTab(tabId, btn){
-  document.querySelectorAll('.tab-content').forEach(el=>el.classList.add('hidden'));
-  document.querySelectorAll('.tab-btn').forEach(el=>el.classList.remove('active'));
-  document.getElementById(tabId).classList.remove('hidden');
-  if(btn) btn.classList.add('active');
-}
-
-function toggleUserDropdown(){
-  document.getElementById('dd-menu').classList.toggle('show');
-}
-
-window.onclick = function(e){
-  if(!e.target.closest('.user-menu-wrapper')){
-    document.getElementById('dd-menu').classList.remove('show');
-  }
-}
-
-function openModal(id){ document.getElementById(id).classList.add('active'); document.getElementById('dd-menu').classList.remove('show'); }
-function closeModal(id){ document.getElementById(id).classList.remove('active'); }
-
-function openProfileModal(){
-  const u = window.currentUser;
-  const initial = u.nm ? u.nm.charAt(0).toUpperCase() : 'U';
-  document.getElementById('prof-avatar').textContent = initial;
-  document.getElementById('prof-name').textContent = u.nm;
-  document.getElementById('prof-email').textContent = u.email;
-
-  const b = document.getElementById('prof-role-badge');
-  b.textContent = u.rol;
-  b.className = 'badge-role ' + roleClass(u.rol);
-
-  const mRow = document.getElementById('prof-materia-row');
-  if(u.rol === 'Docente' && u.materia){
-    mRow.classList.remove('hidden');
-    document.getElementById('prof-materia').textContent = u.materia;
-  } else { mRow.classList.add('hidden'); }
-
-  document.getElementById('prof-type').textContent = u.email.endsWith('@luzyverdadsucre.org') ? 'Institucional (@luzyverdadsucre.org)' : 'Externa / Personal';
-
-  openModal('modal-profile');
-}
-
-function openConfigModal(){ openModal('modal-config'); }
-
-function roleClass(rol){
-  if(rol.includes('Directivo')) return 'role-Directivo';
-  if(rol.includes('Docente')) return 'role-Docente';
-  if(rol.includes('Estudiante')) return 'role-Estudiante';
-  if(rol.includes('Padre')) return 'role-Padre';
-  return 'role-Visitante';
-}
-
-function toggleDarkMode(isDark){
-  document.body.classList.toggle('dark-mode', isDark);
-}
-
-function setFontScale(dir){
-  let scale = parseInt(localStorage.getItem('lyv_fontScale') || '0', 10);
-  if(dir === 0) scale = 0; else scale = Math.max(-2, Math.min(3, scale + dir));
-  localStorage.setItem('lyv_fontScale', scale);
-  document.documentElement.style.fontSize = (100 + scale*12) + '%';
-}
-(function initFontScale(){
-  const scale = parseInt(localStorage.getItem('lyv_fontScale') || '0', 10);
-  document.documentElement.style.fontSize = (100 + scale*12) + '%';
-})();
-
-// ---------- Auth ----------
-async function doGoogleAuth(){
-  try {
-    const remember = document.getElementById('chk-remember').checked;
-    const persistence = remember ? window.fbOps.browserLocalPersistence : window.fbOps.browserSessionPersistence;
-    await window.fbOps.setPersistence(window.fbAuth, persistence);
-    await window.fbOps.signInWithPopup(window.fbAuth, window.googleProvider);
-    toast('¡Sesión iniciada con Google!');
-  } catch(e) {
-    if (e.code === 'auth/popup-closed-by-user') { toast('Inicio de sesión cancelado'); }
-    else { alert('Error con Google: ' + e.message); }
-  }
-}
-
-async function doRegister(){
-  const nm = v('rg-nm'), em = v('rg-em').toLowerCase(), pw = v('rg-pw'), rol = v('rg-rol');
-  const err = document.getElementById('rg-err');
-  if(!nm || !em || !pw){ err.textContent = 'Completa todos los campos.'; return; }
-  if(em.endsWith('@luzyverdadsucre.org')){ err.textContent = 'Las cuentas del colegio deben ingresar por el botón de Google.'; return; }
-  if(pw.length < 6){ err.textContent = 'Mínimo 6 caracteres en la contraseña.'; return; }
-
-  try {
-    const res = await window.fbOps.createUserWithEmailAndPassword(window.fbAuth, em, pw);
-    await window.fbOps.setDoc(window.fbOps.doc(window.fbDb, "users", res.user.uid), { nm, rol, materia:'', rolCompleto:true, email: em });
-    toast('¡Cuenta registrada con éxito!');
-  } catch(e) {
-    err.textContent = 'Error: ' + (e.message.includes('email-already') ? 'El correo ya está registrado' : e.message);
-  }
-}
-
-async function doLogin(){
-  const em = v('li-em').toLowerCase(), pw = v('li-pw');
-  const remember = document.getElementById('chk-remember').checked;
-  const err = document.getElementById('li-err');
-  if(!em || !pw){ err.textContent = 'Ingresa credenciales completas.'; return; }
-  try {
-    // Configura si la sesión debe recordarse o ser temporal de navegador
-    const persistence = remember ? window.fbOps.browserLocalPersistence : window.fbOps.browserSessionPersistence;
-    await window.fbOps.setPersistence(window.fbAuth, persistence);
-    await window.fbOps.signInWithEmailAndPassword(window.fbAuth, em, pw);
-  }
-  catch(e) { err.textContent = 'Correo o contraseña incorrectos.'; }
-}
-
-function doLogout(){
-  [unsubPosts, unsubAchv, unsubReports, unsubChatMsgs].forEach(u => { if(u) u(); });
-  window.fbOps.signOut(window.fbAuth);
-}
-
-async function completeRole(){
-  const rol = v('cr-rol'), materia = v('cr-materia');
-  const err = document.getElementById('cr-err');
-  if(rol === 'Docente' && !materia){ err.textContent = 'Indica la materia o nivel que atiendes.'; return; }
-  const u = window.currentUser;
-  await window.fbOps.setDoc(window.fbOps.doc(window.fbDb, "users", u.uid), { nm:u.nm, email:u.email, rol, materia: rol==='Docente'?materia:'', rolCompleto:true });
-  window.currentUser = { ...u, rol, materia: rol==='Docente'?materia:'', rolCompleto:true };
-  closeModal('modal-rol');
-  renderForRole();
-  toast('Perfil completado. ¡Bienvenido/a, ' + rol + '!');
-}
-
-// ---------- Arranque de la app ----------
-function launchApp(){
-  // Ocultar vistas de autenticación
-  document.getElementById('pg-login').classList.add('hidden');
-  document.getElementById('pg-register').classList.add('hidden');
-  
-  // Mostrar la aplicación
-  document.getElementById('app').classList.add('on');
-
-  const u = window.currentUser;
-  const isSchool = u.email.endsWith('@luzyverdadsucre.org');
-
-  const initial = u.nm ? u.nm.charAt(0).toUpperCase() : 'U';
-  document.getElementById('u-top-avatar').textContent = initial;
-  document.getElementById('u-top-name').textContent = u.nm.split(' ')[0];
-  document.getElementById('welcome-user-name').textContent = u.nm;
-  document.getElementById('dd-full-name').textContent = u.nm;
-  document.getElementById('dd-role').textContent = u.rol;
-
-  // Cargar pestaña Inicio explícitamente tras autenticarse
-  switchTab('tab-home', document.getElementById('btn-tab-home'));
-
-  if(isSchool && !u.rolCompleto){
-    openModal('modal-rol');
+  function toggleUserDropdown() {
+    document.getElementById('dd-menu').classList.toggle('show');
   }
 
-  renderForRole();
-  listenPosts();
-  listenAchievements();
-  listenReports();
-  listenTeachersAndMailbox();
-}
-
-function renderForRole(){
-  const u = window.currentUser;
-  const isSchool = u.email.endsWith('@luzyverdadsucre.org');
-  const b = document.getElementById('banner-perm');
-  const esDirectivo = u.rol === 'Directivo';
-  const esDocente = u.rol === 'Docente';
-
-  if(isSchool){
-    b.className = 'perm-notice info';
-    b.innerHTML = `✅ <b>Cuenta Institucional Verificada (<code>${esc(u.email)}</code>)</b>: rol <b>${esc(u.rol)}</b> con permisos habilitados en la plataforma.`;
-  } else {
-    b.className = 'perm-notice warn';
-    b.innerHTML = `🔒 <b>Modo Padres / Visitantes (<code>${esc(u.email)}</code>)</b>: puedes ver noticias y logros, enviar reportes/sugerencias y escribir a los docentes de forma privada.`;
-  }
-
-  document.getElementById('btn-new-post').classList.toggle('hidden', !esDirectivo);
-  document.getElementById('btn-new-achv').classList.toggle('hidden', !(esDirectivo || esDocente));
-  document.getElementById('reports-list-title').textContent = esDirectivo ? '📋 Todos los Reportes de la Comunidad' : '📋 Mis Reportes Enviados';
-  document.getElementById('report-form-card').classList.toggle('hidden', u.rol === 'Directivo');
-}
-
-// ---------- Tablón Digital ----------
-function openPostModal(){ openModal('modal-post'); }
-
-async function publishPost(){
-  const cat = v('pt-cat'), title = v('pt-title'), body = v('pt-body'), pin = document.getElementById('pt-pin').checked;
-  const err = document.getElementById('pt-err');
-  if(!title || !body){ err.textContent = 'Completa título y contenido.'; return; }
-  const { collection, addDoc, serverTimestamp } = window.fbOps;
-  await addDoc(collection(window.fbDb, 'posts'), {
-    cat, title, body, pin,
-    authorName: window.currentUser.nm,
-    createdAt: serverTimestamp()
-  });
-  document.getElementById('pt-title').value=''; document.getElementById('pt-body').value=''; document.getElementById('pt-pin').checked=false;
-  err.textContent = '';
-  closeModal('modal-post');
-  toast('📧 Comunicado publicado. Notificación institucional enviada por correo (SMTP) a docentes y tutores.');
-}
-
-const REACTIONS = [
-  { key:'like', emoji:'👍', label:'Me gusta' },
-  { key:'love', emoji:'❤️', label:'Me encanta' },
-  { key:'haha', emoji:'😄', label:'Me alegra' },
-  { key:'clap', emoji:'👏', label:'Aplausos' }
-];
-
-function getPostReactions(){
-  try{ return JSON.parse(localStorage.getItem('lyv_post_reactions')||'{}'); }catch(e){ return {}; }
-}
-function setPostReaction(postId, key){
-  const r = getPostReactions();
-  r[postId] = (r[postId] === key) ? null : key;
-  if(!r[postId]) delete r[postId];
-  localStorage.setItem('lyv_post_reactions', JSON.stringify(r));
-  return r[postId] || null;
-}
-
-let postBaseCounts = {};
-let renderedPosts = [];
-
-function renderReactionBar(postId){
-  const base = postBaseCounts[postId] || { like:0, love:0, haha:0, clap:0 };
-  const mine = getPostReactions()[postId] || null;
-  const btns = REACTIONS.map(r => {
-    const count = (base[r.key]||0) + (mine === r.key ? 1 : 0);
-    return `<button class="rx-btn ${mine===r.key?'active':''}" onclick="reactToPost('${postId}','${r.key}',this)" title="${r.label}">
-      <span class="rx-emoji">${r.emoji}</span><span class="rx-count">${count}</span>
-    </button>`;
-  }).join('');
-  return `<div class="fp-reactions" data-post="${postId}">${btns}</div>`;
-}
-
-function reactToPost(postId, key){
-  setPostReaction(postId, key);
-  const bar = document.querySelector(`.fp-reactions[data-post="${postId}"]`);
-  if(bar) bar.outerHTML = renderReactionBar(postId);
-}
-
-function sharePostByIndex(i){
-  const p = renderedPosts[i];
-  if(!p) return;
-  const text = `📢 ${p.title}\n\n${p.body}\n\n— ${p.authorName || 'Dirección'} · U.E. Luz y Verdad`;
-  if(navigator.share){
-    navigator.share({ title: p.title, text }).catch(()=>{});
-  } else if(navigator.clipboard && navigator.clipboard.writeText){
-    navigator.clipboard.writeText(text).then(()=> toast('📋 Comunicado copiado, listo para compartir'))
-      .catch(()=> toast('No se pudo copiar el comunicado.'));
-  } else {
-    toast('Tu navegador no permite compartir automáticamente.');
-  }
-}
-
-function postAvatarInitial(name){
-  return (name||'D').trim().charAt(0).toUpperCase();
-}
-
-function feedPostHTML(p, i, extraTag){
-  return `
-    <article class="feed-post ${p.pin?'pinned':''}">
-      ${p.pin ? `<div class="fp-pin-strip">📌 Comunicado fijado por Dirección</div>` : ''}
-      <div class="fp-head">
-        <div class="fp-avatar">${esc(postAvatarInitial(p.authorName))}</div>
-        <div class="fp-headtext">
-          <div class="fp-name-row"><span class="fp-name">${esc(p.authorName || 'Dirección')}</span><span class="fp-verified" title="Cuenta institucional">✔️</span></div>
-          <div class="fp-time">${esc(p.dateLabel)}<span class="dot"></span>Luz y Verdad</div>
-        </div>
-      </div>
-      <div class="fp-catbar"><span class="cat-tag ${p.cat.toLowerCase()}">${esc(p.cat)}</span>${extraTag||''}</div>
-      <div class="fp-body">
-        <h4 class="fp-title">${esc(p.title)}</h4>
-        <p class="fp-text">${esc(p.body)}</p>
-      </div>
-      <div class="fp-footer">
-        ${renderReactionBar(p.id)}
-        <button class="fp-share-btn" onclick="sharePostByIndex(${i})"><span class="ic">↗️</span> Compartir</button>
-      </div>
-    </article>`;
-}
-
-const EXAMPLE_POSTS = [
-  { id:'ej-1', cat:'Circular', pin:true, authorName:'Dirección Académica', title:'Inicio del segundo trimestre', body:'Se informa a toda la comunidad educativa que las clases del segundo trimestre inician el lunes 17 de agosto. Se ruega puntualidad y uniforme completo.', dateLabel:'hace 2 horas', base:{like:14,love:9,haha:2,clap:6} },
-  { id:'ej-2', cat:'Evento', pin:false, authorName:'Secretaría', title:'Feria de Ciencias 2026', body:'Invitamos a estudiantes de secundaria a inscribir sus proyectos para la Feria de Ciencias, a realizarse el 5 de septiembre en el patio principal.', dateLabel:'hace 5 horas', base:{like:7,love:3,haha:1,clap:4} },
-  { id:'ej-3', cat:'Comunicado', pin:false, authorName:'Dirección Académica', title:'Reunión de padres de familia', body:'Se convoca a los padres de familia a la reunión trimestral el sábado 22 de agosto a horas 9:00, en el auditorio del colegio.', dateLabel:'hace 1 día', base:{like:4,love:1,haha:0,clap:2} }
-];
-
-function renderExamplePosts(cont){
-  renderedPosts = EXAMPLE_POSTS;
-  postBaseCounts = {};
-  EXAMPLE_POSTS.forEach(p => { postBaseCounts[p.id] = p.base; });
-  const html = EXAMPLE_POSTS.map((p, i) => feedPostHTML(p, i, '<span class="contact-badge-demo">Ejemplo</span>')).join('');
-  cont.innerHTML = `<div class="demo-banner">👁️ Vista previa de ejemplo — estos comunicados desaparecerán en cuanto se publique uno real.</div>` + html;
-}
-
-function listenPosts(){
-  const { collection, query, orderBy, onSnapshot } = window.fbOps;
-  const q = query(collection(window.fbDb, 'posts'), orderBy('createdAt', 'desc'));
-  unsubPosts = onSnapshot(q, snap => {
-    const cont = document.getElementById('posts-container');
-    if(snap.empty){ renderExamplePosts(cont); return; }
-    let items = [];
-    snap.forEach(d => items.push({ id:d.id, ...d.data() }));
-    items.sort((a,b) => (b.pin?1:0) - (a.pin?1:0));
-
-    renderedPosts = items.map(p => ({ ...p, dateLabel: fmtDate(p.createdAt) }));
-    postBaseCounts = {};
-    items.forEach(p => {
-      postBaseCounts[p.id] = p.pin
-        ? { like:9, love:6, haha:2, clap:5 }
-        : { like:3, love:2, haha:1, clap:2 };
-    });
-
-    cont.innerHTML = renderedPosts.map((p, i) => feedPostHTML(p, i)).join('');
-  });
-}
-
-// ---------- Vitrina de Logros ----------
-function openAchvModal(){ openModal('modal-achv'); }
-
-async function publishAchv(){
-  const cat = v('ac-cat'), title = v('ac-title'), desc = v('ac-desc');
-  const err = document.getElementById('ac-err');
-  if(!title || !desc){ err.textContent = 'Completa título y descripción.'; return; }
-  const { collection, addDoc, serverTimestamp } = window.fbOps;
-  await addDoc(collection(window.fbDb, 'achievements'), { cat, title, desc, authorName: window.currentUser.nm, createdAt: serverTimestamp() });
-  document.getElementById('ac-title').value=''; document.getElementById('ac-desc').value='';
-  err.textContent = '';
-  closeModal('modal-achv');
-  toast('🏆 Logro publicado en la vitrina.');
-}
-
-const EXAMPLE_ACHIEVEMENTS = [
-  { cat:'Académico', title:'Primer lugar en Olimpiada de Matemáticas', desc:'Estudiantes de 5to de secundaria representaron al colegio en la fase departamental, obteniendo el primer puesto.', authorName:'Prof. Ana Rojas', dateLabel:'hace 3 días' },
-  { cat:'Deportivo', title:'Campeones del torneo interescolar de fútsal', desc:'El equipo masculino de secundaria se coronó campeón invicto del torneo interescolar de Sucre.', authorName:'Prof. Carlos Fernández', dateLabel:'hace 1 semana' },
-  { cat:'Artístico', title:'Mención de honor en pintura', desc:'Una estudiante de 3ro de secundaria obtuvo mención de honor en el concurso departamental de pintura juvenil.', authorName:'Dirección Académica', dateLabel:'hace 2 semanas' }
-];
-
-function listenAchievements(){
-  const { collection, query, orderBy, onSnapshot } = window.fbOps;
-  const q = query(collection(window.fbDb, 'achievements'), orderBy('createdAt', 'desc'));
-  unsubAchv = onSnapshot(q, snap => {
-    const cont = document.getElementById('achv-container');
-    if(snap.empty){
-      let html = `<div class="demo-banner" style="grid-column:1/-1">👁️ Vista previa de ejemplo — estos logros desaparecerán en cuanto se publique uno real.</div>`;
-      html += EXAMPLE_ACHIEVEMENTS.map(a => `
-      <div class="info-card" style="border-left-color:var(--gold)">
-        <h4 style="color:var(--gold)"><span class="cat-tag">${esc(a.cat)}</span><span class="contact-badge-demo">Ejemplo</span></h4>
-        <h4 style="color:var(--gold)">🏅 ${esc(a.title)}</h4>
-        <p>${esc(a.desc)}</p>
-        <div class="meta"><span>${esc(a.authorName)}</span><span>${esc(a.dateLabel)}</span></div>
-      </div>`).join('');
-      cont.innerHTML = html;
-      return;
+  window.onclick = function(e) {
+    if (!e.target.closest('.user-menu-wrapper')) {
+      document.getElementById('dd-menu').classList.remove('show');
     }
-    let html = '';
-    snap.forEach(d => {
-      const a = d.data();
-      html += `
-      <div class="info-card" style="border-left-color:var(--gold)">
-        <h4 style="color:var(--gold)"><span class="cat-tag">${esc(a.cat)}</span></h4>
-        <h4 style="color:var(--gold)">🏅 ${esc(a.title)}</h4>
-        <p>${esc(a.desc)}</p>
-        <div class="meta"><span>${esc(a.authorName||'')}</span><span>${fmtDate(a.createdAt)}</span></div>
-      </div>`;
-    });
-    cont.innerHTML = html;
-  });
-}
-
-// ---------- Reportes y Sugerencias ----------
-async function sendReport(){
-  const cat = v('rp-cat'), title = v('rp-title'), desc = v('rp-desc');
-  const err = document.getElementById('rp-err');
-  if(!title || !desc){ err.textContent = 'Completa el título y la descripción.'; return; }
-  const { collection, addDoc, serverTimestamp } = window.fbOps;
-  const u = window.currentUser;
-  await addDoc(collection(window.fbDb, 'reports'), {
-    cat, title, desc, status: 'Pendiente',
-    authorUid: u.uid, authorName: u.nm, authorRole: u.rol,
-    createdAt: serverTimestamp()
-  });
-  document.getElementById('rp-title').value=''; document.getElementById('rp-desc').value='';
-  err.textContent = '';
-  toast('📨 Tu reporte fue enviado a dirección para su seguimiento.');
-}
-
-async function updateReportStatus(id, status){
-  const { doc, updateDoc } = window.fbOps;
-  await updateDoc(doc(window.fbDb, 'reports', id), { status });
-  toast('Estado del reporte actualizado a "' + status + '".');
-}
-
-function listenReports(){
-  const { collection, query, orderBy, onSnapshot } = window.fbOps;
-  const q = query(collection(window.fbDb, 'reports'), orderBy('createdAt', 'desc'));
-  unsubReports = onSnapshot(q, snap => {
-    const u = window.currentUser;
-    const esDirectivo = u.rol === 'Directivo';
-    const cont = document.getElementById('reports-container');
-    let items = [];
-    snap.forEach(d => items.push({ id:d.id, ...d.data() }));
-    if(!esDirectivo) items = items.filter(r => r.authorUid === u.uid);
-
-    if(items.length === 0){ cont.innerHTML = '<div class="empty-state">No hay reportes registrados todavía.</div>'; return; }
-
-    cont.innerHTML = items.map(r => `
-      <div class="info-card">
-        <h4><span class="cat-tag">${esc(r.cat)}</span><span class="status-tag status-${r.status.replace(/\s/g,'')}">${esc(r.status)}</span></h4>
-        <h4>${esc(r.title)}</h4>
-        <p>${esc(r.desc)}</p>
-        <div class="meta">
-          <span>${esDirectivo ? esc(r.authorName)+' · '+esc(r.authorRole) : fmtDate(r.createdAt)}</span>
-          <span>${esDirectivo ? fmtDate(r.createdAt) : ''}</span>
-        </div>
-        ${esDirectivo ? `
-        <div style="display:flex;gap:6px;margin-top:10px;flex-wrap:wrap">
-          <button class="btn-sm ${r.status==='Pendiente'?'on':''}" onclick="updateReportStatus('${r.id}','Pendiente')">Pendiente</button>
-          <button class="btn-sm ${r.status==='En Proceso'?'on':''}" onclick="updateReportStatus('${r.id}','En Proceso')">En Proceso</button>
-          <button class="btn-sm ${r.status==='Resuelto'?'on':''}" onclick="updateReportStatus('${r.id}','Resuelto')">Resuelto</button>
-        </div>` : ''}
-      </div>`).join('');
-  });
-}
-
-// ---------- Buzón privado con Docentes ----------
-const DEMO_TEACHERS = [
-  { uid:'demo-1', nm:'Prof. Ana María Rojas', materia:'Matemáticas · Secundaria' },
-  { uid:'demo-2', nm:'Prof. Carlos Fernández', materia:'Lenguaje · Secundaria' },
-  { uid:'demo-3', nm:'Prof. Lucía Vargas', materia:'Sistemas Informáticos' }
-];
-const DEMO_THREADS = {
-  'demo-1': [
-    { from:'them', body:'Buenas tardes, ¿en qué puedo ayudarte?', t:'10:02' },
-    { from:'me', body:'Profesora, tengo una duda sobre la tarea de ecuaciones cuadráticas.', t:'10:05' },
-    { from:'them', body:'Claro, revisa el ejercicio 4 de tu cuaderno, usa el mismo método de factorización.', t:'10:07' },
-    { from:'me', body:'¡Muchas gracias! Ya lo reviso.', t:'10:08' }
-  ],
-  'demo-2': [
-    { from:'them', body:'Hola, recuerda que el ensayo se entrega el viernes.', t:'09:14' },
-    { from:'me', body:'Profesor, ¿puede ser en formato digital?', t:'09:20' },
-    { from:'them', body:'Sí, súbelo como PDF a la carpeta compartida.', t:'09:21' }
-  ],
-  'demo-3': [
-    { from:'them', body:'¿Cómo va el avance de tu proyecto de grado?', t:'16:40' },
-    { from:'me', body:'Vamos bien, ya tenemos el diseño de la plataforma casi listo.', t:'16:42' },
-    { from:'them', body:'Excelente, nos vemos en la próxima tutoría para revisarlo.', t:'16:43' }
-  ]
-};
-
-let activeChat = null;
-let cachedTeacherContacts = [];
-
-function contactInitial(name){ return (name||'?').trim().charAt(0).toUpperCase(); }
-
-function listenTeachersAndMailbox(){
-  const u = window.currentUser;
-  document.getElementById('mb-chat-view').classList.add('hidden');
-  document.getElementById('mb-contacts-view').classList.remove('hidden');
-
-  const title = document.getElementById('mb-contacts-title');
-  const sub = document.getElementById('mb-contacts-sub');
-  const list = document.getElementById('mb-contacts-list');
-
-  if(u.rol === 'Visitante'){
-    title.textContent = '💬 Buzón con Docentes';
-    sub.textContent = '';
-    list.innerHTML = '<div class="empty-state">🔒 El chat privado está reservado para estudiantes, padres de familia, docentes y directivos registrados.</div>';
-    return;
   }
 
-  if(u.rol === 'Docente'){
-    title.textContent = '💬 Tus conversaciones';
-    sub.textContent = 'Consultas de padres y estudiantes dirigidas a ti (' + esc(u.materia||'') + ').';
-    listenTeacherContacts();
-    return;
+  function setFontScale(dir) {
+    let scale = parseInt(localStorage.getItem('lyv_fontScale') || '0', 10);
+    if (dir === 0) scale = 0; else scale = Math.max(-2, Math.min(3, scale + dir));
+    localStorage.setItem('lyv_fontScale', scale);
+    document.documentElement.style.fontSize = (100 + scale * 12) + '%';
   }
 
-  title.textContent = '💬 Docentes';
-  sub.textContent = 'Toca a un docente para abrir la conversación, como en un chat privado.';
-  loadTeacherContactsForStudent();
-}
-
-async function loadTeacherContactsForStudent(){
-  const { collection, query, where, onSnapshot } = window.fbOps;
-  const q = query(collection(window.fbDb, 'users'), where('rol','==','Docente'));
-  onSnapshot(q, snap => {
-    let real = [];
-    snap.forEach(d => real.push({ uid:d.id, ...d.data() }));
-    cachedTeacherContacts = real;
-    renderContactsList(real.length ? real.map(t=>({uid:t.uid, nm:t.nm, materia:t.materia, isDemo:false})) : DEMO_TEACHERS.map(t=>({...t, isDemo:true})));
-  });
-}
-
-function listenTeacherContacts(){
-  const { collection, query, where, orderBy, onSnapshot } = window.fbOps;
-  const u = window.currentUser;
-  const q = query(collection(window.fbDb, 'messages'), where('toUid','==', u.uid), orderBy('createdAt','desc'));
-  onSnapshot(q, snap => {
-    const seen = {};
-    let contacts = [];
-    snap.forEach(d => {
-      const m = d.data();
-      if(!seen[m.fromUid]){ seen[m.fromUid] = true; contacts.push({ uid:m.fromUid, nm:m.fromName, materia:m.fromRole, isDemo:false }); }
-    });
-    const list = document.getElementById('mb-contacts-list');
-    if(!list) return;
-    if(contacts.length === 0){ list.innerHTML = '<div class="empty-state">Aún no recibiste mensajes de padres o estudiantes.</div>'; return; }
-    renderContactsList(contacts);
-  });
-}
-
-let renderedContacts = [];
-function renderContactsList(contacts){
-  renderedContacts = contacts;
-  const list = document.getElementById('mb-contacts-list');
-  if(!contacts.length){ list.innerHTML = '<div class="empty-state">No hay contactos disponibles todavía.</div>'; return; }
-  list.innerHTML = contacts.map((c, i) => `
-    <div class="contact-item" onclick="openChat(renderedContacts[${i}])">
-      <div class="contact-avatar">${esc(contactInitial(c.nm))}</div>
-      <div class="contact-info">
-        <div class="contact-name">${esc(c.nm)} ${c.isDemo?'<span class="contact-badge-demo">Ejemplo</span>':''}</div>
-        <div class="contact-sub">${esc(c.materia||'')}</div>
-      </div>
-      <span class="contact-chevron">›</span>
-    </div>`).join('');
-}
-
-function chatConvId(uidA, uidB){ return [uidA, uidB].sort().join('_'); }
-
-function openChat(contact){
-  activeChat = contact;
-  document.getElementById('mb-contacts-view').classList.add('hidden');
-  document.getElementById('mb-chat-view').classList.remove('hidden');
-  document.getElementById('chat-avatar').textContent = contactInitial(contact.nm);
-  document.getElementById('chat-name').textContent = contact.nm;
-  document.getElementById('chat-sub').textContent = contact.materia || '';
-  document.getElementById('chat-input').value = '';
-
-  if(unsubChatMsgs){ unsubChatMsgs(); unsubChatMsgs = null; }
-
-  if(contact.isDemo){
-    renderDemoThread(contact.uid);
-    return;
-  }
-
-  const u = window.currentUser;
-  const convId = chatConvId(u.uid, contact.uid);
-  const { collection, query, where, orderBy, onSnapshot } = window.fbOps;
-  const q = query(collection(window.fbDb, 'messages'), where('convId','==', convId), orderBy('createdAt','asc'));
-  unsubChatMsgs = onSnapshot(q, snap => {
-    const cont = document.getElementById('chat-messages');
-    if(snap.empty){ cont.innerHTML = '<div class="chat-empty-hint">Aún no hay mensajes. Escribe el primero 👋</div>'; return; }
-    let html = '';
-    snap.forEach(d => {
-      const m = d.data();
-      const mine = m.fromUid === u.uid;
-      html += `<div class="bubble ${mine?'sent':'received'}">${esc(m.body)}<span class="bubble-time">${fmtDate(m.createdAt)}</span></div>`;
-    });
-    cont.innerHTML = html;
-    cont.scrollTop = cont.scrollHeight;
-  });
-}
-
-function renderDemoThread(uid){
-  const thread = DEMO_THREADS[uid] || [];
-  const cont = document.getElementById('chat-messages');
-  cont.innerHTML = thread.map(m => `<div class="bubble ${m.from==='me'?'sent':'received'}">${esc(m.body)}<span class="bubble-time">${esc(m.t)}</span></div>`).join('');
-  cont.scrollTop = cont.scrollHeight;
-}
-
-function closeChatView(){
-  if(unsubChatMsgs){ unsubChatMsgs(); unsubChatMsgs = null; }
-  activeChat = null;
-  document.getElementById('mb-chat-view').classList.add('hidden');
-  document.getElementById('mb-contacts-view').classList.remove('hidden');
-}
-
-async function sendChatMessage(){
-  const input = document.getElementById('chat-input');
-  const body = input.value.trim();
-  if(!body || !activeChat) return;
-
-  if(activeChat.isDemo){
-    DEMO_THREADS[activeChat.uid] = DEMO_THREADS[activeChat.uid] || [];
-    const now = new Date();
-    const t = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
-    DEMO_THREADS[activeChat.uid].push({ from:'me', body, t });
-    input.value = '';
-    renderDemoThread(activeChat.uid);
-    return;
-  }
-
-  const { collection, addDoc, serverTimestamp } = window.fbOps;
-  const u = window.currentUser;
-  const convId = chatConvId(u.uid, activeChat.uid);
-  input.value = '';
-  await addDoc(collection(window.fbDb, 'messages'), {
-    convId,
-    toUid: activeChat.uid, toName: activeChat.nm,
-    fromUid: u.uid, fromName: u.nm, fromRole: u.rol,
-    body, createdAt: serverTimestamp()
-  });
-}
+  (function initFontScale() {
+    const scale = parseInt(localStorage.getItem('lyv_fontScale') || '0', 10);
+    document.documentElement.style.fontSize = (100 + scale * 12) + '%';
+  })();
 </script>
+
 </body>
 </html>
